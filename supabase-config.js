@@ -8,8 +8,8 @@
    3) Salve este arquivo. Os dois arquivos (vitrine e painel) ja usam ele.
    ===================================================================== */
 
-const SUPABASE_URL = "COLE_AQUI_SUA_SUPABASE_URL";
-const SUPABASE_ANON_KEY = "COLE_AQUI_SUA_SUPABASE_ANON_KEY";
+const SUPABASE_URL = "https://kvimdatdijavpjvfzjxx.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_yCHZz3gbtQxoAngu4kmcpA_Tv-gs6Mo";
 
 // E-mail do administrador (unico que entra no painel).
 // Tem que ser O MESMO e-mail definido no supabase-setup.sql (funcao is_admin).

@@ -2,7 +2,7 @@
 
 São 3 arquivos:
 
-- **`vitrine-agencia.html`** — o site público (a vitrine +18). É o que os clientes acessam.
+- **`index.html`** — o site público (a vitrine +18). É o que os clientes acessam (abre na raiz do site).
 - **`painel-criadora.html`** — o painel do **admin** (só você). Cadastra/edita/aprova/exclui criadoras.
 - **`supabase-config.js`** — onde ficam suas credenciais (preenche **uma vez** e vale para os dois).
 - **`supabase-setup.sql`** — o script do banco (roda **uma vez** no Supabase).
@@ -54,7 +54,7 @@ A vitrine **cresce sozinha**: toda criadora que você publicar no painel aparece
 1. Abra **`painel-criadora.html`** no navegador, entre com o e-mail/senha do admin.
 2. Clique em **+ Nova criadora**, preencha, envie as fotos.
 3. Marque **Publicar na vitrine** (precisa das 3 confirmações) e **Salvar**.
-4. Abra **`vitrine-agencia.html`** — a criadora já aparece. Repita para quantas quiser.
+4. Abra **`index.html`** — a criadora já aparece. Repita para quantas quiser.
 
 ---
 
