@@ -144,7 +144,10 @@
     <p class="sub">Cadastre quantas criadoras quiser. Cada uma que você publicar aparece automaticamente na vitrine.</p>
     <div class="toolbar">
       <span class="count" id="listCount"></span>
-      <button class="btn btn-primary" style="width:auto" onclick="newCreator()">+ Nova criadora</button>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-ghost" style="width:auto" onclick="showClients()">👤 Liberar cliente</button>
+        <button class="btn btn-primary" style="width:auto" onclick="newCreator()">+ Nova criadora</button>
+      </div>
     </div>
     <div class="list" id="creatorList"></div>
   </div>
@@ -251,6 +254,28 @@
     </div>
 
     <button class="btn btn-primary" onclick="saveProfile()">Salvar criadora</button>
+  </div>
+
+  <!-- ---------- LIBERAR CLIENTE POR TELEFONE ---------- -->
+  <div id="clientsView" class="hidden">
+    <div class="editor-head"><button class="back" onclick="showList()">← Voltar à lista</button></div>
+    <h1>Liberar acesso de cliente</h1>
+    <p class="sub">O pagamento chega pelo webhook já com o telefone. Aqui você confere e libera o acesso de um cliente pelo número.</p>
+    <div class="card">
+      <label>Telefone do cliente (o usado no pagamento)</label>
+      <input type="tel" id="cliPhone" inputmode="numeric" placeholder="Ex: 84 000 0000" />
+      <label style="margin-top:14px">Plano</label>
+      <select id="cliPlan">
+        <option value="vip">VIP (Telegram)</option>
+        <option value="access">Acesso completo</option>
+      </select>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+        <button class="btn btn-ghost" style="width:auto" onclick="verificarCliente()">Verificar pagamento</button>
+        <button class="btn btn-primary" style="width:auto" onclick="liberarCliente()">Liberar acesso</button>
+      </div>
+      <div id="cliResult" style="margin-top:16px;font-size:14px;color:var(--muted);line-height:1.6"></div>
+    </div>
+    <p class="hint">Dica: "Verificar" mostra os pagamentos que o webhook registrou para esse número. "Liberar acesso" cria a liberação manualmente (use quando o pagamento não entrou sozinho). Depois, o cliente entra pelo "Já é cliente?" no site com o mesmo número.</p>
   </div>
 </div>
 
@@ -563,9 +588,37 @@ async function deleteCreator(id){
 }
 
 /* ---------- EDITOR (abrir/fechar) ---------- */
-function showList(){ $('listView').classList.remove('hidden'); $('editView').classList.add('hidden'); }
-function showEditor(){ $('listView').classList.add('hidden'); $('editView').classList.remove('hidden'); window.scrollTo(0,0); }
+function showList(){ $('listView').classList.remove('hidden'); $('editView').classList.add('hidden'); $('clientsView').classList.add('hidden'); }
+function showEditor(){ $('listView').classList.add('hidden'); $('clientsView').classList.add('hidden'); $('editView').classList.remove('hidden'); window.scrollTo(0,0); }
 function closeEditor(){ showList(); }
+
+/* ---------- LIBERAR CLIENTE POR TELEFONE ---------- */
+function showClients(){
+  $('listView').classList.add('hidden'); $('editView').classList.add('hidden');
+  $('clientsView').classList.remove('hidden'); $('cliResult').innerHTML=''; window.scrollTo(0,0);
+}
+function _normPhone(s){ return String(s||'').replace(/\D/g,'').slice(-9); }
+async function verificarCliente(){
+  if(!sb){ toast('Configure o Supabase primeiro.',true); return; }
+  const phone=_normPhone($('cliPhone').value); const box=$('cliResult');
+  if(phone.length<9){ box.innerHTML='<span style="color:var(--accent)">Digite um número válido (9 dígitos).</span>'; return; }
+  box.textContent='Verificando…';
+  const { data, error } = await sb.from('payments').select('plan,event,created_at,customer_phone').eq('status','completed').limit(1000);
+  if(error){ box.innerHTML='<span style="color:var(--accent)">'+error.message+'</span>'; return; }
+  const hits=(data||[]).filter(r=>_normPhone(r.customer_phone)===phone);
+  if(!hits.length){ box.innerHTML='❌ Nenhum pagamento confirmado para <b>'+phone+'</b>. Dá pra liberar manualmente no botão ao lado.'; return; }
+  box.innerHTML='✅ <b>'+hits.length+'</b> pagamento(s) confirmado(s) para <b>'+phone+'</b>:<br>'+
+    hits.map(h=>'• '+(h.plan==='vip'?'VIP (Telegram)':(h.plan==='access'?'Acesso completo':(h.plan||'—')))+' — '+new Date(h.created_at).toLocaleDateString('pt-BR')+(h.event==='manual_admin'?' <i>(liberado manualmente)</i>':'')).join('<br>');
+}
+async function liberarCliente(){
+  if(!sb){ toast('Configure o Supabase primeiro.',true); return; }
+  const phone=_normPhone($('cliPhone').value); const plan=$('cliPlan').value; const box=$('cliResult');
+  if(phone.length<9){ box.innerHTML='<span style="color:var(--accent)">Digite um número válido (9 dígitos).</span>'; return; }
+  const { error } = await sb.from('payments').insert({ customer_phone:phone, plan, status:'completed', event:'manual_admin' });
+  if(error){ box.innerHTML='<span style="color:var(--accent)">'+error.message+'</span>'; return; }
+  toast('Acesso liberado para '+phone+'.');
+  box.innerHTML='✅ Acesso de <b>'+(plan==='vip'?'VIP (Telegram)':'Acesso completo')+'</b> liberado para <b>'+phone+'</b>.<br>O cliente já pode entrar no site usando <b>"Já é cliente?"</b> com esse número.';
+}
 
 function clearForm(){
   ['f_name','f_handle','f_bio','f_desc','f_photos','f_videos',

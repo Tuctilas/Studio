@@ -32,10 +32,11 @@ create index if not exists payments_provider_ref_idx on public.payments(provider
 alter table public.payments enable row level security;
 -- ninguem do navegador (anon/authenticated) le/escreve direto:
 revoke all on public.payments from anon, authenticated;
--- o admin pode VER os pagamentos no painel (opcional):
+-- o admin GERENCIA os pagamentos no painel (ver + liberar manualmente por telefone):
 drop policy if exists "admin ve pagamentos" on public.payments;
-create policy "admin ve pagamentos" on public.payments
-  for select using ( public.is_admin() );
+drop policy if exists "admin gerencia pagamentos" on public.payments;
+create policy "admin gerencia pagamentos" on public.payments
+  for all using ( public.is_admin() ) with check ( public.is_admin() );
 
 -- 2) ESCONDER o telegram_link do publico.
 --    Criamos uma VIEW publica que expoe tudo MENOS o telegram_link,

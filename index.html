@@ -641,7 +641,7 @@ function goVip(url){
   let target = url;
   try{ const u = new URL(url); u.searchParams.set('reference', ref); target = u.toString(); }
   catch(e){ target = url + (url.includes('?')?'&':'?') + 'reference=' + encodeURIComponent(ref); }
-  location.href = target;   // mesma aba: o gateway traz o cliente de volta
+  const w = window.open(target, '_blank', 'noopener'); if(!w) location.href = target;  // nova aba: o site fica aberto
 }
 function goAccess(url){
   if(!url || url === '#'){ return; }
@@ -650,7 +650,7 @@ function goAccess(url){
   let target = url;
   try{ const u = new URL(url); u.searchParams.set('reference', ref); target = u.toString(); }
   catch(e){ target = url + (url.includes('?')?'&':'?') + 'reference=' + encodeURIComponent(ref); }
-  location.href = target;
+  const w = window.open(target, '_blank', 'noopener'); if(!w) location.href = target;  // nova aba
 }
 
 /* ---------- Estado de acesso do cliente (quem já pagou) ---------- */
