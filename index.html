@@ -155,6 +155,39 @@
   .plan li{display:flex;gap:9px;align-items:flex-start}
   .plan li::before{content:"✓";color:var(--ok);font-weight:800}
 
+  /* ---------- PRÉVIAS (galeria com cadeado) ---------- */
+  .previews{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-bottom:36px}
+  .preview{position:relative;aspect-ratio:4/5;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:#191320}
+  .preview img,.preview video{width:100%;height:100%;object-fit:cover;display:block}
+  .preview .vbadge{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.62);color:#fff;font-size:10px;font-weight:800;letter-spacing:.04em;padding:3px 7px;border-radius:6px;z-index:2}
+  .preview.locked{cursor:pointer}
+  .preview.locked img,.preview.locked video{filter:blur(18px) brightness(.45);transform:scale(1.14)}
+  .preview .lock{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:#fff;background:radial-gradient(circle at 50% 40%,rgba(224,42,58,.20),rgba(10,7,9,.4))}
+  .preview .lock svg{width:30px;height:30px;filter:drop-shadow(0 2px 6px #000)}
+  .preview .lock span{font-size:11px;font-weight:800;letter-spacing:.04em;text-shadow:0 1px 6px #000;text-align:center;padding:0 8px}
+  @media(max-width:760px){ .previews{grid-template-columns:repeat(2,1fr);gap:10px} }
+
+  /* ---------- destaque dos cards da vitrine ---------- */
+  .creator{box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(224,42,58,.10)}
+  .creator:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 16px 46px rgba(224,42,58,.42)}
+  .creator .from .arrow{animation:arrowPulse 1.8s ease-in-out infinite}
+  @keyframes arrowPulse{0%,100%{opacity:.7;transform:translateX(0)}50%{opacity:1;transform:translateX(4px)}}
+
+  /* ---------- luzes laterais ---------- */
+  .side-light{position:absolute;top:-5%;bottom:-5%;width:150px;mix-blend-mode:screen;filter:blur(36px);pointer-events:none}
+  .side-light.l{left:-48px;background:linear-gradient(to right,rgba(224,42,58,.55),transparent 75%);animation:sidePulse 5s ease-in-out infinite}
+  .side-light.r{right:-48px;background:linear-gradient(to left,rgba(255,82,54,.5),transparent 75%);animation:sidePulse 6.5s ease-in-out infinite}
+  @keyframes sidePulse{0%,100%{opacity:.38}50%{opacity:.9}}
+
+  /* ---------- HISTÓRICO FAKE DE COMPRAS (canto inferior esquerdo) ---------- */
+  #salesFeed{position:fixed;left:14px;bottom:14px;z-index:55;display:flex;flex-direction:column;gap:8px;max-width:262px;pointer-events:none}
+  .sale{background:rgba(29,24,31,.94);border:1px solid var(--line);border-left:3px solid var(--ok);border-radius:12px;padding:9px 12px;box-shadow:0 12px 34px rgba(0,0,0,.55);backdrop-filter:blur(10px);transform:translateY(16px);opacity:0;transition:transform .4s ease,opacity .4s ease}
+  .sale.show{transform:translateY(0);opacity:1}
+  .sale .s-top{font-size:12px;color:var(--ink)}
+  .sale .s-top b{color:#fff}
+  .sale .s-sub{font-size:11px;color:var(--muted);margin-top:1px}
+  @media(max-width:760px){ #salesFeed{left:8px;bottom:8px;max-width:66vw} .sale .s-top{font-size:11px} body.detail-open #salesFeed{display:none} }
+
   footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:13px}
 
   /* barra fixa de ação no perfil (só mobile) */
@@ -181,7 +214,7 @@
 
   /* 1) silhueta da mulher dancando (licenca livre Pexels) */
   /* contraste alto = figura bem marcada (silhueta) sobre o fundo iluminado */
-  .dancer-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.96;filter:contrast(1.16) saturate(1.06) brightness(1.06)}
+  .dancer-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.96;filter:contrast(1.25) saturate(1.12) brightness(.6)}
   /* 2) fumaca em video, soma luz por cima (so desktop, e pesado) */
   .smoke-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;mix-blend-mode:screen;opacity:.5}
   /* 3) nevoa em CSS — base leve de fumaca (vale ate sem o video) */
@@ -195,27 +228,27 @@
 
   /* 4) escurecimento pro texto ficar legivel (mais leve no meio, p/ mostrar a silhueta) */
   .stage-tint{position:absolute;inset:0;background:
-    linear-gradient(180deg,rgba(10,7,9,.72) 0%,rgba(10,7,9,.24) 32%,rgba(10,7,9,.30) 64%,rgba(10,7,9,.90) 100%),
-    radial-gradient(120% 80% at 50% 36%,transparent 46%,rgba(10,7,9,.52) 100%)}
+    linear-gradient(180deg,rgba(8,5,7,.88) 0%,rgba(8,5,7,.55) 30%,rgba(8,5,7,.6) 64%,rgba(8,5,7,.96) 100%),
+    radial-gradient(120% 85% at 50% 38%,transparent 28%,rgba(8,5,7,.8) 100%)}
 
-  /* 5) banho de luz vermelha ambiente */
+  /* 5) banho de luz vermelha ambiente (mais forte) */
   .red-wash{position:absolute;inset:0;mix-blend-mode:screen;background:
-    radial-gradient(92% 70% at 50% 26%,rgba(224,42,58,.30),transparent 62%),
-    radial-gradient(80% 60% at 50% 102%,rgba(150,16,30,.36),transparent 60%)}
+    radial-gradient(92% 70% at 50% 24%,rgba(224,42,58,.42),transparent 62%),
+    radial-gradient(80% 60% at 50% 104%,rgba(180,18,36,.5),transparent 60%)}
 
   /* 6) orbs de luz (vermelhos) */
   .orb{position:absolute;border-radius:50%;filter:blur(85px);mix-blend-mode:screen;will-change:transform,opacity}
   .orb.a{width:440px;height:440px;background:radial-gradient(circle,#e02a3a,transparent 66%);top:-90px;left:-60px;animation:drift1 17s ease-in-out infinite}
   .orb.b{width:360px;height:360px;background:radial-gradient(circle,#8a0f1e,transparent 66%);bottom:-90px;right:-50px;animation:drift2 21s ease-in-out infinite}
   .orb.c{width:320px;height:320px;background:radial-gradient(circle,#ff5236,transparent 66%);top:40%;left:54%;animation:drift3 25s ease-in-out infinite}
-  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1);opacity:.40}50%{transform:translate(50px,40px) scale(1.18);opacity:.60}}
-  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1.05);opacity:.34}50%{transform:translate(-40px,-30px) scale(.9);opacity:.55}}
-  @keyframes drift3{0%,100%{transform:translate(0,0) scale(.95);opacity:.24}50%{transform:translate(-60px,20px) scale(1.2);opacity:.48}}
+  @keyframes drift1{0%,100%{transform:translate(0,0) scale(1);opacity:.55}50%{transform:translate(50px,40px) scale(1.18);opacity:.85}}
+  @keyframes drift2{0%,100%{transform:translate(0,0) scale(1.05);opacity:.5}50%{transform:translate(-40px,-30px) scale(.9);opacity:.78}}
+  @keyframes drift3{0%,100%{transform:translate(0,0) scale(.95);opacity:.4}50%{transform:translate(-60px,20px) scale(1.2);opacity:.72}}
 
-  /* 7) feixes de holofote vermelhos, varrendo de cima */
-  .beam{position:absolute;top:-12%;left:50%;width:170px;height:120%;transform-origin:top center;filter:blur(12px);opacity:.55;will-change:transform}
-  .beam.l{background:linear-gradient(to bottom,rgba(224,42,58,.30),transparent 70%);animation:sweepL 8s ease-in-out infinite}
-  .beam.r{background:linear-gradient(to bottom,rgba(255,82,54,.24),transparent 70%);animation:sweepR 11s ease-in-out infinite}
+  /* 7) feixes de holofote vermelhos, varrendo de cima (mais fortes) */
+  .beam{position:absolute;top:-12%;left:50%;width:180px;height:120%;transform-origin:top center;filter:blur(12px);opacity:.72;will-change:transform}
+  .beam.l{background:linear-gradient(to bottom,rgba(224,42,58,.5),transparent 72%);animation:sweepL 8s ease-in-out infinite}
+  .beam.r{background:linear-gradient(to bottom,rgba(255,82,54,.42),transparent 72%);animation:sweepR 11s ease-in-out infinite}
   @keyframes sweepL{0%,100%{transform:translateX(-50%) rotate(-24deg)}50%{transform:translateX(-50%) rotate(-6deg)}}
   @keyframes sweepR{0%,100%{transform:translateX(-50%) rotate(24deg)}50%{transform:translateX(-50%) rotate(6deg)}}
 
@@ -305,6 +338,8 @@
     <div class="orb a"></div>
     <div class="orb b"></div>
     <div class="orb c"></div>
+    <div class="side-light l"></div>
+    <div class="side-light r"></div>
   </div>
 
   <!-- velocidade dos vídeos de fundo (1 = normal, 0.5 = metade) -->
@@ -395,6 +430,12 @@
         <div id="d-schedule" style="display:flex;flex-direction:column;gap:10px;margin-bottom:30px"></div>
       </div>
 
+      <!-- PRÉVIAS: amostras grátis + restante bloqueado com cadeado -->
+      <div id="d-previews-wrap" style="display:none">
+        <div class="section-head"><h3>Prévias</h3><p>Amostras grátis. Assine para desbloquear tudo.</p></div>
+        <div class="previews" id="d-previews"></div>
+      </div>
+
       <div class="section-head"><h3>Planos de assinatura</h3></div>
       <div class="plans" id="d-plans"></div>
       <div style="height:50px"></div>
@@ -405,6 +446,9 @@
   <div id="stickyCta">
     <a class="btn btn-primary" id="stickyCtaLink" href="#" target="_blank" rel="noopener">Assinar</a>
   </div>
+
+  <!-- ================= HISTÓRICO (FAKE) DE COMPRAS ================= -->
+  <div id="salesFeed" aria-hidden="true"></div>
 
   <!-- ================= RODAPÉ ================= -->
   <footer>
@@ -439,6 +483,16 @@ let CREATORS = [
     photos: "—", videos: "—", subs: "—",   // <-- coloque os números reais quando tiver
     live: true,
     avatar: "",                      // <-- cole a URL da foto de capa/perfil dela
+    gallery: [                       // <-- prévias (DEMO/placeholder); criadoras reais sobem pelo painel
+      "https://picsum.photos/seed/biby1/500/640",
+      "media/bg-dance.mp4",
+      "https://picsum.photos/seed/biby3/500/640",
+      "https://picsum.photos/seed/biby4/500/640",
+      "https://picsum.photos/seed/biby5/500/640",
+      "https://picsum.photos/seed/biby6/500/640",
+      "https://picsum.photos/seed/biby7/500/640",
+      "https://picsum.photos/seed/biby8/500/640"
+    ],
     bio: "Conteúdo autoral exclusivo, publicado por mim. Novidades toda semana.",
     desc: "Conteúdo exclusivo e autoral. Assine para ter acesso à galeria completa e ao grupo VIP no Telegram, com novidades em primeira mão.",
     fromPrice: "297 MZN",
@@ -471,6 +525,7 @@ function enterSite(){
   document.body.classList.remove('locked');
   // marca a sessão para não pedir de novo nesta visita
   try { sessionStorage.setItem('age_ok','1'); } catch(e){}
+  startSales();   // começa o histórico de compras
 }
 try { if(sessionStorage.getItem('age_ok')==='1'){ enterSite(); } } catch(e){}
 
@@ -589,6 +644,9 @@ function openCreator(id){
     }).join('');
   } else { sw.style.display='none'; }
 
+  // prévias (5 grátis + restante com cadeado)
+  renderPreviews(c.gallery || []);
+
   document.getElementById('d-plans').innerHTML = c.plans.map(p => `
     <div class="plan ${p.best?'best':''}">
       ${p.best?'<div class="badge">Mais escolhido</div>':''}
@@ -629,6 +687,53 @@ function showHome(){
   document.getElementById('home').style.display='block';
   document.body.classList.remove('detail-open');
   window.scrollTo(0,0);
+}
+
+/* ---------- PRÉVIAS: 5 grátis + restante bloqueado com cadeado ---------- */
+const FREE_PREVIEWS = 5;
+function isVid(u){ return /\.(mp4|webm|mov|m4v|ogg)(\?|$)/i.test(u||''); }
+function renderPreviews(gallery){
+  const wrap=document.getElementById('d-previews-wrap');
+  const box=document.getElementById('d-previews');
+  if(!gallery || !gallery.length){ wrap.style.display='none'; box.innerHTML=''; return; }
+  wrap.style.display='block';
+  box.innerHTML = gallery.map((u,i)=>{
+    const media = isVid(u)
+      ? `<video src="${u}" muted playsinline preload="metadata"></video><span class="vbadge">VÍDEO</span>`
+      : `<img src="${u}" alt="" loading="lazy">`;
+    if(i < FREE_PREVIEWS) return `<div class="preview">${media}</div>`;
+    return `<div class="preview locked" onclick="scrollToPlans()">${media}
+      <div class="lock">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5A4.5 4.5 0 0 0 7.5 6v3H6.75A2.25 2.25 0 0 0 4.5 11.25v8.25A2.25 2.25 0 0 0 6.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-8.25A2.25 2.25 0 0 0 17.25 9H16.5V6A4.5 4.5 0 0 0 12 1.5zm-3 7.5V6a3 3 0 1 1 6 0v3H9z"/></svg>
+        <span>Assinar para ver</span>
+      </div></div>`;
+  }).join('');
+}
+function scrollToPlans(){ const p=document.getElementById('d-plans'); if(p) p.scrollIntoView({behavior:'smooth',block:'center'}); }
+
+/* ---------- HISTÓRICO (FAKE) DE COMPRAS — sobe a cada 5s ---------- */
+const _saleNames=["Carlos M.","Adérito","Nelson","Hélio","Stélio","Júlio C.","Edson","Bruno","Rui P.","Délcio","Ivan","Paíto","Geraldo","Anselmo","Fábio","Quito","Mário","Tó Zé"];
+const _saleCities=["Maputo","Matola","Beira","Nampula","Tete","Quelimane","Chimoio","Xai-Xai","Nacala","Pemba","Inhambane","Maxixe","Lichinga"];
+const _salePlans=["o Acesso completo","o VIP no Telegram"];
+function _pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+function showSale(){
+  const feed=document.getElementById('salesFeed'); if(!feed) return;
+  const gate=document.getElementById('ageGate');
+  if(gate && getComputedStyle(gate).display!=='none') return;   // só depois do +18
+  const min=Math.floor(Math.random()*9)+1;
+  const el=document.createElement('div'); el.className='sale';
+  el.innerHTML=`<div class="s-top">✅ <b>${_pick(_saleNames)}</b> de ${_pick(_saleCities)}</div>`+
+               `<div class="s-sub">assinou ${_pick(_salePlans)} · há ${min} min</div>`;
+  feed.appendChild(el);
+  requestAnimationFrame(()=>el.classList.add('show'));
+  while(feed.children.length>3) feed.removeChild(feed.firstChild);
+  setTimeout(()=>{ el.classList.remove('show'); setTimeout(()=>el.remove(),450); }, 4300);
+}
+let _salesTimer=null;
+function startSales(){
+  if(_salesTimer) return;
+  setTimeout(showSale, 1500);
+  _salesTimer=setInterval(showSale, 5000);
 }
 
 /* ---------- Acesso secreto ao painel admin ----------
