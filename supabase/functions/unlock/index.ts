@@ -11,6 +11,8 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_KEY  = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+// link unico do Telegram (mesmo para todas) — guardado como secret, nunca no site
+const TELEGRAM_VIP = Deno.env.get("TELEGRAM_VIP_LINK") ?? "";
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
@@ -45,8 +47,9 @@ Deno.serve(async (req) => {
   if (error) return json({ paid: false, error: error.message }, 200);
 
   const row = data && data[0];
-  if (row && row.plan === "vip" && row.telegram_link) {
-    return json({ paid: true, telegram: row.telegram_link });
+  if (row && row.plan === "vip") {
+    // libera o link unico do Telegram (secret) ou, se nao houver, o do registro
+    return json({ paid: true, telegram: TELEGRAM_VIP || row.telegram_link || null });
   }
   if (row) return json({ paid: true, telegram: null }); // pago, mas plano sem Telegram
   return json({ paid: false });
