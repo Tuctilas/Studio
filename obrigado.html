@@ -56,7 +56,7 @@
       <p id="okMsg">Seu acesso está liberado.</p>
       <a id="tgBtn" class="btn btn-tg" href="#" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
-        Entrar no grupo VIP
+        Entrar no Grupo Vazadinhos
       </a>
       <a id="siteBtn" class="btn btn-tg hidden" href="index.html">Ver a galeria completa no site</a>
       <p class="small">Guarde este acesso. Foi liberado para o seu pagamento.</p>
@@ -118,7 +118,7 @@
         try{ localStorage.setItem('studio_unlock', JSON.stringify({access:true, vip:!!data.vip, telegram:data.telegram||null})); }catch(e){}
         if(data.telegram){
           $('tgBtn').href = data.telegram; $('tgBtn').classList.remove('hidden'); $('siteBtn').classList.add('hidden');
-          $('okMsg').textContent = 'Seu acesso VIP está liberado. Toque para entrar no Telegram.';
+          $('okMsg').textContent = 'Seu acesso ao Grupo Vazadinhos está liberado. Toque para entrar no Telegram.';
         } else {
           $('tgBtn').classList.add('hidden'); $('siteBtn').classList.remove('hidden');
           $('okMsg').textContent = 'Sua galeria completa foi liberada. Toque para ver no site.';

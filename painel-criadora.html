@@ -224,9 +224,9 @@
         </div>
       </div>
       <div class="row">
-        <div><label>Preço do VIP no Telegram</label><input type="text" id="f_priceVip" placeholder="497 MZN" /></div>
+        <div><label>Preço do Grupo Vazadinhos (Telegram)</label><input type="text" id="f_priceVip" placeholder="497 MZN" /></div>
         <div>
-          <label>Link de pagamento (VIP Telegram)</label>
+          <label>Link de pagamento (Grupo Vazadinhos)</label>
           <input type="url" id="f_linkVip" placeholder="https://debitopay.com/l/..." />
           <div class="link-actions">
             <button type="button" class="btn btn-ghost btn-sm" onclick="pasteInto('f_linkVip')">Colar</button>
@@ -266,7 +266,7 @@
       <input type="tel" id="cliPhone" inputmode="numeric" placeholder="Ex: 84 000 0000" />
       <label style="margin-top:14px">Plano</label>
       <select id="cliPlan">
-        <option value="vip">VIP (Telegram)</option>
+        <option value="vip">Grupo Vazadinhos (Telegram)</option>
         <option value="access">Acesso completo</option>
       </select>
       <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
@@ -608,7 +608,7 @@ async function verificarCliente(){
   const hits=(data||[]).filter(r=>_normPhone(r.customer_phone)===phone);
   if(!hits.length){ box.innerHTML='❌ Nenhum pagamento confirmado para <b>'+phone+'</b>. Dá pra liberar manualmente no botão ao lado.'; return; }
   box.innerHTML='✅ <b>'+hits.length+'</b> pagamento(s) confirmado(s) para <b>'+phone+'</b>:<br>'+
-    hits.map(h=>'• '+(h.plan==='vip'?'VIP (Telegram)':(h.plan==='access'?'Acesso completo':(h.plan||'—')))+' — '+new Date(h.created_at).toLocaleDateString('pt-BR')+(h.event==='manual_admin'?' <i>(liberado manualmente)</i>':'')).join('<br>');
+    hits.map(h=>'• '+(h.plan==='vip'?'Grupo Vazadinhos (Telegram)':(h.plan==='access'?'Acesso completo':(h.plan||'—')))+' — '+new Date(h.created_at).toLocaleDateString('pt-BR')+(h.event==='manual_admin'?' <i>(liberado manualmente)</i>':'')).join('<br>');
 }
 async function liberarCliente(){
   if(!sb){ toast('Configure o Supabase primeiro.',true); return; }
@@ -617,7 +617,7 @@ async function liberarCliente(){
   const { error } = await sb.from('payments').insert({ customer_phone:phone, plan, status:'completed', event:'manual_admin' });
   if(error){ box.innerHTML='<span style="color:var(--accent)">'+error.message+'</span>'; return; }
   toast('Acesso liberado para '+phone+'.');
-  box.innerHTML='✅ Acesso de <b>'+(plan==='vip'?'VIP (Telegram)':'Acesso completo')+'</b> liberado para <b>'+phone+'</b>.<br>O cliente já pode entrar no site usando <b>"Já é cliente?"</b> com esse número.';
+  box.innerHTML='✅ Acesso de <b>'+(plan==='vip'?'Grupo Vazadinhos (Telegram)':'Acesso completo')+'</b> liberado para <b>'+phone+'</b>.<br>O cliente já pode entrar no site usando <b>"Já é cliente?"</b> com esse número.';
 }
 
 function clearForm(){
@@ -716,7 +716,7 @@ function enterDemo(){
   $('demoBanner').classList.remove('hidden');
   creators=[
     { id:'demo-biby', name:'Biby', handle:'@biby', bio:'Conteúdo autoral exclusivo, toda semana.',
-      description:'Acesso à galeria completa e ao grupo VIP no Telegram, com novidades em primeira mão.',
+      description:'Acesso à galeria completa e ao GRUPO VAZADINHOS TELEGRAM, com novidades em primeira mão.',
       photos_count:'120', videos_count:'40', is_live:true, avatar_url:'', gallery:[], schedule:[],
       access_price:'297 MZN', checkout_access:'https://debitopay.com/l/ativacao-standard-biby-f4y5',
       vip_price:'497 MZN', checkout_vip:'https://debitopay.com/l/pacote-vp-comunidade-w4iq', telegram_link:'',
