@@ -54,6 +54,9 @@
   .thumb{width:80px;height:100px;border-radius:10px;object-fit:cover;border:1px solid var(--line);position:relative}
   .thumb-wrap{position:relative}
   .thumb-x{position:absolute;top:-7px;right:-7px;background:var(--accent);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-weight:700;font-size:13px;line-height:1;z-index:2}
+  .thumb-lock{position:absolute;top:-8px;left:-8px;border:none;border-radius:8px;width:26px;height:24px;cursor:pointer;font-size:12px;line-height:1;z-index:3;padding:0}
+  .thumb-lock.free{background:var(--ok)}
+  .thumb-lock.locked{background:#5e2733}
   .thumb-move{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:3px}
   .thumb-move button{background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px;width:24px;height:22px;cursor:pointer;font-size:15px;line-height:1}
   .thumb-move button:disabled{opacity:.3;cursor:default}
@@ -451,38 +454,53 @@ async function uploadGallery(e){
     n++;
     showProgress(`Enviando ${n}/${files.length}: ${f.name}`);
     const url=await uploadFile(f, (p)=>setProgress(p));
-    if(url){ gallery.push(url); ok++; renderGallery(); }
+    if(url){ gallery.push({url:url, free:true}); ok++; renderGallery(); }   // novo upload entra como prévia grátis
   }
   hideProgress();
   e.target.value='';   // permite reenviar o mesmo arquivo depois
   toast(ok ? `${ok} enviado(s) · ${gallery.length}/${MAX_GALLERY}` : 'Nenhum arquivo enviado.', !ok);
 }
 function isVideo(u){ return /\.(mp4|webm|mov|m4v|ogg)(\?|$)/i.test(u||''); }
+function gURL(it){ return (it && typeof it==='object') ? it.url : it; }
+function gFREE(it,i){ return (it && typeof it==='object') ? !!it.free : (i<5); }
 function renderGallery(){
-  $('galleryThumbs').innerHTML = gallery.map((u,i)=>`
+  $('galleryThumbs').innerHTML = gallery.map((it,i)=>{
+    const u=gURL(it), free=gFREE(it,i);
+    const media = isVideo(u)
+      ? `<video class="thumb" src="${u}" muted playsinline preload="metadata"></video><span class="thumb-badge">VÍDEO</span>`
+      : `<img class="thumb" src="${u}" alt="">`;
+    return `
     <div class="thumb-wrap" draggable="true"
          ondragstart="galDragStart(event,${i})" ondragover="galDragOver(event,${i})"
          ondragleave="galDragLeave(event)" ondrop="galDrop(event,${i})" ondragend="galDragEnd(event)">
-      ${isVideo(u)
-        ? `<video class="thumb" src="${u}" muted playsinline preload="metadata"></video><span class="thumb-badge">VÍDEO</span>`
-        : `<img class="thumb" src="${u}" alt="">`}
+      ${media}
+      <button class="thumb-lock ${free?'free':'locked'}" title="${free?'Prévia grátis — clique para BLOQUEAR':'Bloqueado — clique para liberar como prévia'}" onclick="toggleFree(${i})">${free?'🔓':'🔒'}</button>
       <button class="thumb-x" title="remover" onclick="removeGalleryItem(${i})">×</button>
       <div class="thumb-move">
         <button title="mover para a esquerda" onclick="moveGalleryItem(${i},-1)" ${i===0?'disabled':''}>‹</button>
         <button title="mover para a direita" onclick="moveGalleryItem(${i},1)" ${i===gallery.length-1?'disabled':''}>›</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
   const c=$('galCount');
-  if(c) c.textContent = `${gallery.length} de ${MAX_GALLERY}` + (gallery.length>=MAX_GALLERY ? ' · limite atingido' : '');
+  if(c){
+    const livres=gallery.filter((it,i)=>gFREE(it,i)).length;
+    c.textContent = `${gallery.length} de ${MAX_GALLERY} · ${livres} prévia(s) grátis, ${gallery.length-livres} bloqueada(s)`;
+  }
   const inp=$('galleryFile');
   if(inp) inp.disabled = gallery.length>=MAX_GALLERY;
+}
+function toggleFree(i){
+  if(!gallery[i]) return;
+  if(typeof gallery[i]!=='object') gallery[i]={url:gallery[i], free:(i<5)};
+  gallery[i].free=!gallery[i].free; renderGallery();
 }
 function moveGalleryItem(i,dir){
   const j=i+dir; if(j<0||j>=gallery.length) return;
   const t=gallery[i]; gallery[i]=gallery[j]; gallery[j]=t; renderGallery();
 }
 async function removeGalleryItem(i){
-  const url=gallery[i];
+  const url=gURL(gallery[i]);
   gallery.splice(i,1); renderGallery();
   await deleteFromStorage(url);   // remove também do Storage
 }
@@ -652,7 +670,7 @@ function editCreator(id){
   $('f_approved').checked=!!d.approved;
   avatarUrl=d.avatar_url||'';
   if(avatarUrl){ const img=$('avatarPrev'); img.src=avatarUrl; img.classList.remove('hidden'); }
-  gallery=Array.isArray(d.gallery)?d.gallery.slice():[];
+  gallery=(Array.isArray(d.gallery)?d.gallery:[]).map((it,i)=> (it&&typeof it==='object')?{url:it.url,free:!!it.free}:{url:it,free:i<5});
   schedule=Array.isArray(d.schedule)?d.schedule.slice():[];
   renderGallery(); renderSchedule();
   $('editTitle').textContent='Editar criadora';

@@ -123,8 +123,10 @@
   .creator .name{font-family:var(--display);font-weight:600;font-size:20px}
   .creator .handle{color:var(--accent);font-size:13px;font-weight:600;margin-top:-4px}
   .creator .bio{color:var(--muted);font-size:13px;flex:1}
-  .creator .meta{display:flex;gap:14px;font-size:12px;color:var(--muted);margin-top:4px}
+  .creator .meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);margin-top:4px}
   .creator .meta b{color:var(--ink)}
+  .creator .meta .subs{flex-basis:100%;color:var(--accent);font-weight:600}
+  .creator .meta .subs b{color:var(--accent)}
   .creator .from{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:13px;border-top:1px solid var(--line)}
   .creator .from .price{font-size:14px}
   .creator .from .price b{font-family:var(--display);font-size:19px;color:var(--ink)}
@@ -597,7 +599,7 @@ function renderGrid(){
         <div class="name">${c.name}</div>
         <div class="handle">${c.handle}</div>
         <div class="bio">${c.bio}</div>
-        <div class="meta"><span><b>${c.photos}</b> fotos</span><span><b>${c.videos}</b> vídeos</span></div>
+        <div class="meta"><span><b>${c.photos}</b> fotos</span><span><b>${c.videos}</b> vídeos</span><span class="subs">🔥 <b>${fakeSubs(c.id)}</b> assinantes</span></div>
         <div class="from">
           <div class="price">a partir de <b>${c.fromPrice}</b></div>
           <div class="arrow">Ver perfil →</div>
@@ -709,8 +711,8 @@ function applyUnlockUI(){
 function fakeSubs(id){
   let h=0; const s=String(id||'x');
   for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; }
-  const n = 2500 + (h % 15500);            // ~2.500 a ~18.000 assinantes
-  return n.toLocaleString('pt-BR');         // ex: "12.847"
+  const n = 10000 + (h % 40001);           // 10.000 a 50.000 assinantes
+  return n.toLocaleString('pt-BR');         // ex: "37.412"
 }
 
 /* ---------- Abrir detalhe ---------- */
@@ -794,17 +796,21 @@ function showHome(){
 /* ---------- PRÉVIAS: 5 grátis + restante bloqueado com cadeado ---------- */
 const FREE_PREVIEWS = 5;
 function isVid(u){ return /\.(mp4|webm|mov|m4v|ogg)(\?|$)/i.test(u||''); }
+// itens da galeria podem ser string (antigo) ou {url, free} (novo, escolhido no painel)
+function gUrl(it){ return (it && typeof it==='object') ? it.url : it; }
+function gFree(it,i){ return (it && typeof it==='object') ? !!it.free : (i < FREE_PREVIEWS); }
 function renderPreviews(gallery){
   const wrap=document.getElementById('d-previews-wrap');
   const box=document.getElementById('d-previews');
   if(!gallery || !gallery.length){ wrap.style.display='none'; box.innerHTML=''; return; }
   wrap.style.display='block';
   const unlocked = !!(UNLOCK && UNLOCK.access);   // cliente que já pagou vê tudo
-  box.innerHTML = gallery.map((u,i)=>{
+  box.innerHTML = gallery.map((it,i)=>{
+    const u = gUrl(it);
     const media = isVid(u)
       ? `<video src="${u}" muted playsinline preload="metadata" controlsList="nodownload" disablepictureinpicture></video><span class="vbadge">VÍDEO</span>`
       : `<img src="${u}" alt="" loading="lazy" draggable="false">`;
-    if(unlocked || i < FREE_PREVIEWS) return `<div class="preview">${media}</div>`;
+    if(unlocked || gFree(it,i)) return `<div class="preview">${media}</div>`;
     return `<div class="preview locked" onclick="scrollToPlans()">${media}
       <div class="lock">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5A4.5 4.5 0 0 0 7.5 6v3H6.75A2.25 2.25 0 0 0 4.5 11.25v8.25A2.25 2.25 0 0 0 6.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-8.25A2.25 2.25 0 0 0 17.25 9H16.5V6A4.5 4.5 0 0 0 12 1.5zm-3 7.5V6a3 3 0 1 1 6 0v3H9z"/></svg>
