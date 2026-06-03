@@ -86,9 +86,17 @@
     ['checking','ok','pending','cfg'].forEach(id=>$(id).classList.toggle('hidden', id!==which));
   }
 
-  // referencia do pagamento, lida da URL (vinda do DebitoPay e/ou da nossa redireção)
+  // referencia do pagamento: da URL (DebitoPay/nossa redireção) OU do navegador
+  // (assim a verificação continua valendo mesmo que a pessoa recarregue/volte)
   const q = new URLSearchParams(location.search);
-  const ref = q.get('reference') || q.get('ref') || q.get('transaction_id') || q.get('payment_id') || q.get('id') || '';
+  let ref = q.get('reference') || q.get('ref') || q.get('transaction_id') || q.get('payment_id') || q.get('id') || '';
+  try{ if(!ref) ref = localStorage.getItem('studio_lastRef') || ''; }catch(e){}
+
+  // se já foi confirmado antes (nesta visita/navegador), mostra direto
+  try{
+    const cached = JSON.parse(localStorage.getItem('studio_vip')||'null');
+    if(cached && cached.telegram){ document.getElementById('tgBtn').href = cached.telegram; }
+  }catch(e){}
 
   // sem Supabase configurado -> nao da pra verificar
   if(typeof SUPABASE_URL === 'undefined' || !String(SUPABASE_URL).startsWith('http')){
@@ -106,6 +114,7 @@
       const data = await r.json();
       if(data.paid && data.telegram){
         $('tgBtn').href = data.telegram;
+        try{ localStorage.setItem('studio_vip', JSON.stringify({telegram:data.telegram, ref:ref, at:Date.now()})); }catch(e){}
         show('ok');
         return;
       }

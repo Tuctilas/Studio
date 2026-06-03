@@ -167,6 +167,11 @@
   .preview .lock span{font-size:11px;font-weight:800;letter-spacing:.04em;text-shadow:0 1px 6px #000;text-align:center;padding:0 8px}
   @media(max-width:760px){ .previews{grid-template-columns:repeat(2,1fr);gap:10px} }
 
+  /* ---------- dificultar download de mídias (deterrente) ---------- */
+  img,video{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none}
+  .preview,.preview img,.preview video,#d-avatar,.creator .thumb{-webkit-user-select:none;user-select:none}
+  .preview img,.preview video{pointer-events:none}
+
   /* ---------- destaque dos cards da vitrine ---------- */
   .creator{box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(224,42,58,.10)}
   .creator:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 16px 46px rgba(224,42,58,.42)}
@@ -699,8 +704,8 @@ function renderPreviews(gallery){
   wrap.style.display='block';
   box.innerHTML = gallery.map((u,i)=>{
     const media = isVid(u)
-      ? `<video src="${u}" muted playsinline preload="metadata"></video><span class="vbadge">VÍDEO</span>`
-      : `<img src="${u}" alt="" loading="lazy">`;
+      ? `<video src="${u}" muted playsinline preload="metadata" controlsList="nodownload" disablepictureinpicture></video><span class="vbadge">VÍDEO</span>`
+      : `<img src="${u}" alt="" loading="lazy" draggable="false">`;
     if(i < FREE_PREVIEWS) return `<div class="preview">${media}</div>`;
     return `<div class="preview locked" onclick="scrollToPlans()">${media}
       <div class="lock">
@@ -737,6 +742,16 @@ function startSales(){
   setTimeout(showSale, 1500);
   _salesTimer=setInterval(showSale, 5000);
 }
+
+/* ---------- deterrente anti-download de mídias ----------
+   Não é à prova de tudo (devtools sempre acessa), mas bloqueia
+   o clique-direito "salvar", arrastar e o menu de salvar do celular. */
+document.addEventListener('contextmenu', function(e){
+  if(e.target && e.target.closest && e.target.closest('img,video,.preview,#d-avatar,.creator .thumb,.ambient')) e.preventDefault();
+});
+document.addEventListener('dragstart', function(e){
+  if(e.target && e.target.tagName && /IMG|VIDEO/.test(e.target.tagName)) e.preventDefault();
+});
 
 /* ---------- Acesso secreto ao painel admin ----------
    Clique normal no logo = volta ao início.
