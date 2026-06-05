@@ -841,14 +841,24 @@ function openCreator(id){
   document.getElementById('detail').style.display='block';
   document.body.classList.add('detail-open');
   window.scrollTo(0,0);
+  // cria um passo no histórico: o "Voltar" do navegador retorna à vitrine (não sai do site)
+  try{ if(!(history.state && history.state.studioDetail)) history.pushState({studioDetail:id}, ''); }catch(e){}
 }
 
-function showHome(){
+function showHomeView(){
   document.getElementById('detail').style.display='none';
   document.getElementById('home').style.display='block';
   document.body.classList.remove('detail-open');
   window.scrollTo(0,0);
 }
+function showHome(){
+  // se viemos de um perfil (passo no histórico), volta por ele; senão só troca a tela
+  if(history.state && history.state.studioDetail){ history.back(); }
+  else { showHomeView(); }
+}
+window.addEventListener('popstate', function(){
+  if(document.body.classList.contains('detail-open')) showHomeView();
+});
 
 /* ---------- PRÉVIAS: 5 grátis + restante bloqueado com cadeado ---------- */
 const FREE_PREVIEWS = 5;
