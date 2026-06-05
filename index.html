@@ -76,6 +76,10 @@
   .logo{font-family:var(--display);font-size:22px;font-weight:600;letter-spacing:-.01em;cursor:pointer}
   .logo span{color:var(--accent)}
   .nav-tag{font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;border:1px solid var(--line);padding:5px 11px;border-radius:99px}
+  .nav-right{display:flex;align-items:center;gap:12px}
+  .nav-enter{font-size:13px;font-weight:700;color:#fff;background:linear-gradient(120deg,var(--accent),#b8456a);padding:8px 16px;border-radius:99px;text-decoration:none;white-space:nowrap}
+  .nav-enter:hover{filter:brightness(1.08)}
+  @media(max-width:760px){ .nav-enter{font-size:12px;padding:7px 14px} .nav-right .nav-tag{display:none} }
 
   /* ---------- HERO ---------- */
   .hero{padding:74px 0 52px;position:relative}
@@ -410,7 +414,10 @@
   <header class="site">
     <div class="wrap nav">
       <div class="logo" onclick="logoTap()" title="Studio">Studio<span>.</span></div>
-      <div class="nav-tag">Conteúdo verificado · +18</div>
+      <div class="nav-right">
+        <span class="nav-tag">Conteúdo verificado · +18</span>
+        <a class="nav-enter" href="modelo.html">Entrar</a>
+      </div>
     </div>
   </header>
 
