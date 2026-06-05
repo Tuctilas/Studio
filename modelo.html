@@ -111,14 +111,14 @@
 <div id="app" class="wrap hidden">
   <header>
     <div class="logo">Studio<span>.</span></div>
-    <div class="who">Criadora: <b id="meEmail"></b> · <button class="link" onclick="signOut()">sair</button></div>
+    <div class="who"><b id="meName">Minha conta</b> · <button class="link" onclick="signOut()">sair</button></div>
   </header>
 
   <!-- aguardando aprovação -->
   <div id="pendingView" class="hidden">
     <h1>Conta em análise ⏳</h1>
-    <p class="sub">Recebemos seu cadastro e seu documento. Assim que verificarmos, liberamos seu acesso (pelo seu telefone). Volte aqui mais tarde.</p>
-    <div class="pending">Status: <b>aguardando aprovação</b>. Qualquer dúvida, fale com a agência.</div>
+    <p class="sub">Recebemos seu cadastro e seu documento. Após a verificação, <b>entraremos em contato</b> para liberar seu acesso.</p>
+    <div class="pending">Status: <b>aguardando aprovação</b> · <b>Entraremos em contato</b> em breve.</div>
   </div>
 
   <!-- editor da própria vitrine -->
@@ -250,10 +250,11 @@ async function signOut(){ await sb.auth.signOut(); location.reload(); }
 
 /* ---------- CARREGAR ---------- */
 async function onLogin(user){
-  me=user; $('meEmail').textContent=user.email;
+  me=user;
   $('auth').classList.add('hidden'); $('app').classList.remove('hidden');
   const { data } = await sb.from('creators').select('*').eq('owner', user.id).maybeSingle();
   myCreator=data;
+  $('meName').textContent = (myCreator && myCreator.name) ? myCreator.name : 'Minha conta';
   if(!myCreator || myCreator.account_status!=='approved'){
     $('editorView').classList.add('hidden'); $('pendingView').classList.remove('hidden');
     return;
