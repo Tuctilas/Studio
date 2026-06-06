@@ -3,23 +3,26 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Studio · Conteúdo Exclusivo +18</title>
+<title>Studio — Melhores Modelos do Brasil</title>
+<meta name="description" content="Studio — seleção exclusiva das melhores modelos do Brasil. Conteúdo autoral, direto e sem intermediários." />
+<meta property="og:title" content="Studio — Melhores Modelos do Brasil" />
+<meta property="og:description" content="Studio — seleção exclusiva das melhores modelos do Brasil. Conteúdo autoral, direto e sem intermediários." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://kvimdatdijavpjvfzjxx.supabase.co" crossorigin>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=DM+Serif+Display&family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0e0b10;
-    --bg-soft:#171318;
-    --card:#1d181f;
-    --line:#2c252e;
-    --ink:#f3eef2;
-    --muted:#a99 caa;
-    --muted:#a99caa;
-    --accent:#e0567f;
-    --accent-2:#c9963f;
+    --bg:#080706;
+    --bg-soft:#100d0a;
+    --card:#15110d;
+    --line:#2a2318;
+    --ink:#f4ecdd;
+    --muted:#a89a82;
+    --accent:#c9a24e;       /* dourado da logo */
+    --accent-2:#e8cd84;     /* dourado claro */
+    --gold-deep:#9a7a35;    /* dourado escuro (gradientes) */
     --ok:#5fd09a;
     --display:'Fraunces',Georgia,serif;
     --body:'Manrope',system-ui,sans-serif;
@@ -60,7 +63,7 @@
     transition:transform .15s ease, filter .2s ease;text-decoration:none;display:inline-block;text-align:center;
   }
   .btn:active{transform:scale(.98)}
-  .btn-primary{background:linear-gradient(120deg,var(--accent),#b8456a);color:#fff}
+  .btn-primary{background:linear-gradient(120deg,var(--accent),var(--gold-deep));color:#fff}
   .btn-primary:hover{filter:brightness(1.08)}
   .btn-tg{background:linear-gradient(120deg,#34a6e0,#229ED9);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:9px}
   .btn-tg:hover{filter:brightness(1.08)}
@@ -72,14 +75,14 @@
   .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
   header.site{
     position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
-    background:rgba(14,11,16,.78);border-bottom:1px solid var(--line);
+    background:rgba(4,3,2,.88);border-bottom:1px solid var(--line);
   }
-  .nav{display:flex;align-items:center;justify-content:space-between;height:66px}
-  .logo{font-family:var(--display);font-size:22px;font-weight:600;letter-spacing:-.01em;cursor:pointer}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:80px}
+  .logo{height:60px;width:auto;cursor:pointer;display:block}
   .logo span{color:var(--accent)}
   .nav-tag{font-size:11px;letter-spacing:.2em;color:var(--muted);text-transform:uppercase;border:1px solid var(--line);padding:5px 11px;border-radius:99px}
   .nav-right{display:flex;align-items:center;gap:12px}
-  .nav-enter{font-size:13px;font-weight:700;color:#fff;background:linear-gradient(120deg,var(--accent),#b8456a);padding:8px 16px;border-radius:99px;text-decoration:none;white-space:nowrap}
+  .nav-enter{font-size:13px;font-weight:700;color:#fff;background:linear-gradient(120deg,var(--accent),var(--gold-deep));padding:8px 16px;border-radius:99px;text-decoration:none;white-space:nowrap}
   .nav-enter:hover{filter:brightness(1.08)}
   @media(max-width:760px){ .nav-enter{font-size:12px;padding:7px 14px} .nav-right .nav-tag{display:none} }
 
@@ -94,6 +97,7 @@
   .hero h2{font-family:var(--display);font-weight:600;font-size:clamp(34px,6vw,58px);line-height:1.04;margin:16px 0 18px;max-width:13ch}
   .hero h2 em{font-style:italic;color:var(--accent)}
   .hero p{color:var(--muted);font-size:17px;max-width:52ch}
+  .hero .hero-lead{color:var(--ink);font-size:19px;font-weight:600;margin-bottom:2px;max-width:none}
   .hero .trust{display:flex;gap:26px;margin-top:30px;flex-wrap:wrap}
   .trust-item{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px}
   .trust-item b{color:var(--ink);font-weight:700}
@@ -106,7 +110,8 @@
   .section-head p{color:var(--muted);font-size:14px;max-width:40ch}
 
   /* ---------- CREATOR GRID ---------- */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+  @media(max-width:1100px){ .grid{grid-template-columns:repeat(3,1fr)} }
   .creator{
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
     overflow:hidden;cursor:pointer;transition:transform .25s ease, border-color .25s ease;
@@ -114,7 +119,7 @@
   }
   .creator:hover{transform:translateY(-5px);border-color:var(--accent)}
   .creator .thumb{
-    aspect-ratio:4/5;background:
+    aspect-ratio:3/4;background:
       linear-gradient(150deg,#2a2230,#191320);
     position:relative;display:flex;align-items:center;justify-content:center;
   }
@@ -125,18 +130,60 @@
     display:flex;align-items:center;gap:6px;text-transform:uppercase;
   }
   .creator .live .dot{width:6px;height:6px}
-  .creator .info{padding:16px 16px 18px;display:flex;flex-direction:column;gap:7px;flex:1}
-  .creator .name{font-family:var(--display);font-weight:600;font-size:20px}
-  .creator .handle{color:var(--accent);font-size:13px;font-weight:600;margin-top:-4px}
-  .creator .bio{color:var(--muted);font-size:13px;flex:1}
-  .creator .meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);margin-top:4px}
-  .creator .meta b{color:var(--ink)}
-  .creator .meta .subs{flex-basis:100%;color:var(--accent);font-weight:600}
-  .creator .meta .subs b{color:var(--accent)}
-  .creator .from{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:13px;border-top:1px solid var(--line)}
-  .creator .from .price{font-size:14px}
-  .creator .from .price b{font-family:var(--display);font-size:19px;color:var(--ink)}
-  .creator .from .arrow{color:var(--accent);font-weight:700;font-size:14px}
+  /* nome no topo da foto — aparece no hover */
+  .creator .c-name{
+    position:absolute;top:0;left:0;right:0;z-index:2;
+    padding:14px 14px 28px;
+    font-family:'DM Serif Display',Georgia,serif;font-size:23px;line-height:1.05;
+    color:var(--accent);text-shadow:0 2px 12px rgba(0,0,0,.85);
+    background:linear-gradient(180deg,rgba(0,0,0,.62),transparent);
+    pointer-events:none;
+    opacity:0;transform:translateY(-8px);transition:opacity .3s ease,transform .3s ease;
+  }
+  .creator:hover .c-name{opacity:1;transform:translateY(0)}
+  /* painel que sobe no hover: telefone + estrelas */
+  .creator .c-hover{
+    position:absolute;left:0;right:0;bottom:0;z-index:2;
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:14px;font-family:'Fira Sans',sans-serif;font-size:13px;color:var(--accent);
+    background:linear-gradient(0deg,rgba(0,0,0,.82),rgba(0,0,0,.55) 60%,transparent);
+    transform:translateY(100%);opacity:0;transition:transform .3s ease,opacity .3s ease;
+    pointer-events:none;
+  }
+  .creator:hover .c-hover{transform:translateY(0);opacity:1}
+  .creator .c-stars{display:flex;align-items:center;gap:3px;font-weight:600}
+  .creator .c-stars .star{color:#f4d98a;font-size:14px;line-height:1}
+  .creator .c-stars b{color:#fff;font-weight:700;margin-left:4px}
+  .creator .c-phone{font-family:'Fira Sans',sans-serif;font-weight:600;white-space:nowrap;color:#f4d98a}
+
+  /* ---------- DESTAQUES (showcase) ---------- */
+  .featured-sec{padding-top:6px}
+  .featured{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px}
+  .feat-card{
+    position:relative;aspect-ratio:3/2;border-radius:var(--radius);overflow:hidden;
+    border:1px solid var(--line);cursor:pointer;background:#15110d;
+    box-shadow:0 18px 50px rgba(0,0,0,.45);transition:border-color .3s ease, transform .3s ease;
+  }
+  .feat-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+  .feat-card .fimg{position:absolute;inset:0;background-size:cover;background-position:center top;transition:transform .6s ease}
+  .feat-card:hover .fimg{transform:scale(1.06)}
+  .feat-card .fph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:#5f5566;font-size:12px;letter-spacing:.2em;text-transform:uppercase}
+  .feat-badge{position:absolute;top:14px;right:14px;z-index:3;
+    font-family:'Fira Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+    color:#0b0805;background:linear-gradient(180deg,#f4d98a,#c9a96e);padding:5px 11px;border-radius:99px}
+  .feat-panel{
+    position:absolute;top:0;left:0;bottom:0;z-index:2;width:64%;max-width:360px;
+    display:flex;flex-direction:column;justify-content:center;gap:12px;padding:26px 24px;
+    background:linear-gradient(90deg,rgba(8,7,6,.94) 60%,rgba(8,7,6,.5) 85%,transparent);
+    transform:translateX(-105%);transition:transform .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .feat-card:hover .feat-panel{transform:translateX(0)}
+  .feat-panel .fname{font-family:'DM Serif Display',Georgia,serif;font-size:27px;line-height:1.08;color:var(--accent)}
+  .feat-panel .fdiv{height:1px;width:48px;background:linear-gradient(90deg,#f4d98a,transparent)}
+  .feat-panel .fbio{font-family:'Fira Sans',sans-serif;color:var(--ink);font-size:14px;line-height:1.55;opacity:.92;
+    display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+  .feat-panel .fmore{font-family:'Fira Sans',sans-serif;color:var(--accent);font-weight:600;font-size:13px;margin-top:2px}
 
   /* ---------- CREATOR DETAIL ---------- */
   #detail{display:none}
@@ -171,7 +218,7 @@
   .preview .vbadge{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.62);color:#fff;font-size:10px;font-weight:800;letter-spacing:.04em;padding:3px 7px;border-radius:6px;z-index:2}
   .preview.locked{cursor:pointer}
   .preview.locked img,.preview.locked video{filter:blur(18px) brightness(.45);transform:scale(1.14)}
-  .preview .lock{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:#fff;background:radial-gradient(circle at 50% 40%,rgba(224,42,58,.20),rgba(10,7,9,.4))}
+  .preview .lock{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;color:#fff;background:radial-gradient(circle at 50% 40%,rgba(201,162,78,.20),rgba(10,7,9,.4))}
   .preview .lock svg{width:30px;height:30px;filter:drop-shadow(0 2px 6px #000)}
   .preview .lock span{font-size:11px;font-weight:800;letter-spacing:.04em;text-shadow:0 1px 6px #000;text-align:center;padding:0 8px}
   .preview.playable{cursor:pointer}
@@ -196,15 +243,15 @@
   .recover-msg{font-size:13px;margin-top:10px;min-height:1em}
 
   /* ---------- destaque dos cards da vitrine ---------- */
-  .creator{box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(224,42,58,.10)}
-  .creator:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 16px 46px rgba(224,42,58,.42)}
+  .creator{box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(201,162,78,.10)}
+  .creator:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 16px 46px rgba(201,162,78,.42)}
   .creator .from .arrow{animation:arrowPulse 1.8s ease-in-out infinite}
   @keyframes arrowPulse{0%,100%{opacity:.7;transform:translateX(0)}50%{opacity:1;transform:translateX(4px)}}
 
   /* ---------- luzes laterais ---------- */
   .side-light{position:absolute;top:-5%;bottom:-5%;width:150px;mix-blend-mode:screen;filter:blur(36px);pointer-events:none}
-  .side-light.l{left:-48px;background:linear-gradient(to right,rgba(224,42,58,.55),transparent 75%);animation:sidePulse 5s ease-in-out infinite}
-  .side-light.r{right:-48px;background:linear-gradient(to left,rgba(255,82,54,.5),transparent 75%);animation:sidePulse 6.5s ease-in-out infinite}
+  .side-light.l{left:-48px;background:linear-gradient(to right,rgba(201,162,78,.55),transparent 75%);animation:sidePulse 5s ease-in-out infinite}
+  .side-light.r{right:-48px;background:linear-gradient(to left,rgba(230,190,110,.5),transparent 75%);animation:sidePulse 6.5s ease-in-out infinite}
   @keyframes sidePulse{0%,100%{opacity:.38}50%{opacity:.9}}
 
   /* ---------- HISTÓRICO FAKE DE COMPRAS (canto inferior esquerdo) ---------- */
@@ -274,22 +321,22 @@
 
   /* 5) banho de luz vermelha ambiente (mais forte) */
   .red-wash{position:absolute;inset:0;mix-blend-mode:screen;background:
-    radial-gradient(92% 70% at 50% 24%,rgba(224,42,58,.42),transparent 62%),
-    radial-gradient(80% 60% at 50% 104%,rgba(180,18,36,.5),transparent 60%)}
+    radial-gradient(92% 70% at 50% 24%,rgba(201,162,78,.42),transparent 62%),
+    radial-gradient(80% 60% at 50% 104%,rgba(150,110,40,.5),transparent 60%)}
 
   /* 6) orbs de luz (vermelhos) */
   .orb{position:absolute;border-radius:50%;filter:blur(85px);mix-blend-mode:screen;will-change:transform,opacity}
-  .orb.a{width:440px;height:440px;background:radial-gradient(circle,#e02a3a,transparent 66%);top:-90px;left:-60px;animation:drift1 17s ease-in-out infinite}
-  .orb.b{width:360px;height:360px;background:radial-gradient(circle,#8a0f1e,transparent 66%);bottom:-90px;right:-50px;animation:drift2 21s ease-in-out infinite}
-  .orb.c{width:320px;height:320px;background:radial-gradient(circle,#ff5236,transparent 66%);top:40%;left:54%;animation:drift3 25s ease-in-out infinite}
+  .orb.a{width:440px;height:440px;background:radial-gradient(circle,#c9a24e,transparent 66%);top:-90px;left:-60px;animation:drift1 17s ease-in-out infinite}
+  .orb.b{width:360px;height:360px;background:radial-gradient(circle,#8a6d2f,transparent 66%);bottom:-90px;right:-50px;animation:drift2 21s ease-in-out infinite}
+  .orb.c{width:320px;height:320px;background:radial-gradient(circle,#e8cd84,transparent 66%);top:40%;left:54%;animation:drift3 25s ease-in-out infinite}
   @keyframes drift1{0%,100%{transform:translate(0,0) scale(1);opacity:.55}50%{transform:translate(50px,40px) scale(1.18);opacity:.85}}
   @keyframes drift2{0%,100%{transform:translate(0,0) scale(1.05);opacity:.5}50%{transform:translate(-40px,-30px) scale(.9);opacity:.78}}
   @keyframes drift3{0%,100%{transform:translate(0,0) scale(.95);opacity:.4}50%{transform:translate(-60px,20px) scale(1.2);opacity:.72}}
 
   /* 7) feixes de holofote vermelhos, varrendo de cima (mais fortes) */
   .beam{position:absolute;top:-12%;left:50%;width:180px;height:120%;transform-origin:top center;filter:blur(12px);opacity:.72;will-change:transform}
-  .beam.l{background:linear-gradient(to bottom,rgba(224,42,58,.5),transparent 72%);animation:sweepL 8s ease-in-out infinite}
-  .beam.r{background:linear-gradient(to bottom,rgba(255,82,54,.42),transparent 72%);animation:sweepR 11s ease-in-out infinite}
+  .beam.l{background:linear-gradient(to bottom,rgba(201,162,78,.5),transparent 72%);animation:sweepL 8s ease-in-out infinite}
+  .beam.r{background:linear-gradient(to bottom,rgba(230,190,110,.42),transparent 72%);animation:sweepR 11s ease-in-out infinite}
   @keyframes sweepL{0%,100%{transform:translateX(-50%) rotate(-24deg)}50%{transform:translateX(-50%) rotate(-6deg)}}
   @keyframes sweepR{0%,100%{transform:translateX(-50%) rotate(24deg)}50%{transform:translateX(-50%) rotate(6deg)}}
 
@@ -304,8 +351,8 @@
   /* ---------- MOBILE ---------- */
   @media(max-width:760px){
     .wrap{padding:0 16px}
-    .nav{height:58px}
-    .logo{font-size:20px}
+    .nav{height:68px}
+    .logo{height:48px}
     .nav-tag{font-size:10px;padding:4px 9px}
 
     .hero{padding:46px 0 34px}
@@ -322,15 +369,18 @@
 
     /* dois cards por linha no celular, mais compactos */
     .grid{grid-template-columns:repeat(2,1fr);gap:12px}
-    .creator .info{padding:12px 12px 14px;gap:5px}
-    .creator .name{font-size:16px}
-    .creator .handle{font-size:12px}
-    .creator .bio{font-size:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    .creator .meta{font-size:11px;gap:10px}
-    .creator .from .price{font-size:12px}
-    .creator .from .price b{font-size:16px}
-    .creator .from .arrow{font-size:12px}
+    /* no touch (sem hover) nome + painel ficam sempre visíveis */
+    .creator .c-name{font-size:18px;padding:11px 11px 24px;opacity:1;transform:none}
+    .creator .c-hover{transform:none;opacity:1;padding:11px;font-size:12px}
+    .creator .c-stars .star{font-size:13px}
     .creator:hover{transform:none}
+
+    /* destaques: 1 por linha e painel sempre visível no touch */
+    .featured{grid-template-columns:1fr;gap:14px}
+    .feat-card{aspect-ratio:16/10}
+    .feat-panel{transform:translateX(0);width:72%;padding:18px 16px;background:linear-gradient(90deg,rgba(8,7,6,.92) 62%,transparent)}
+    .feat-panel .fname{font-size:23px}
+    .feat-panel .fbio{font-size:13px;-webkit-line-clamp:3}
 
     .back{padding:20px 0 4px}
     .profile{grid-template-columns:1fr;gap:20px}
@@ -423,7 +473,7 @@
   <!-- ================= CABEÇALHO ================= -->
   <header class="site">
     <div class="wrap nav">
-      <div class="logo" onclick="logoTap()" title="Studio">Studio<span>.</span></div>
+      <img class="logo" onclick="logoTap()" src="media/logo-mark.png" alt="Studio" title="Studio" />
       <div class="nav-right">
         <span class="nav-tag">Conteúdo verificado · +18</span>
         <a class="nav-enter" href="modelo.html">Entrar</a>
@@ -435,14 +485,25 @@
   <main id="home">
     <section class="hero">
       <div class="wrap">
-        <div class="kicker">Brasileiras em Moçambique</div>
-        <h2>Conteúdo <em>exclusivo</em>, direto de quem cria.</h2>
-        <p>Uma seleção de criadoras brasileiras com conteúdo autoral, publicado por elas mesmas. Assine quem você gosta e apoie diretamente o trabalho delas.</p>
+        <div class="kicker">Seleção exclusiva</div>
+        <h2>Melhores Modelos do <em>Brasil</em></h2>
+        <p class="hero-lead">Conteúdo exclusivo, direto de quem cria.</p>
+        <p>Uma seleção das modelos mais desejadas do Brasil, com conteúdo autoral publicado por elas mesmas. Assine quem você gosta e apoie diretamente o trabalho delas.</p>
         <div class="trust">
           <div class="trust-item"><span class="dot"></span> <b>Conteúdo</b>&nbsp;100% autoral e consentido</div>
           <div class="trust-item"><span class="dot"></span> <b>Pagamento</b>&nbsp;seguro e discreto</div>
           <div class="trust-item"><span class="dot"></span> <b>Idade</b>&nbsp;de todas verificada</div>
         </div>
+      </div>
+    </section>
+
+    <section class="section featured-sec" id="featuredSec" style="display:none">
+      <div class="wrap">
+        <div class="section-head">
+          <div><h3>Destaques</h3></div>
+          <p>Nossa seleção em evidência. Passe o mouse para conhecer.</p>
+        </div>
+        <div class="featured" id="featuredRow"><!-- destaques via JS --></div>
       </div>
     </section>
 
@@ -554,6 +615,8 @@ let CREATORS = [
     id: "biby",
     name: "Biby",
     handle: "@biby",                 // <-- troque se o @ for outro
+    phone: "+258 84 123 4567",       // <-- telefone exibido na vitrine (hover)
+    featured: true,                  // <-- aparece na seção "Destaques"
     photos: "—", videos: "—", subs: "—",   // <-- coloque os números reais quando tiver
     live: true,
     avatar: "",                      // <-- cole a URL da foto de capa/perfil dela
@@ -648,6 +711,16 @@ async function initCurrency(){
   }catch(e){ /* falhou: mantém MZN */ }
 }
 
+/* Encurta a bio pela metade, cortando no limite da palavra */
+function shortBio(t){
+  t = (t||'').trim();
+  if(!t) return '';
+  const half = Math.ceil(t.length/2);
+  if(t.length <= half) return t;
+  let cut = t.slice(0, half).replace(/\s+\S*$/,'');      // volta p/ a última palavra inteira
+  return cut.replace(/[.,;:!?\-\s]+$/,'') + '… ';
+}
+
 /* ---------- Render da vitrine ---------- */
 function renderGrid(){
   const grid = document.getElementById('creatorGrid');
@@ -659,17 +732,36 @@ function renderGrid(){
     <div class="creator" onclick="openCreator('${c.id}')">
       <div class="thumb" ${c.avatar?`style="background-image:url('${c.avatar}');background-size:cover;background-position:center"`:''}>
         ${c.live ? '<div class="live"><span class="dot"></span>Online agora</div>' : ''}
+        <div class="c-name">${c.name}</div>
+        <div class="c-hover">
+          <span class="c-stars">${starsHtml(c.id)} <b>${fakeStars(c.id)}</b></span>
+          ${c.phone ? `<span class="c-phone">📱 ${c.phone}</span>` : ''}
+        </div>
         ${c.avatar ? '' : '<span class="ph">[ PRÉVIA / CAPA ]</span>'}
       </div>
-      <div class="info">
-        <div class="name">${c.name}</div>
-        <div class="handle">${c.handle}</div>
-        <div class="bio">${c.bio}</div>
-        <div class="meta"><span><b>${c.photos}</b> fotos</span><span><b>${c.videos}</b> vídeos</span><span class="subs">🔥 <b>${fakeSubs(c.id)}</b> assinantes</span></div>
-        <div class="from">
-          <div class="price">a partir de <b>${fmtPrice(c.fromPrice)}</b></div>
-          <div class="arrow">Ver perfil →</div>
-        </div>
+    </div>
+  `).join('');
+  renderFeatured();
+}
+
+/* ---------- Destaques (modelos marcadas no painel) ---------- */
+function renderFeatured(){
+  const sec = document.getElementById('featuredSec');
+  const row = document.getElementById('featuredRow');
+  if(!sec || !row) return;
+  const list = CREATORS.filter(c => c.featured);
+  if(!list.length){ sec.style.display='none'; row.innerHTML=''; return; }
+  sec.style.display='';
+  row.innerHTML = list.map(c => `
+    <div class="feat-card" onclick="openCreator('${c.id}')">
+      <div class="fimg" ${c.avatar?`style="background-image:url('${c.avatar}')"`:''}></div>
+      ${c.avatar ? '' : '<div class="fph">[ FOTO ]</div>'}
+      <div class="feat-badge">Destaque</div>
+      <div class="feat-panel">
+        <div class="fname">${c.name}</div>
+        <div class="fdiv"></div>
+        <div class="fbio">${c.bio || 'Conteúdo exclusivo e autoral.'}</div>
+        <div class="fmore">Ver perfil →</div>
       </div>
     </div>
   `).join('');
@@ -700,6 +792,8 @@ function mapRow(row){
     gallery: row.gallery || [],
     schedule: row.schedule || [],
     bio: row.bio || '',
+    phone: row.phone || '',
+    featured: !!row.featured,
     desc: row.description || '',
     fromPrice: row.access_price || row.vip_price || '—',
     plans
@@ -779,6 +873,18 @@ function fakeSubs(id){
   for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; }
   const n = 10000 + (h % 40001);           // 10.000 a 50.000 assinantes
   return n.toLocaleString('pt-BR');         // ex: "37.412"
+}
+/* avaliação em estrelas, estável por modelo (4.3 a 4.9) */
+function fakeStars(id){
+  let h=0; const s=String(id||'x')+'s';
+  for(let i=0;i<s.length;i++){ h=(h*31 + s.charCodeAt(i))>>>0; }
+  return (4.3 + (h % 70)/100).toFixed(1);   // ex: "4.8"
+}
+function starsHtml(id){
+  const full = Math.round(parseFloat(fakeStars(id)));   // ~4 ou 5
+  let out='';
+  for(let i=1;i<=5;i++){ out += `<span class="star">${i<=full?'★':'☆'}</span>`; }
+  return out;
 }
 
 /* ---------- Abrir detalhe ---------- */

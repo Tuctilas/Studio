@@ -9,8 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0e0b10;--card:#1d181f;--line:#2c252e;--ink:#f3eef2;--muted:#a99caa;
-    --accent:#e0567f;--ok:#5fd09a;--tg:#229ED9;
+    --bg:#080706;--card:#15110d;--line:#2a2318;--ink:#f4ecdd;--muted:#a89a82;
+    --accent:#c9a24e;--gold-deep:#9a7a35;--ok:#5fd09a;--tg:#229ED9;
     --display:'Fraunces',Georgia,serif;--body:'Manrope',system-ui,sans-serif;--radius:18px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -18,7 +18,7 @@
     font-family:var(--body);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
   .card{max-width:460px;width:100%;text-align:center;background:var(--card);border:1px solid var(--line);
     border-radius:var(--radius);padding:40px 30px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
-  .logo{font-family:var(--display);font-size:24px;font-weight:600;margin-bottom:22px}
+  .logo{height:58px;width:auto;margin:0 auto 20px;display:block}
   .logo span{color:var(--accent)}
   .spinner{width:46px;height:46px;border-radius:50%;border:4px solid var(--line);border-top-color:var(--accent);
     margin:6px auto 18px;animation:spin 1s linear infinite}
@@ -40,7 +40,7 @@
 </head>
 <body>
   <div class="card">
-    <div class="logo">Studio<span>.</span></div>
+    <img class="logo" src="media/logo-mark.png" alt="Studio" />
 
     <!-- 1) verificando -->
     <div id="checking">

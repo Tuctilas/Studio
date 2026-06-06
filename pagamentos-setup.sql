@@ -41,11 +41,14 @@ create policy "admin gerencia pagamentos" on public.payments
 -- 2) ESCONDER o telegram_link do publico.
 --    Criamos uma VIEW publica que expoe tudo MENOS o telegram_link,
 --    e tiramos a leitura publica direta da tabela base.
+-- coluna de "destaque" (a vitrine mostra essas modelos na seção Destaques)
+alter table public.creators add column if not exists featured boolean default false;
+
 create or replace view public.creators_public
 with (security_invoker = off) as
   select id, name, handle, bio, description,
          photos_count, videos_count, is_live, avatar_url,
-         gallery, schedule,
+         gallery, schedule, phone, featured,
          access_price, checkout_access, vip_price, checkout_vip,
          sort_order, updated_at
   from public.creators
