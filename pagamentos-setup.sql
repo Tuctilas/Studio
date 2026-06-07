@@ -43,12 +43,14 @@ create policy "admin gerencia pagamentos" on public.payments
 --    e tiramos a leitura publica direta da tabela base.
 -- coluna de "destaque" (a vitrine mostra essas modelos na seção Destaques)
 alter table public.creators add column if not exists featured boolean default false;
+-- características da acompanhante (cidade, idade, altura, tipo, etc.) em JSON flexível
+alter table public.creators add column if not exists attributes jsonb default '{}'::jsonb;
 
 create or replace view public.creators_public
 with (security_invoker = off) as
   select id, name, handle, bio, description,
          photos_count, videos_count, is_live, avatar_url,
-         gallery, schedule, phone, featured,
+         gallery, schedule, phone, featured, attributes,
          access_price, checkout_access, vip_price, checkout_vip,
          sort_order, updated_at
   from public.creators

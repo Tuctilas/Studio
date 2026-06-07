@@ -32,6 +32,9 @@
   input:focus,textarea:focus{outline:none;border-color:var(--accent)}
   textarea{resize:vertical;min-height:80px}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:560px){.row{grid-template-columns:1fr}}
+  .fetbox{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 14px;margin-top:8px}
+  .fetopt{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink);cursor:pointer}
+  .fetopt input{width:16px;height:16px;flex:none}
   .btn{font-family:var(--body);font-weight:700;font-size:15px;border:none;border-radius:11px;padding:14px 20px;cursor:pointer;transition:filter .2s,transform .12s}
   .btn:active{transform:scale(.99)}
   .btn-primary{background:linear-gradient(120deg,var(--accent),var(--gold-deep));color:#fff;width:100%}
@@ -124,17 +127,7 @@
   <!-- editor da própria vitrine -->
   <div id="editorView" class="hidden">
     <h1>Meu perfil</h1>
-    <p class="sub">Tudo que você salvar aqui aparece na sua vitrine. Você controla suas fotos, prévias e valores.</p>
-
-    <!-- vendas -->
-    <div class="card">
-      <h2>Minhas vendas</h2>
-      <p class="hint">Resumo do que você já vendeu.</p>
-      <div class="stat-box">
-        <div><div class="b" id="salesTotal">—</div><div class="l">Total vendido</div></div>
-        <div><div class="b" id="salesCount">—</div><div class="l">Vendas</div></div>
-      </div>
-    </div>
+    <p class="sub">Tudo que você salvar aqui aparece na sua vitrine. Você controla suas fotos, informações e contato.</p>
 
     <!-- perfil -->
     <div class="card">
@@ -160,28 +153,121 @@
       <div style="height:10px"></div>
       <input type="file" id="avatarFile" accept="image/*" onchange="uploadAvatar(event)" />
 
-      <h2 style="margin-top:24px">Prévias da galeria</h2>
-      <p class="hint">Fotos ou vídeos · até 100&nbsp;MB cada · 🔓 = prévia grátis, 🔒 = bloqueado (só quem paga vê) · arraste para reordenar.</p>
+      <h2 style="margin-top:24px">Fotos da galeria</h2>
+      <p class="hint">Fotos ou vídeos · até 100&nbsp;MB cada · arraste para reordenar · todas aparecem no seu perfil.</p>
       <input type="file" id="galleryFile" accept="image/*,video/*" multiple onchange="uploadGallery(event)" />
       <div class="hint" id="galCount" style="margin-top:8px"></div>
       <div class="thumbs" id="galleryThumbs"></div>
       <div id="upWrap" class="up hidden"><div class="up-bar"><i id="upBar"></i></div><div class="up-txt" id="upTxt"></div></div>
     </div>
 
-    <!-- valores -->
+    <!-- características -->
     <div class="card">
-      <h2>Valores e links</h2>
-      <p class="hint">Preços e os links de pagamento do gateway.</p>
+      <h2>Características</h2>
+      <p class="hint">Aparecem no seu perfil e nos filtros da vitrine (cidade e tipo).</p>
       <div class="row">
-        <div><label>Preço do acesso completo</label><input type="text" id="f_priceAccess" placeholder="297 MZN" /></div>
-        <div><label>Link de pagamento (acesso)</label><input type="url" id="f_linkAccess" placeholder="https://debitopay.com/l/..." /></div>
+        <div><label>CEP (preenche cidade e bairro)</label><input type="text" id="f_cep" inputmode="numeric" placeholder="Ex: 30140-071" onblur="buscarCep()" /><div class="hint" id="cepMsg"></div></div>
+        <div></div>
       </div>
       <div class="row">
-        <div><label>Preço do Grupo Vazadinhos (Telegram)</label><input type="text" id="f_priceVip" placeholder="497 MZN" /></div>
-        <div><label>Link de pagamento (Grupo Vazadinhos)</label><input type="url" id="f_linkVip" placeholder="https://debitopay.com/l/..." /></div>
+        <div><label>Cidade · UF</label><input type="text" id="f_at_cidade" placeholder="Ex: Belo Horizonte · MG" /></div>
+        <div><label>Bairro / Região</label><input type="text" id="f_at_bairro" placeholder="Ex: Savassi" /></div>
       </div>
-      <label>Link do grupo/canal do Telegram (entregue após o pagamento)</label>
-      <input type="url" id="f_telegram" placeholder="https://t.me/+..." />
+      <div class="row">
+        <div><label>Tipo</label>
+          <select id="f_at_tipo">
+            <option value="">—</option>
+            <option>Loira</option><option>Morena</option><option>Ruiva</option>
+            <option>Negra</option><option>Mulata</option><option>Oriental</option><option>Latina</option>
+          </select>
+        </div>
+        <div><label>Idade</label><input type="number" id="f_at_idade" inputmode="numeric" placeholder="Ex: 25" /></div>
+      </div>
+      <div class="row">
+        <div><label>Altura</label><input type="text" id="f_at_altura" placeholder="Ex: 1,70 m" /></div>
+        <div><label>Peso</label><input type="text" id="f_at_peso" placeholder="Ex: 58 kg" /></div>
+      </div>
+      <div class="row">
+        <div><label>Manequim</label><input type="text" id="f_at_manequim" placeholder="Ex: 38" /></div>
+        <div><label>Biotipo</label><input type="text" id="f_at_biotipo" placeholder="Ex: Magra, Curvilínea" /></div>
+      </div>
+      <div class="row">
+        <div><label>Cabelos</label><input type="text" id="f_at_cabelos" placeholder="Ex: Loiros" /></div>
+        <div><label>Olhos</label><input type="text" id="f_at_olhos" placeholder="Ex: Castanhos" /></div>
+      </div>
+      <div class="row">
+        <div><label>Seios</label><input type="text" id="f_at_seios" placeholder="Ex: Naturais" /></div>
+        <div><label>Pés (calçado)</label><input type="text" id="f_at_pes" placeholder="Ex: 36" /></div>
+      </div>
+      <div class="row">
+        <div><label>Cintura</label><input type="text" id="f_at_cintura" placeholder="Ex: 66" /></div>
+        <div><label>Quadril</label><input type="text" id="f_at_quadril" placeholder="Ex: 102" /></div>
+      </div>
+      <div class="row">
+        <div><label>Tatuagem</label><select id="f_at_tatuagem"><option value="">—</option><option>Sim</option><option>Não</option></select></div>
+        <div><label>Piercing</label><select id="f_at_piercing"><option value="">—</option><option>Sim</option><option>Não</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>Fumante</label><select id="f_at_fumante"><option value="">—</option><option>Sim</option><option>Não</option></select></div>
+        <div><label>Nível cultural</label><input type="text" id="f_at_nivel" placeholder="Ex: Superior, Estudante" /></div>
+      </div>
+      <div class="row">
+        <div><label>Idiomas</label><input type="text" id="f_at_idiomas" placeholder="Ex: Português, Inglês" /></div>
+        <div><label>Signo</label><input type="text" id="f_at_signo" placeholder="Ex: Escorpião" /></div>
+      </div>
+    </div>
+
+    <!-- atendimento -->
+    <div class="card">
+      <h2>Atendimento</h2>
+      <p class="hint">Serviços oferecidos (deixe em branco o que não se aplica).</p>
+      <div class="row">
+        <div><label>Sexo vaginal</label><input type="text" id="f_at_at_vaginal" placeholder="Ex: Sim" /></div>
+        <div><label>Sexo oral</label><input type="text" id="f_at_at_oral" placeholder="Ex: Com preservativo" /></div>
+      </div>
+      <div class="row">
+        <div><label>Sexo anal</label><input type="text" id="f_at_at_anal" placeholder="Ex: Não" /></div>
+        <div><label>Perfil</label><input type="text" id="f_at_at_perfil" placeholder="Ex: Namoradinha, Safadinha" /></div>
+      </div>
+      <label>Fetiches / Fantasias</label>
+      <div id="fetBox" class="fetbox"></div>
+    </div>
+
+    <!-- cachê + contato -->
+    <div class="card">
+      <h2>Cachê e contato</h2>
+      <p class="hint">Valores e o WhatsApp que aparecem no seu perfil.</p>
+      <div class="row">
+        <div><label>Valor 1 hora (R$)</label><input type="text" id="f_priceAccess" inputmode="numeric" placeholder="Ex: 500" /></div>
+        <div><label>Valor 2 horas (R$)</label><input type="text" id="f_at_cache2h" inputmode="numeric" placeholder="Ex: 1000" /></div>
+      </div>
+      <div class="row">
+        <div><label>Pernoite</label><input type="text" id="f_at_pernoite" placeholder="Ex: A combinar" /></div>
+        <div><label>Formas de pagamento</label><input type="text" id="f_at_pagamento" placeholder="Ex: Dinheiro, Pix, Cartão" /></div>
+      </div>
+      <label>WhatsApp / telefone</label>
+      <input type="tel" id="f_phone" placeholder="Ex: +55 11 99999-9999" />
+    </div>
+
+    <!-- disponibilidade -->
+    <div class="card">
+      <h2>Disponibilidade</h2>
+      <div class="row">
+        <div><label>Quem atende</label><input type="text" id="f_at_quem" placeholder="Ex: Homens" /></div>
+        <div><label>Onde</label><input type="text" id="f_at_onde" placeholder="Ex: Hotéis, Motéis, Residência" /></div>
+      </div>
+      <div class="row">
+        <div><label>Quando</label><input type="text" id="f_at_quando" placeholder="Ex: Seg a Sáb" /></div>
+        <div><label>Período</label><input type="text" id="f_at_periodo" placeholder="Ex: Tarde, Noite" /></div>
+      </div>
+      <label>Disponível para</label>
+      <input type="text" id="f_at_disponivel" placeholder="Ex: Atendimento, Massagens" />
+    </div>
+
+    <!-- observações -->
+    <div class="card">
+      <h2>Observações</h2>
+      <textarea id="f_at_obs" placeholder="Ex: Não atende números confidenciais. Responde SMS."></textarea>
     </div>
 
     <div class="card">
@@ -260,23 +346,46 @@ async function onLogin(user){
     return;
   }
   $('pendingView').classList.add('hidden'); $('editorView').classList.remove('hidden');
-  fillEditor(myCreator); loadSales();
+  fillEditor(myCreator);
+}
+const ATTR_KEYS = ['cidade','bairro','tipo','idade','altura','peso','manequim','biotipo','cabelos','olhos','seios','pes','cintura','quadril','tatuagem','piercing','fumante','nivel','idiomas','signo','at_vaginal','at_oral','at_anal','at_perfil','cache2h','pernoite','pagamento','quem','onde','quando','periodo','disponivel','obs'];
+const FETICHES = ['Beijo na boca','Oral','Garganta profunda','Massagem','Strip-tease','Roupa erótica','Pompoarismo','Podolatria','Inversão de papéis','Dominação','Submissão','Voyeurismo','Sexo a três','Fetiche por pés','Acessórios','Chuva dourada'];
+function renderFetichesBox(){
+  const box=document.getElementById('fetBox'); if(!box) return;
+  box.innerHTML = FETICHES.map(f=>`<label class="fetopt"><input type="checkbox" value="${f}"> ${f}</label>`).join('');
+}
+function readFetiches(){ const b=document.getElementById('fetBox'); return b?[...b.querySelectorAll('input:checked')].map(i=>i.value):[]; }
+function fillFetiches(arr){ arr=Array.isArray(arr)?arr:[]; const b=document.getElementById('fetBox'); if(!b) return; b.querySelectorAll('input').forEach(i=>{ i.checked=arr.includes(i.value); }); }
+function readAttrs(){
+  const a={};
+  ATTR_KEYS.forEach(k=>{ const v=(document.getElementById('f_at_'+k).value||'').trim(); if(v) a[k]=(k==='idade')?parseInt(v,10):v; });
+  const fet=readFetiches(); if(fet.length) a.fetiches=fet;
+  return a;
+}
+function fillAttrs(a){ a=a||{}; ATTR_KEYS.forEach(k=>{ document.getElementById('f_at_'+k).value=(a[k]!=null?a[k]:''); }); fillFetiches(a.fetiches); }
+/* CEP -> cidade/bairro (ViaCEP) */
+async function buscarCep(){
+  const el=document.getElementById('f_cep'), msg=document.getElementById('cepMsg'); if(!el) return;
+  const cep=(el.value||'').replace(/\D/g,'');
+  if(cep.length!==8){ if(msg) msg.textContent=''; return; }
+  if(msg) msg.textContent='Buscando…';
+  try{
+    const d=await fetch(`https://viacep.com.br/ws/${cep}/json/`).then(r=>r.json());
+    if(d.erro){ if(msg) msg.textContent='CEP não encontrado.'; return; }
+    if(d.localidade && d.uf) document.getElementById('f_at_cidade').value=`${d.localidade} · ${d.uf}`;
+    if(d.bairro) document.getElementById('f_at_bairro').value=d.bairro;
+    if(msg) msg.textContent='Endereço preenchido ✓';
+  }catch(e){ if(msg) msg.textContent='Falha ao buscar o CEP.'; }
 }
 function fillEditor(d){
   f_name.value=d.name||''; f_handle.value=d.handle||''; f_bio.value=d.bio||''; f_desc.value=d.description||'';
   f_photos.value=d.photos_count||''; f_videos.value=d.videos_count||''; f_live.checked=!!d.is_live;
-  f_priceAccess.value=d.access_price||''; f_linkAccess.value=d.checkout_access||'';
-  f_priceVip.value=d.vip_price||''; f_linkVip.value=d.checkout_vip||''; f_telegram.value=d.telegram_link||'';
+  f_priceAccess.value=d.access_price||''; f_phone.value=d.phone||'';
+  fillAttrs(d.attributes);
   f_approved.checked=!!d.approved;
   avatarUrl=d.avatar_url||''; if(avatarUrl){ const i=$('avatarPrev'); i.src=avatarUrl; i.classList.remove('hidden'); }
-  gallery=(Array.isArray(d.gallery)?d.gallery:[]).map((it,i)=> (it&&typeof it==='object')?{url:it.url,free:!!it.free}:{url:it,free:i<5});
+  gallery=(Array.isArray(d.gallery)?d.gallery:[]).map((it)=> (it&&typeof it==='object')?{url:it.url}:{url:it});
   renderGallery();
-}
-async function loadSales(){
-  const { data } = await sb.from('payments').select('amount').eq('creator_id', myCreator.id).eq('status','completed');
-  const rows=data||[]; const total=rows.reduce((s,r)=>s+(Number(r.amount)||0),0);
-  $('salesCount').textContent=rows.length;
-  $('salesTotal').textContent = total ? (total.toLocaleString('pt-BR')+' MZN') : (rows.length+' venda(s)');
 }
 
 /* ---------- UPLOAD (na pasta da modelo = uid) ---------- */
@@ -311,26 +420,22 @@ async function uploadGallery(e){
   hideProgress(); e.target.value=''; toast(ok?`${ok} enviado(s) · ${gallery.length}/${MAX_GALLERY}`:'Nada enviado.',!ok);
 }
 
-/* ---------- GALERIA (com 🔓/🔒) ---------- */
+/* ---------- GALERIA ---------- */
 function isVideo(u){ return /\.(mp4|webm|mov|m4v|ogg)(\?|$)/i.test(u||''); }
 function gURL(it){ return (it&&typeof it==='object')?it.url:it; }
-function gFREE(it,i){ return (it&&typeof it==='object')?!!it.free:(i<5); }
 function renderGallery(){
   $('galleryThumbs').innerHTML = gallery.map((it,i)=>{
-    const u=gURL(it), free=gFREE(it,i);
+    const u=gURL(it);
     const media=isVideo(u)?`<video class="thumb" src="${u}" muted playsinline preload="metadata"></video><span class="thumb-badge">VÍDEO</span>`:`<img class="thumb" src="${u}" alt="">`;
     return `<div class="thumb-wrap" draggable="true" ondragstart="gDS(event,${i})" ondragover="gDO(event,${i})" ondragleave="gDL(event)" ondrop="gDR(event,${i})" ondragend="gDE(event)">
       ${media}
-      <button class="thumb-lock ${free?'free':'locked'}" title="${free?'Prévia grátis — clique p/ BLOQUEAR':'Bloqueado — clique p/ liberar'}" onclick="toggleFree(${i})">${free?'🔓':'🔒'}</button>
       <button class="thumb-x" title="remover" onclick="rmGallery(${i})">×</button>
       <div class="thumb-move"><button onclick="mvGallery(${i},-1)" ${i===0?'disabled':''}>‹</button><button onclick="mvGallery(${i},1)" ${i===gallery.length-1?'disabled':''}>›</button></div>
     </div>`;
   }).join('');
-  const livres=gallery.filter((it,i)=>gFREE(it,i)).length;
-  $('galCount').textContent=`${gallery.length} de ${MAX_GALLERY} · ${livres} grátis, ${gallery.length-livres} bloqueada(s)`;
+  $('galCount').textContent=`${gallery.length} de ${MAX_GALLERY}`;
   $('galleryFile').disabled=gallery.length>=MAX_GALLERY;
 }
-function toggleFree(i){ if(!gallery[i]) return; if(typeof gallery[i]!=='object') gallery[i]={url:gallery[i],free:(i<5)}; gallery[i].free=!gallery[i].free; renderGallery(); }
 function mvGallery(i,d){ const j=i+d; if(j<0||j>=gallery.length) return; const t=gallery[i]; gallery[i]=gallery[j]; gallery[j]=t; renderGallery(); }
 async function rmGallery(i){ const u=gURL(gallery[i]); gallery.splice(i,1); renderGallery(); await deleteFromStorage(u); }
 let _df=null;
@@ -349,8 +454,8 @@ async function saveProfile(){
     name:f_name.value.trim(), handle:f_handle.value.trim(), bio:f_bio.value.trim(), description:f_desc.value.trim(),
     photos_count:f_photos.value.trim(), videos_count:f_videos.value.trim(), is_live:f_live.checked,
     avatar_url:avatarUrl, gallery:gallery,
-    access_price:f_priceAccess.value.trim(), checkout_access:f_linkAccess.value.trim(),
-    vip_price:f_priceVip.value.trim(), checkout_vip:f_linkVip.value.trim(), telegram_link:f_telegram.value.trim(),
+    access_price:f_priceAccess.value.trim(), phone:f_phone.value.trim(),
+    attributes:readAttrs(),
     approved:f_approved.checked, confirmed_age:true
   };
   const { error } = await sb.from('creators').upsert(payload);
@@ -362,6 +467,7 @@ async function saveProfile(){
 
 /* ---------- INICIAR ---------- */
 (async function init(){
+  renderFetichesBox();
   if(!sb){ $('auth').classList.remove('hidden'); return; }
   const { data } = await sb.auth.getSession();
   if(data.session){ onLogin(data.session.user); } else { $('auth').classList.remove('hidden'); }

@@ -78,6 +78,9 @@
   .check{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);margin:12px 0}
   .check input{margin-top:3px;width:16px;height:16px;flex:none}
   .check b{color:var(--ink)}
+  .fetbox{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 14px;margin-top:8px}
+  .fetopt{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink);cursor:pointer}
+  .fetopt input{width:16px;height:16px;flex:none}
 
   .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ok);color:#06281b;font-weight:700;padding:13px 22px;border-radius:12px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:99}
   .toast.show{opacity:1}
@@ -141,14 +144,13 @@
 
   <!-- ---------- LISTA DE CRIADORAS ---------- -->
   <div id="listView">
-    <h1>Criadoras</h1>
-    <p class="sub">Cadastre quantas criadoras quiser. Cada uma que você publicar aparece automaticamente na vitrine.</p>
+    <h1>Acompanhantes</h1>
+    <p class="sub">Cadastre quantas acompanhantes quiser. Cada uma que você publicar aparece automaticamente na vitrine.</p>
     <div class="toolbar">
       <span class="count" id="listCount"></span>
       <div style="display:flex;gap:10px;flex-wrap:wrap">
-        <button class="btn btn-ghost" style="width:auto" onclick="showModels()">✅ Aprovar modelo</button>
-        <button class="btn btn-ghost" style="width:auto" onclick="showClients()">👤 Liberar cliente</button>
-        <button class="btn btn-primary" style="width:auto" onclick="newCreator()">+ Nova criadora</button>
+        <button class="btn btn-ghost" style="width:auto" onclick="showModels()">✅ Aprovar cadastro</button>
+        <button class="btn btn-primary" style="width:auto" onclick="newCreator()">+ Nova acompanhante</button>
       </div>
     </div>
     <div class="list" id="creatorList"></div>
@@ -205,80 +207,155 @@
 
     <!-- AGENDA -->
     <div class="card">
-      <h2>Agenda de lives</h2>
-      <p class="hint">Adicione data, horário e uma observação para cada live.</p>
+      <h2>Agenda de disponibilidade</h2>
+      <p class="hint">Adicione os dias/horários disponíveis (ou deixe uma observação como "Hoje · 14h às 23h"). Aparece atualizado no perfil.</p>
       <div id="schedList"></div>
-      <button class="btn btn-ghost" onclick="addSchedule()" style="margin-top:6px">+ Adicionar horário</button>
+      <button class="btn btn-ghost" onclick="addSchedule()" style="margin-top:6px">+ Adicionar disponibilidade</button>
     </div>
 
-    <!-- VALORES -->
+    <!-- CARACTERÍSTICAS -->
     <div class="card">
-      <h2>Valores e links</h2>
-      <p class="hint">Defina os preços e cole os links de pagamento do gateway.</p>
+      <h2>Características</h2>
+      <p class="hint">Aparecem no perfil e nos filtros da vitrine (cidade e tipo).</p>
       <div class="row">
-        <div><label>Preço do acesso completo</label><input type="text" id="f_priceAccess" placeholder="297 MZN" /></div>
-        <div>
-          <label>Link de pagamento (acesso)</label>
-          <input type="url" id="f_linkAccess" placeholder="https://debitopay.com/l/..." />
-          <div class="link-actions">
-            <button type="button" class="btn btn-ghost btn-sm" onclick="pasteInto('f_linkAccess')">Colar</button>
-            <button type="button" class="btn btn-danger btn-sm" onclick="clearField('f_linkAccess')">Apagar</button>
-          </div>
-        </div>
+        <div><label>CEP (preenche cidade e bairro)</label><input type="text" id="f_cep" inputmode="numeric" placeholder="Ex: 30140-071" onblur="buscarCep()" /><div class="hint" id="cepMsg"></div></div>
+        <div></div>
       </div>
       <div class="row">
-        <div><label>Preço do Grupo Vazadinhos (Telegram)</label><input type="text" id="f_priceVip" placeholder="497 MZN" /></div>
-        <div>
-          <label>Link de pagamento (Grupo Vazadinhos)</label>
-          <input type="url" id="f_linkVip" placeholder="https://debitopay.com/l/..." />
-          <div class="link-actions">
-            <button type="button" class="btn btn-ghost btn-sm" onclick="pasteInto('f_linkVip')">Colar</button>
-            <button type="button" class="btn btn-danger btn-sm" onclick="clearField('f_linkVip')">Apagar</button>
-          </div>
+        <div><label>Cidade · UF</label><input type="text" id="f_at_cidade" placeholder="Ex: Belo Horizonte · MG" /></div>
+        <div><label>Bairro / Região</label><input type="text" id="f_at_bairro" placeholder="Ex: Savassi" /></div>
+      </div>
+      <div class="row">
+        <div><label>Tipo</label>
+          <select id="f_at_tipo"><option value="">—</option><option>Loira</option><option>Morena</option><option>Ruiva</option><option>Negra</option><option>Mulata</option><option>Oriental</option><option>Latina</option></select>
         </div>
+        <div><label>Idade</label><input type="number" id="f_at_idade" inputmode="numeric" placeholder="Ex: 25" /></div>
       </div>
-      <label>Link do grupo/canal do Telegram (entregue após o pagamento · mesmo link em todas)</label>
-      <input type="url" id="f_telegram" placeholder="https://t.me/+..." />
-      <div class="link-actions">
-        <button type="button" class="btn btn-ghost btn-sm" onclick="pasteInto('f_telegram')">Colar</button>
-        <button type="button" class="btn btn-danger btn-sm" onclick="clearField('f_telegram')">Apagar</button>
+      <div class="row">
+        <div><label>Altura</label><input type="text" id="f_at_altura" placeholder="Ex: 1,70 m" /></div>
+        <div><label>Peso</label><input type="text" id="f_at_peso" placeholder="Ex: 58 kg" /></div>
       </div>
+      <div class="row">
+        <div><label>Manequim</label><input type="text" id="f_at_manequim" placeholder="Ex: 38" /></div>
+        <div><label>Pés (calçado)</label><input type="text" id="f_at_pes" placeholder="Ex: 36" /></div>
+      </div>
+      <div class="row">
+        <div><label>Cintura</label><input type="text" id="f_at_cintura" placeholder="Ex: 66" /></div>
+        <div><label>Quadril</label><input type="text" id="f_at_quadril" placeholder="Ex: 102" /></div>
+      </div>
+      <div class="row">
+        <div><label>Biotipo</label><select id="f_at_biotipo"><option value="">—</option><option>Magra</option><option>Falsa magra</option><option>Curvilínea</option><option>Atlética</option><option>Plus size</option></select></div>
+        <div><label>Cabelos</label><select id="f_at_cabelos"><option value="">—</option><option>Loiros</option><option>Castanhos</option><option>Pretos</option><option>Ruivos</option><option>Coloridos</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>Olhos</label><select id="f_at_olhos"><option value="">—</option><option>Castanhos</option><option>Pretos</option><option>Verdes</option><option>Azuis</option><option>Mel</option></select></div>
+        <div><label>Seios</label><select id="f_at_seios"><option value="">—</option><option>Naturais</option><option>Silicone</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>Tatuagem</label><select id="f_at_tatuagem"><option value="">—</option><option>Sim</option><option>Não</option></select></div>
+        <div><label>Piercing</label><select id="f_at_piercing"><option value="">—</option><option>Sim</option><option>Não</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>Fumante</label><select id="f_at_fumante"><option value="">—</option><option>Sim</option><option>Não</option></select></div>
+        <div><label>Nível cultural</label><select id="f_at_nivel"><option value="">—</option><option>Fundamental</option><option>Médio</option><option>Superior</option><option>Estudante</option><option>Pós-graduada</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>Signo</label><select id="f_at_signo"><option value="">—</option><option>Áries</option><option>Touro</option><option>Gêmeos</option><option>Câncer</option><option>Leão</option><option>Virgem</option><option>Libra</option><option>Escorpião</option><option>Sagitário</option><option>Capricórnio</option><option>Aquário</option><option>Peixes</option></select></div>
+        <div></div>
+      </div>
+      <label>Idiomas</label>
+      <div id="m_idiomas" class="fetbox"></div>
+    </div>
+
+    <!-- ATENDIMENTO -->
+    <div class="card">
+      <h2>Atendimento</h2>
+      <p class="hint">Selecione os serviços oferecidos.</p>
+      <div class="row">
+        <div><label>Sexo vaginal</label><select id="f_at_at_vaginal"><option value="">—</option><option>Sim</option><option>Não</option></select></div>
+        <div><label>Sexo oral</label><select id="f_at_at_oral"><option value="">—</option><option>Com preservativo</option><option>Sem preservativo</option><option>Não</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>Sexo anal</label><select id="f_at_at_anal"><option value="">—</option><option>Sim</option><option>Não</option></select></div>
+        <div></div>
+      </div>
+      <label>Perfil</label>
+      <div id="m_perfil" class="fetbox"></div>
+      <label style="margin-top:14px">Fetiches / Fantasias</label>
+      <div id="m_fetiches" class="fetbox"></div>
+    </div>
+
+    <!-- CACHÊ + CONTATO -->
+    <div class="card">
+      <h2>Cachê e contato</h2>
+      <p class="hint">Valores e o WhatsApp que aparecem no perfil.</p>
+      <div class="row">
+        <div><label>Valor 1 hora (R$)</label><input type="text" id="f_priceAccess" inputmode="numeric" placeholder="Ex: 500" /></div>
+        <div><label>Valor 2 horas (R$)</label><input type="text" id="f_at_cache2h" inputmode="numeric" placeholder="Ex: 1000" /></div>
+      </div>
+      <div class="row">
+        <div><label>Pernoite</label><input type="text" id="f_at_pernoite" placeholder="Ex: A combinar" /></div>
+        <div><label>Formas de pagamento</label><input type="text" id="f_at_pagamento" placeholder="Ex: Dinheiro, Pix, Cartão" /></div>
+      </div>
+      <label>WhatsApp / telefone</label>
+      <input type="tel" id="f_phone" placeholder="Ex: +55 11 99999-9999" />
+    </div>
+
+    <!-- DISPONIBILIDADE -->
+    <div class="card">
+      <h2>Disponibilidade</h2>
+      <p class="hint">Marque as opções (sem precisar digitar).</p>
+      <label>Quem atende</label>
+      <div id="m_quem" class="fetbox"></div>
+      <label style="margin-top:14px">Onde atende</label>
+      <div id="m_onde" class="fetbox"></div>
+      <label style="margin-top:14px">Dias (quando)</label>
+      <div id="m_quando" class="fetbox"></div>
+      <label style="margin-top:14px">Período</label>
+      <div id="m_periodo" class="fetbox"></div>
+      <label style="margin-top:14px">Disponível para</label>
+      <div id="m_disponivel" class="fetbox"></div>
+    </div>
+
+    <!-- REDES SOCIAIS -->
+    <div class="card">
+      <h2>Redes sociais</h2>
+      <p class="hint">Opcional. Deixe em branco o que não tiver.</p>
+      <div class="row">
+        <div><label>Instagram</label><input type="text" id="f_at_instagram" placeholder="@usuario" /></div>
+        <div><label>Twitter / X</label><input type="text" id="f_at_twitter" placeholder="@usuario" /></div>
+      </div>
+      <label>TikTok</label>
+      <input type="text" id="f_at_tiktok" placeholder="@usuario" />
+    </div>
+
+    <!-- ENSAIO FOTOGRÁFICO -->
+    <div class="card">
+      <h2>Ensaio fotográfico profissional</h2>
+      <div class="row">
+        <div><label>Data</label><input type="text" id="f_at_ensaio_data" placeholder="Ex: 21/05/2025" /></div>
+        <div><label>Produção</label><input type="text" id="f_at_ensaio_producao" placeholder="Ex: Álbum da anunciante" /></div>
+      </div>
+    </div>
+
+    <!-- OBSERVAÇÕES -->
+    <div class="card">
+      <h2>Observações</h2>
+      <textarea id="f_at_obs" placeholder="Ex: Não atende números confidenciais. Responde SMS."></textarea>
     </div>
 
     <!-- CONFIRMAÇÕES + PUBLICAÇÃO -->
     <div class="card">
       <h2>Confirmações e publicação</h2>
       <p class="hint">Obrigatórias para publicar o perfil.</p>
-      <label class="check"><input type="checkbox" id="c_age"> <span>Confirmo que a criadora tem <b>18 anos ou mais</b> e que o documento de identidade já foi entregue à agência.</span></label>
-      <label class="check"><input type="checkbox" id="c_own"> <span>O conteúdo é <b>autoral</b> e há autorização para sua venda e distribuição (incluindo via Telegram) neste site.</span></label>
-      <label class="check"><input type="checkbox" id="c_remove"> <span>A criadora pode pedir a <b>remoção</b> do conteúdo a qualquer momento.</span></label>
+      <label class="check"><input type="checkbox" id="c_age"> <span>Confirmo que a acompanhante tem <b>18 anos ou mais</b> e que o documento de identidade foi conferido.</span></label>
+      <label class="check"><input type="checkbox" id="c_own"> <span>As fotos são <b>autênticas</b> e há autorização para publicá-las neste site.</span></label>
+      <label class="check"><input type="checkbox" id="c_remove"> <span>A acompanhante pode pedir a <b>remoção</b> do anúncio a qualquer momento.</span></label>
       <hr style="border:none;border-top:1px solid var(--line);margin:16px 0">
       <label class="switch"><input type="checkbox" id="f_approved" style="width:18px;height:18px"> <b>Publicar na vitrine</b> (visível para o público)</label>
     </div>
 
     <button class="btn btn-primary" onclick="saveProfile()">Salvar criadora</button>
-  </div>
-
-  <!-- ---------- LIBERAR CLIENTE POR TELEFONE ---------- -->
-  <div id="clientsView" class="hidden">
-    <div class="editor-head"><button class="back" onclick="showList()">← Voltar à lista</button></div>
-    <h1>Liberar acesso de cliente</h1>
-    <p class="sub">O pagamento chega pelo webhook já com o telefone. Aqui você confere e libera o acesso de um cliente pelo número.</p>
-    <div class="card">
-      <label>Telefone do cliente (o usado no pagamento)</label>
-      <input type="tel" id="cliPhone" inputmode="numeric" placeholder="Ex: 84 000 0000" />
-      <label style="margin-top:14px">Plano</label>
-      <select id="cliPlan">
-        <option value="vip">Grupo Vazadinhos (Telegram)</option>
-        <option value="access">Acesso completo</option>
-      </select>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
-        <button class="btn btn-ghost" style="width:auto" onclick="verificarCliente()">Verificar pagamento</button>
-        <button class="btn btn-primary" style="width:auto" onclick="liberarCliente()">Liberar acesso</button>
-      </div>
-      <div id="cliResult" style="margin-top:16px;font-size:14px;color:var(--muted);line-height:1.6"></div>
-    </div>
-    <p class="hint">Dica: "Verificar" mostra os pagamentos que o webhook registrou para esse número. "Liberar acesso" cria a liberação manualmente (use quando o pagamento não entrou sozinho). Depois, o cliente entra pelo "Já é cliente?" no site com o mesmo número.</p>
   </div>
 
   <!-- ---------- APROVAR MODELO POR TELEFONE ---------- -->
@@ -612,15 +689,12 @@ async function deleteCreator(id){
 }
 
 /* ---------- EDITOR (abrir/fechar) ---------- */
-function _hideAll(){ $('listView').classList.add('hidden'); $('editView').classList.add('hidden'); $('clientsView').classList.add('hidden'); $('modelsView').classList.add('hidden'); }
+function _hideAll(){ $('listView').classList.add('hidden'); $('editView').classList.add('hidden'); $('modelsView').classList.add('hidden'); }
 function showList(){ _hideAll(); $('listView').classList.remove('hidden'); }
 function showEditor(){ _hideAll(); $('editView').classList.remove('hidden'); window.scrollTo(0,0); }
 function closeEditor(){ showList(); }
 
-/* ---------- LIBERAR CLIENTE POR TELEFONE ---------- */
-function showClients(){ _hideAll(); $('clientsView').classList.remove('hidden'); $('cliResult').innerHTML=''; window.scrollTo(0,0); }
-
-/* ---------- APROVAR MODELO POR TELEFONE ---------- */
+/* ---------- APROVAR CADASTRO POR TELEFONE ---------- */
 let _foundModel=null;
 function showModels(){ _hideAll(); $('modelsView').classList.remove('hidden'); $('mResult').innerHTML=''; _foundModel=null; window.scrollTo(0,0); }
 async function buscarModelo(){
@@ -655,31 +729,42 @@ async function recusarModelo(){
   toast('Modelo recusada.'); buscarModelo();
 }
 function _normPhone(s){ return String(s||'').replace(/\D/g,'').slice(-9); }
-async function verificarCliente(){
-  if(!sb){ toast('Configure o Supabase primeiro.',true); return; }
-  const phone=_normPhone($('cliPhone').value); const box=$('cliResult');
-  if(phone.length<9){ box.innerHTML='<span style="color:var(--accent)">Digite um número válido (9 dígitos).</span>'; return; }
-  box.textContent='Verificando…';
-  const { data, error } = await sb.from('payments').select('plan,event,created_at,customer_phone').eq('status','completed').limit(1000);
-  if(error){ box.innerHTML='<span style="color:var(--accent)">'+error.message+'</span>'; return; }
-  const hits=(data||[]).filter(r=>_normPhone(r.customer_phone)===phone);
-  if(!hits.length){ box.innerHTML='❌ Nenhum pagamento confirmado para <b>'+phone+'</b>. Dá pra liberar manualmente no botão ao lado.'; return; }
-  box.innerHTML='✅ <b>'+hits.length+'</b> pagamento(s) confirmado(s) para <b>'+phone+'</b>:<br>'+
-    hits.map(h=>'• '+(h.plan==='vip'?'Grupo Vazadinhos (Telegram)':(h.plan==='access'?'Acesso completo':(h.plan||'—')))+' — '+new Date(h.created_at).toLocaleDateString('pt-BR')+(h.event==='manual_admin'?' <i>(liberado manualmente)</i>':'')).join('<br>');
+
+/* características (vão para a coluna JSON "attributes") */
+const ATTR_KEYS = ['cidade','bairro','tipo','idade','altura','peso','manequim','biotipo','cabelos','olhos','seios','pes','cintura','quadril','tatuagem','piercing','fumante','nivel','idiomas','signo','at_vaginal','at_oral','at_anal','at_perfil','cache2h','pernoite','pagamento','quem','onde','quando','periodo','disponivel','obs'];
+const FETICHES = ['Beijo na boca','Oral','Garganta profunda','Massagem','Strip-tease','Roupa erótica','Pompoarismo','Podolatria','Inversão de papéis','Dominação','Submissão','Voyeurismo','Sexo a três','Fetiche por pés','Acessórios','Chuva dourada'];
+function renderFetichesBox(){
+  const box=$('fetBox'); if(!box) return;
+  box.innerHTML = FETICHES.map(f=>`<label class="fetopt"><input type="checkbox" value="${f}"> ${f}</label>`).join('');
 }
-async function liberarCliente(){
-  if(!sb){ toast('Configure o Supabase primeiro.',true); return; }
-  const phone=_normPhone($('cliPhone').value); const plan=$('cliPlan').value; const box=$('cliResult');
-  if(phone.length<9){ box.innerHTML='<span style="color:var(--accent)">Digite um número válido (9 dígitos).</span>'; return; }
-  const { error } = await sb.from('payments').insert({ customer_phone:phone, plan, status:'completed', event:'manual_admin' });
-  if(error){ box.innerHTML='<span style="color:var(--accent)">'+error.message+'</span>'; return; }
-  toast('Acesso liberado para '+phone+'.');
-  box.innerHTML='✅ Acesso de <b>'+(plan==='vip'?'Grupo Vazadinhos (Telegram)':'Acesso completo')+'</b> liberado para <b>'+phone+'</b>.<br>O cliente já pode entrar no site usando <b>"Já é cliente?"</b> com esse número.';
+function readFetiches(){ const b=$('fetBox'); return b? [...b.querySelectorAll('input:checked')].map(i=>i.value) : []; }
+function fillFetiches(arr){ arr=Array.isArray(arr)?arr:[]; const b=$('fetBox'); if(!b) return; b.querySelectorAll('input').forEach(i=>{ i.checked=arr.includes(i.value); }); }
+function readAttrs(){
+  const a = {};
+  ATTR_KEYS.forEach(k=>{ const v=($('f_at_'+k).value||'').trim(); if(v) a[k] = (k==='idade') ? parseInt(v,10) : v; });
+  const fet = readFetiches(); if(fet.length) a.fetiches = fet;
+  return a;
+}
+function fillAttrs(a){ a=a||{}; ATTR_KEYS.forEach(k=>{ $('f_at_'+k).value = (a[k]!=null?a[k]:''); }); fillFetiches(a.fetiches); }
+/* CEP -> cidade/bairro (ViaCEP) */
+async function buscarCep(){
+  const el=$('f_cep'), msg=$('cepMsg'); if(!el) return;
+  const cep=(el.value||'').replace(/\D/g,'');
+  if(cep.length!==8){ if(msg) msg.textContent=''; return; }
+  if(msg) msg.textContent='Buscando…';
+  try{
+    const d=await fetch(`https://viacep.com.br/ws/${cep}/json/`).then(r=>r.json());
+    if(d.erro){ if(msg) msg.textContent='CEP não encontrado.'; return; }
+    if(d.localidade && d.uf) $('f_at_cidade').value = `${d.localidade} · ${d.uf}`;
+    if(d.bairro) $('f_at_bairro').value = d.bairro;
+    if(msg) msg.textContent='Endereço preenchido ✓';
+  }catch(e){ if(msg) msg.textContent='Falha ao buscar o CEP.'; }
 }
 
 function clearForm(){
   ['f_name','f_handle','f_bio','f_desc','f_photos','f_videos',
-   'f_priceAccess','f_linkAccess','f_priceVip','f_linkVip','f_telegram'].forEach(id=>$(id).value='');
+   'f_priceAccess','f_phone'].forEach(id=>$(id).value='');
+  fillAttrs({});
   ['f_live','f_featured','c_age','c_own','c_remove','f_approved'].forEach(id=>$(id).checked=false);
   avatarUrl=''; gallery=[]; schedule=[];
   $('avatarPrev').src=''; $('avatarPrev').classList.add('hidden');
@@ -703,9 +788,8 @@ function editCreator(id){
   $('f_photos').value=d.photos_count||''; $('f_videos').value=d.videos_count||'';
   $('f_live').checked=!!d.is_live;
   $('f_featured').checked=!!d.featured;
-  $('f_priceAccess').value=d.access_price||''; $('f_linkAccess').value=d.checkout_access||'';
-  $('f_priceVip').value=d.vip_price||''; $('f_linkVip').value=d.checkout_vip||'';
-  $('f_telegram').value=d.telegram_link||'';
+  $('f_priceAccess').value=d.access_price||''; $('f_phone').value=d.phone||'';
+  fillAttrs(d.attributes);
   $('c_age').checked=!!d.confirmed_age; $('c_own').checked=!!d.confirmed_ownership; $('c_remove').checked=!!d.confirmed_removal;
   $('f_approved').checked=!!d.approved;
   avatarUrl=d.avatar_url||'';
@@ -735,9 +819,8 @@ async function saveProfile(){
     is_live:$('f_live').checked,
     featured:$('f_featured').checked,
     avatar_url:avatarUrl, gallery:gallery, schedule:schedule,
-    access_price:$('f_priceAccess').value.trim(), checkout_access:$('f_linkAccess').value.trim(),
-    vip_price:$('f_priceVip').value.trim(), checkout_vip:$('f_linkVip').value.trim(),
-    telegram_link:$('f_telegram').value.trim(),
+    access_price:$('f_priceAccess').value.trim(), phone:$('f_phone').value.trim(),
+    attributes:readAttrs(),
     confirmed_age:$('c_age').checked, confirmed_ownership:$('c_own').checked, confirmed_removal:$('c_remove').checked,
     approved:wantPublish,
     updated_at:new Date().toISOString()
@@ -758,6 +841,7 @@ async function onLogin(user){
   await loadCreators();
 }
 (async function init(){
+  renderFetichesBox();
   if(!sb){ $('auth').classList.remove('hidden'); return; }
   const { data } = await sb.auth.getSession();
   if(data.session){ onLogin(data.session.user); }

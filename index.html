@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Studio — Melhores Modelos do Brasil</title>
-<meta name="description" content="Studio — seleção exclusiva das melhores modelos do Brasil. Conteúdo autoral, direto e sem intermediários." />
-<meta property="og:title" content="Studio — Melhores Modelos do Brasil" />
-<meta property="og:description" content="Studio — seleção exclusiva das melhores modelos do Brasil. Conteúdo autoral, direto e sem intermediários." />
+<title>Studio — Acompanhantes de Luxo no Brasil</title>
+<meta name="description" content="Studio — as acompanhantes mais desejadas do Brasil. Perfis verificados, fotos reais e contato direto e discreto pelo WhatsApp. Anúncios para maiores de 18." />
+<meta property="og:title" content="Studio — Acompanhantes de Luxo no Brasil" />
+<meta property="og:description" content="Studio — as acompanhantes mais desejadas do Brasil. Perfis verificados, fotos reais e contato direto e discreto pelo WhatsApp. Anúncios para maiores de 18." />
+<meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://kvimdatdijavpjvfzjxx.supabase.co" crossorigin>
@@ -68,6 +69,9 @@
   .btn-tg{background:linear-gradient(120deg,#34a6e0,#229ED9);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:9px}
   .btn-tg:hover{filter:brightness(1.08)}
   .btn-tg svg{width:18px;height:18px;flex:none}
+  .btn-wpp{background:linear-gradient(120deg,#25D366,#128C7E);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:9px}
+  .btn-wpp:hover{filter:brightness(1.08)}
+  .btn-wpp svg{width:20px;height:20px;flex:none}
   .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
   .btn-ghost:hover{color:var(--ink)}
 
@@ -185,6 +189,42 @@
     display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
   .feat-panel .fmore{font-family:'Fira Sans',sans-serif;color:var(--accent);font-weight:600;font-size:13px;margin-top:2px}
 
+  /* ---------- LOJA: filtros + grade ---------- */
+  .shop{display:grid;grid-template-columns:248px 1fr;gap:28px;align-items:start}
+  .filters{position:sticky;top:96px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px;display:flex;flex-direction:column;gap:20px}
+  .filters h4{font-family:var(--display);font-size:18px;margin-bottom:2px}
+  .filters .fgroup{display:flex;flex-direction:column;gap:9px}
+  .filters .flabel{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  .filters select{background:#15111780;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 12px;font-family:var(--body);font-size:14px}
+  .filters select:focus{outline:none;border-color:var(--accent)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{cursor:pointer;border:1px solid var(--line);background:#15111780;color:var(--muted);border-radius:99px;padding:7px 13px;font-size:13px;font-family:var(--body);transition:all .2s}
+  .chip:hover{border-color:var(--accent);color:var(--ink)}
+  .chip.on{background:linear-gradient(120deg,var(--accent),var(--gold-deep));border-color:transparent;color:#fff;font-weight:600}
+  .chips-scroll{max-height:174px;overflow:auto;padding:2px 4px 2px 0}
+  .filters .flabel small{color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;font-size:11px}
+  .filters .clear{background:none;border:none;color:var(--muted);font-family:var(--body);font-size:13px;cursor:pointer;text-decoration:underline;align-self:flex-start;padding:0}
+  .filters .clear:hover{color:var(--ink)}
+  .filters-toggle{display:none}
+  .shop-empty{color:var(--muted);font-size:14px;padding:30px 0}
+
+  /* localização no card */
+  .creator .c-city{font-family:'Fira Sans',sans-serif;font-weight:600;white-space:nowrap;color:#f4d98a}
+
+  /* características no perfil */
+  .specs{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:24px}
+  .spec{background:var(--card);padding:13px 16px}
+  .spec .k{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .spec .v{font-family:var(--display);font-size:18px;color:var(--ink);margin-top:2px}
+  /* blocos de seção (atendimento, cachê, disponibilidade, observações) */
+  .block{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin-bottom:18px}
+  .block h3{font-family:var(--display);font-size:20px;color:var(--accent);margin-bottom:10px}
+  .block .line{display:flex;gap:10px;flex-wrap:wrap;padding:7px 0;border-bottom:1px solid var(--line);font-size:14px}
+  .block .line:last-child{border-bottom:none}
+  .block .line .bk{color:var(--muted);min-width:130px}
+  .block .line .bv{color:var(--ink);font-weight:600;flex:1}
+  .block .obs{color:var(--ink);font-size:14px;line-height:1.6;white-space:pre-line}
+
   /* ---------- CREATOR DETAIL ---------- */
   #detail{display:none}
   .back{background:none;border:none;color:var(--muted);font-family:var(--body);font-size:14px;cursor:pointer;padding:24px 0 6px;display:flex;align-items:center;gap:8px}
@@ -192,8 +232,19 @@
   .profile{display:grid;grid-template-columns:300px 1fr;gap:34px;padding:14px 0 40px;align-items:start}
   .profile .avatar{aspect-ratio:1;border-radius:var(--radius);background:linear-gradient(150deg,#2a2230,#191320);display:flex;align-items:center;justify-content:center;color:#5f5566;font-size:11px;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--line)}
   .profile h2{font-family:var(--display);font-weight:600;font-size:34px;margin-bottom:2px}
-  .profile .handle{color:var(--accent);font-weight:600;margin-bottom:16px}
-  .profile .desc{color:var(--muted);max-width:54ch;margin-bottom:20px}
+  .profile .handle{color:var(--accent);font-weight:600;margin-bottom:12px}
+  .d-rating{display:flex;align-items:center;gap:6px;margin-bottom:10px;font-family:'Fira Sans',sans-serif}
+  .d-rating .star{color:#f4d98a;font-size:16px}
+  .d-rating b{color:var(--ink);font-weight:700;margin-left:4px}
+  .d-acessos{font-family:'Fira Sans',sans-serif;font-size:13px;color:var(--muted);margin-bottom:8px}
+  .d-acessos b{color:var(--accent)}
+  .block .rede-link{color:var(--accent);text-decoration:none}
+  .block .rede-link:hover{text-decoration:underline}
+  .d-price{font-family:var(--display);font-size:22px;color:var(--ink);margin-bottom:16px}
+  .d-price small{font-size:13px;color:var(--muted);font-family:var(--body)}
+  .d-loc{color:var(--muted);font-size:14px;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+  .profile .desc{color:var(--muted);max-width:54ch;margin-bottom:20px;white-space:pre-line}
+  .profile .btn-wpp{width:auto;min-width:240px}
   .stats{display:flex;gap:30px;margin-bottom:8px}
   .stat b{font-family:var(--display);font-size:24px;display:block}
   .stat span{font-size:12px;color:var(--muted);letter-spacing:.05em}
@@ -206,7 +257,6 @@
   .plan h4{font-family:var(--display);font-weight:600;font-size:22px}
   .plan .price{font-family:var(--display);font-size:30px}
   .plan .price small{font-size:14px;color:var(--muted);font-family:var(--body)}
-  .plan .orig-mzn{font-size:11px;color:var(--muted);margin-top:-6px}
   .plan ul{list-style:none;display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--muted);flex:1}
   .plan li{display:flex;gap:9px;align-items:flex-start}
   .plan li::before{content:"✓";color:var(--ok);font-weight:800}
@@ -231,17 +281,6 @@
   .preview,.preview img,.preview video,#d-avatar,.creator .thumb{-webkit-user-select:none;user-select:none}
   .preview img,.preview video{pointer-events:none}
 
-  /* ---------- recuperar acesso / VIP liberado ---------- */
-  .vip-ready{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:rgba(95,208,154,.10);border:1px solid rgba(95,208,154,.4);border-radius:14px;padding:14px 16px;margin-bottom:20px;color:var(--ink);font-weight:600}
-  .vip-ready .btn{width:auto}
-  .recover{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:30px}
-  .recover-q{font-weight:700;font-size:14px;margin-bottom:10px}
-  .recover-row{display:flex;gap:10px;flex-wrap:wrap}
-  .recover-row input{flex:1;min-width:160px;background:#15111780;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:12px 13px;font-family:var(--body);font-size:15px}
-  .recover-row input:focus{outline:none;border-color:var(--accent)}
-  .recover-row .btn{width:auto}
-  .recover-msg{font-size:13px;margin-top:10px;min-height:1em}
-
   /* ---------- destaque dos cards da vitrine ---------- */
   .creator{box-shadow:0 10px 30px rgba(0,0,0,.45),0 0 0 1px rgba(201,162,78,.10)}
   .creator:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),0 16px 46px rgba(201,162,78,.42)}
@@ -254,40 +293,7 @@
   .side-light.r{right:-48px;background:linear-gradient(to left,rgba(230,190,110,.5),transparent 75%);animation:sidePulse 6.5s ease-in-out infinite}
   @keyframes sidePulse{0%,100%{opacity:.38}50%{opacity:.9}}
 
-  /* ---------- HISTÓRICO FAKE DE COMPRAS (canto inferior esquerdo) ---------- */
-  #salesFeed{position:fixed;left:14px;bottom:14px;z-index:55;display:flex;flex-direction:column;gap:8px;max-width:262px;pointer-events:none}
-  .sale{background:rgba(29,24,31,.94);border:1px solid var(--line);border-left:3px solid var(--ok);border-radius:12px;padding:9px 12px;box-shadow:0 12px 34px rgba(0,0,0,.55);backdrop-filter:blur(10px);transform:translateY(16px);opacity:0;transition:transform .4s ease,opacity .4s ease}
-  .sale.show{transform:translateY(0);opacity:1}
-  .sale .s-top{font-size:12px;color:var(--ink)}
-  .sale .s-top b{color:#fff}
-  .sale .s-sub{font-size:11px;color:var(--muted);margin-top:1px}
-  @media(max-width:760px){ #salesFeed{left:8px;bottom:8px;max-width:66vw} .sale .s-top{font-size:11px} body.detail-open #salesFeed{display:none} }
-
-  /* ---------- botão flutuante do Grupo Vazadinhos (lateral, acompanha o scroll, sobe/desce) ---------- */
-  .tg-float{position:fixed;right:12px;top:50%;transform:translateY(-50%);z-index:58;
-    display:flex;flex-direction:column;align-items:center;gap:3px;
-    background:linear-gradient(120deg,#34a6e0,#229ED9);color:#fff;text-decoration:none;
-    padding:10px 10px;border-radius:16px;box-shadow:0 12px 30px rgba(34,158,217,.5);
-    font-size:10px;font-weight:800;letter-spacing:.02em;text-align:center;line-height:1.05;
-    animation:tgBob 2.6s ease-in-out infinite}
-  .tg-float svg{width:24px;height:24px}
-  .tg-float:active{transform:translateY(-50%) scale(.96)}
-  .tg-float:hover{filter:brightness(1.08)}
-  @keyframes tgBob{0%,100%{transform:translateY(-50%)}50%{transform:translateY(calc(-50% - 12px))}}
-  @media(max-width:760px){ .tg-float{right:8px;padding:8px 8px;font-size:9px} .tg-float svg{width:20px;height:20px} }
-
   footer{border-top:1px solid var(--line);padding:34px 0;color:var(--muted);font-size:13px}
-
-  /* barra fixa de ação no perfil (só mobile) */
-  #stickyCta{
-    display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;
-    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
-    background:rgba(14,11,16,.92);backdrop-filter:blur(14px);
-    border-top:1px solid var(--line);
-  }
-  #stickyCta .btn{width:100%}
-  body.detail-open #stickyCta{display:block}
-  @media(min-width:761px){ body.detail-open #stickyCta{display:none} }
   footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
   footer a{color:var(--muted);text-decoration:none}
   footer a:hover{color:var(--ink)}
@@ -374,6 +380,11 @@
     .creator .c-hover{transform:none;opacity:1;padding:11px;font-size:12px}
     .creator .c-stars .star{font-size:13px}
     .creator:hover{transform:none}
+
+    /* filtros empilham no topo no celular */
+    .shop{grid-template-columns:1fr;gap:16px}
+    .filters{position:static;top:auto;flex-direction:column}
+    .specs{grid-template-columns:repeat(2,1fr)}
 
     /* destaques: 1 por linha e painel sempre visível no touch */
     .featured{grid-template-columns:1fr;gap:14px}
@@ -485,14 +496,14 @@
   <main id="home">
     <section class="hero">
       <div class="wrap">
-        <div class="kicker">Seleção exclusiva</div>
-        <h2>Melhores Modelos do <em>Brasil</em></h2>
-        <p class="hero-lead">Conteúdo exclusivo, direto de quem cria.</p>
-        <p>Uma seleção das modelos mais desejadas do Brasil, com conteúdo autoral publicado por elas mesmas. Assine quem você gosta e apoie diretamente o trabalho delas.</p>
+        <div class="kicker">Acompanhantes de luxo</div>
+        <h2>As melhores Acompanhantes do <em>Brasil</em></h2>
+        <p class="hero-lead">Perfis verificados, com discrição e elegância.</p>
+        <p>Uma seleção das acompanhantes mais desejadas do Brasil. Veja os perfis, as fotos e fale direto pelo WhatsApp — simples, seguro e discreto.</p>
         <div class="trust">
-          <div class="trust-item"><span class="dot"></span> <b>Conteúdo</b>&nbsp;100% autoral e consentido</div>
-          <div class="trust-item"><span class="dot"></span> <b>Pagamento</b>&nbsp;seguro e discreto</div>
-          <div class="trust-item"><span class="dot"></span> <b>Idade</b>&nbsp;de todas verificada</div>
+          <div class="trust-item"><span class="dot"></span> <b>Perfis</b>&nbsp;verificados</div>
+          <div class="trust-item"><span class="dot"></span> <b>Contato</b>&nbsp;direto e discreto</div>
+          <div class="trust-item"><span class="dot"></span> <b>+18</b>&nbsp;anúncio dentro da lei</div>
         </div>
       </div>
     </section>
@@ -511,84 +522,92 @@
       <div class="wrap">
         <div class="section-head">
           <div>
-            <h3>Nossas criadoras</h3>
+            <h3>Acompanhantes</h3>
           </div>
-          <p>Toque em uma criadora para ver perfil, prévias e planos de assinatura.</p>
+          <p>Filtre por cidade e tipo, ou toque em um perfil para ver fotos, detalhes e WhatsApp.</p>
         </div>
-        <div class="grid" id="creatorGrid"><!-- cards inseridos via JS --></div>
+        <div class="shop">
+          <!-- FILTROS -->
+          <aside class="filters">
+            <h4>Filtros</h4>
+            <div class="fgroup">
+              <span class="flabel">Cidade <small id="fCityCount"></small></span>
+              <div class="chips chips-scroll" id="fCity"></div>
+            </div>
+            <div class="fgroup">
+              <span class="flabel">Tipo</span>
+              <div class="chips" id="fTipo"></div>
+            </div>
+            <div class="fgroup">
+              <span class="flabel">Idade</span>
+              <select id="fIdade" onchange="setIdade(this.value)">
+                <option value="">Todas</option>
+                <option value="18-25">18 a 25</option>
+                <option value="26-35">26 a 35</option>
+                <option value="36-99">36 ou mais</option>
+              </select>
+            </div>
+            <div class="fgroup">
+              <span class="flabel">Fetiche</span>
+              <div class="chips chips-scroll" id="fFetiche"></div>
+            </div>
+            <button class="clear" onclick="clearFilters()">Limpar filtros</button>
+          </aside>
+          <!-- GRADE -->
+          <div class="shop-main">
+            <div class="grid" id="creatorGrid"><!-- cards inseridos via JS --></div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- ================= DETALHE DA CRIADORA ================= -->
+  <!-- ================= PERFIL DA ACOMPANHANTE ================= -->
   <main id="detail">
     <div class="wrap">
-      <button class="back" onclick="showHome()">← Voltar à vitrine</button>
+      <button class="back" onclick="showHome()">← Voltar</button>
       <div class="profile">
-        <div class="avatar" id="d-avatar">[ FOTO DE PERFIL ]</div>
+        <div class="avatar" id="d-avatar">[ FOTO ]</div>
         <div>
           <h2 id="d-name"></h2>
           <div class="handle" id="d-handle"></div>
-          <div class="stats">
-            <div class="stat"><b id="d-photos"></b><span>FOTOS</span></div>
-            <div class="stat"><b id="d-videos"></b><span>VÍDEOS</span></div>
-            <div class="stat"><b id="d-subs"></b><span>ASSINANTES</span></div>
-          </div>
+          <div class="d-rating" id="d-rating"></div>
+          <div class="d-acessos" id="d-acessos"></div>
+          <div class="d-loc" id="d-loc" style="display:none"></div>
+          <div class="d-price" id="d-price" style="display:none"></div>
           <p class="desc" id="d-desc"></p>
+          <a id="d-whats" class="btn btn-wpp" href="#" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.02zM12.04 20.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23a8.2 8.2 0 0 1 8.23 8.24c0 4.54-3.69 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
+            Falar no WhatsApp
+          </a>
         </div>
       </div>
 
-      <div id="d-schedule-wrap" style="display:none">
-        <div class="section-head"><h3>Próximas lives</h3></div>
-        <div id="d-schedule" style="display:flex;flex-direction:column;gap:10px;margin-bottom:30px"></div>
-      </div>
+      <!-- CARACTERÍSTICAS -->
+      <div class="specs" id="d-specs" style="display:none"></div>
 
-      <!-- PRÉVIAS: amostras grátis + restante bloqueado com cadeado -->
+      <!-- ATENDIMENTO / CACHÊ / DISPONIBILIDADE / AGENDA / ENSAIO / REDES / OBSERVAÇÕES -->
+      <div class="block" id="d-atend" style="display:none"></div>
+      <div class="block" id="d-cache" style="display:none"></div>
+      <div class="block" id="d-dispo" style="display:none"></div>
+      <div class="block" id="d-agenda" style="display:none"></div>
+      <div class="block" id="d-ensaio" style="display:none"></div>
+      <div class="block" id="d-redes" style="display:none"></div>
+      <div class="block" id="d-obs" style="display:none"></div>
+
+      <!-- FOTOS -->
       <div id="d-previews-wrap" style="display:none">
-        <div class="section-head"><h3>Prévias</h3><p>Amostras grátis. Assine para desbloquear tudo.</p></div>
+        <div class="section-head"><h3>Fotos</h3></div>
         <div class="previews" id="d-previews"></div>
       </div>
-
-      <!-- VIP já liberado (cliente que pagou) -->
-      <div id="d-vip-ready" class="vip-ready" style="display:none">
-        <span>✅ Seu acesso ao Grupo Vazadinhos está liberado.</span>
-        <a id="d-vip-link" class="btn btn-tg" href="#" target="_blank" rel="noopener">Entrar no Grupo Vazadinhos</a>
-      </div>
-
-      <!-- Já é cliente? recupera o acesso pelo telefone usado no pagamento -->
-      <div class="recover">
-        <div class="recover-q">Já é cliente? Digite seu telefone e tenha acesso</div>
-        <div class="recover-row">
-          <input id="recPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Seu nº (ex: 84 000 0000)" onkeydown="if(event.key==='Enter')recoverAccess()" />
-          <button id="recBtn" class="btn btn-ghost" onclick="recoverAccess()">Tenho acesso</button>
-        </div>
-        <div id="recMsg" class="recover-msg"></div>
-      </div>
-
-      <div class="section-head"><h3>Planos de assinatura</h3></div>
-      <div class="plans" id="d-plans"></div>
       <div style="height:50px"></div>
     </div>
   </main>
 
-  <!-- ================= CTA FIXO (mobile, dentro do perfil) ================= -->
-  <div id="stickyCta">
-    <a class="btn btn-primary" id="stickyCtaLink" href="#" target="_blank" rel="noopener">Assinar</a>
-  </div>
-
-  <!-- ================= HISTÓRICO (FAKE) DE COMPRAS ================= -->
-  <div id="salesFeed" aria-hidden="true"></div>
-
-  <!-- ================= BOTÃO FLUTUANTE: GRUPO VAZADINHOS (lateral) ================= -->
-  <a id="tgFloat" class="tg-float" href="#" onclick="event.preventDefault();goVip(GRUPO_VAZADINHOS_CHECKOUT)" title="Entrar no Grupo Vazadinhos">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
-    <span>Grupo<br>Vazadinhos</span>
-  </a>
-
   <!-- ================= RODAPÉ ================= -->
   <footer>
     <div class="wrap">
-      <div>© 2026 Studio · Conteúdo +18 · Todas as criadoras têm idade verificada.</div>
+      <div>© 2026 Studio · Anúncios +18 · Todas as acompanhantes são maiores de 18, com idade verificada.</div>
       <div>
         <a href="#">Termos</a> &nbsp;·&nbsp;
         <a href="#">Privacidade</a> &nbsp;·&nbsp;
@@ -612,47 +631,49 @@
    ===================================================================== */
 let CREATORS = [
   {
-    id: "biby",
-    name: "Biby",
-    handle: "@biby",                 // <-- troque se o @ for outro
-    phone: "+258 84 123 4567",       // <-- telefone exibido na vitrine (hover)
-    featured: true,                  // <-- aparece na seção "Destaques"
-    photos: "—", videos: "—", subs: "—",   // <-- coloque os números reais quando tiver
+    id: "demo",
+    name: "Aline",
+    handle: "São Paulo · SP",         // <-- usado como localização
+    phone: "+55 11 99999-0000",       // <-- WhatsApp/contato
+    price: "300",                     // <-- valor (R$); deixe vazio para não mostrar
+    featured: true,                   // <-- aparece na seção "Destaques"
+    city: "São Paulo · SP",
     live: true,
-    avatar: "",                      // <-- cole a URL da foto de capa/perfil dela
-    gallery: [                       // <-- prévias (DEMO/placeholder); criadoras reais sobem pelo painel
-      "https://picsum.photos/seed/biby1/500/640",
-      "media/bg-dance.mp4",
-      "https://picsum.photos/seed/biby3/500/640",
-      "https://picsum.photos/seed/biby4/500/640",
-      "https://picsum.photos/seed/biby5/500/640",
-      "https://picsum.photos/seed/biby6/500/640",
-      "https://picsum.photos/seed/biby7/500/640",
-      "https://picsum.photos/seed/biby8/500/640"
+    schedule: [                       // <-- agenda de disponibilidade
+      { date:"", time:"", note:"Hoje · 14h às 23h" },
+      { date:"", time:"", note:"Sábado · 16h às 02h" }
     ],
-    bio: "Conteúdo autoral exclusivo, publicado por mim. Novidades toda semana.",
-    desc: "Conteúdo exclusivo e autoral. Assine para ter acesso à galeria completa e ao GRUPO VAZADINHOS TELEGRAM, com novidades em primeira mão.",
-    fromPrice: "297 MZN",
-    plans: [
-      { tier:"ACESSO", name:"Acesso completo", price:"297 MZN", per:"",
-        perks:["Acesso à galeria completa","Conteúdo novo toda semana","Mensagens diretas"],
-        checkoutUrl:"https://debitopay.com/l/ativacao-standard-biby-f4y5" },
-      { tier:"VIP", name:"GRUPO VAZADINHOS TELEGRAM", price:"497 MZN", per:"", best:true, telegram:true,
-        perks:["Tudo do acesso completo","Entrada no GRUPO VAZADINHOS TELEGRAM","Conteúdo em primeira mão","Pedidos personalizados"],
-        checkoutUrl:"https://debitopay.com/l/pacote-vp-comunidade-w4iq" },
-    ]
+    avatar: "",                       // <-- foto de capa/perfil
+    gallery: [                        // <-- fotos (DEMO/placeholder); perfis reais sobem pelo painel
+      "https://picsum.photos/seed/aline1/500/640",
+      "https://picsum.photos/seed/aline2/500/640",
+      "https://picsum.photos/seed/aline3/500/640",
+      "https://picsum.photos/seed/aline4/500/640"
+    ],
+    bio: "Acompanhante de luxo, discreta e elegante. Atendimento exclusivo.",
+    desc: "Acompanhante de luxo em São Paulo. Atendimento discreto e exclusivo, com elegância e carinho. Entre em contato pelo WhatsApp para combinar.",
+    attributes: {
+      cidade:"São Paulo · SP", bairro:"Jardins", tipo:"Morena",
+      idade:25, altura:"1,70 m", peso:"58 kg", manequim:"38", biotipo:"Magra",
+      cabelos:"Castanhos", olhos:"Castanhos", seios:"Naturais", pes:"36",
+      cintura:"66", quadril:"98", tatuagem:"Não", piercing:"Sim", fumante:"Não",
+      nivel:"Superior", idiomas:["Português","Inglês"], signo:"Libra",
+      at_vaginal:"Sim", at_oral:"Com preservativo", at_anal:"Não",
+      perfil:["Namoradinha","Safadinha"], fetiches:["Beijo na boca","Massagem","Strip-tease","Roupa erótica"],
+      cache2h:"550", pernoite:"A combinar", pagamento:"Dinheiro, Pix, Cartão",
+      quem:["Homens","Casais"], onde:["Hotéis","Motéis","Residência"], quando:["Seg","Ter","Qua","Qui","Sex","Sáb"],
+      periodo:["Tarde","Noite"], disponivel:["Atendimento","Massagens"],
+      instagram:"@aline.demo", twitter:"", tiktok:"",
+      ensaio_data:"21/05/2025", ensaio_producao:"Álbum da anunciante",
+      obs:"Não atende números confidenciais. Responde SMS."
+    }
   },
-  // ---- duplique este bloco para cada nova criadora ----
+  // ---- duplique este bloco para cada nova acompanhante ----
   // {
-  //   id: "outra", name: "Nome", handle: "@usuario",
-  //   photos:"—", videos:"—", subs:"—", live:false, avatar:"",
-  //   bio:"...", desc:"...", fromPrice:"297 MZN",
-  //   plans:[
-  //     { tier:"ACESSO", name:"Acesso completo", price:"297 MZN", per:"",
-  //       perks:["..."], checkoutUrl:"https://debitopay.com/l/..." },
-  //     { tier:"VIP", name:"GRUPO VAZADINHOS TELEGRAM", price:"497 MZN", per:"", best:true, telegram:true,
-  //       perks:["..."], checkoutUrl:"https://debitopay.com/l/..." },
-  //   ]
+  //   id: "outra", name: "Nome", handle: "Cidade · UF",
+  //   phone:"+55 ...", price:"400", featured:false, avatar:"",
+  //   gallery:["url1","url2"], bio:"...", desc:"...",
+  //   attributes:{ cidade:"", bairro:"", idade:0, altura:"", peso:"", manequim:"", olhos:"", tipo:"", idiomas:"", atende:"" }
   // },
 ];
 
@@ -662,53 +683,23 @@ function enterSite(){
   document.body.classList.remove('locked');
   // marca a sessão para não pedir de novo nesta visita
   try { sessionStorage.setItem('age_ok','1'); } catch(e){}
-  setTimeout(startSales, 0);   // adia p/ depois do script carregar (evita TDZ na auto-entrada)
 }
 try { if(sessionStorage.getItem('age_ok')==='1'){ enterSite(); } } catch(e){}
 
-/* ---------- Moeda local (pela localização do acesso) ----------
-   Mostra os preços aproximados na moeda do visitante (câmbio real).
-   A cobrança continua em MZN (gateway DebitoPay). */
-let CUR = { code:'MZN', rate:1, ready:false };
-function mznAmount(raw){ const n=parseInt(String(raw||'').replace(/\D/g,''),10); return isNaN(n)?null:n; }
-function fmtPrice(raw){
-  if(!CUR.ready) return raw;
-  const n=mznAmount(raw); if(n==null) return raw;
-  const local=Math.round(n*CUR.rate);
-  let s; try{ s=new Intl.NumberFormat(undefined,{style:'currency',currency:CUR.code,maximumFractionDigits:0}).format(local); }
-  catch(e){ s=local.toLocaleString('pt-BR')+' '+CUR.code; }
-  return '≈ '+s;
+/* ---------- Valor (R$) ---------- */
+function fmtBRL(raw){
+  if(raw==null || String(raw).trim()==='') return '';
+  const n = parseInt(String(raw).replace(/\D/g,''),10);
+  if(isNaN(n)) return String(raw);
+  return 'R$ ' + n.toLocaleString('pt-BR');
 }
-function reRenderPrices(){
-  renderGrid();
-  if(document.body.classList.contains('detail-open') && currentCreatorId) openCreator(currentCreatorId);
-}
-async function detectCurrency(){
-  // tenta vários serviços de geo-IP (com fallback) até achar a moeda
-  try{ const g=await fetch('https://ipwho.is/').then(r=>r.json()); if(g && g.success!==false && g.currency && g.currency.code) return g.currency.code; }catch(e){}
-  try{ const g=await fetch('https://ipapi.co/json/').then(r=>r.json()); if(g && g.currency) return g.currency; }catch(e){}
-  try{ const g=await fetch('https://get.geojs.io/v1/ip/country.json').then(r=>r.json()); if(g && g.country) return cc2cur(g.country); }catch(e){}
-  try{ const g=await fetch('https://api.country.is/').then(r=>r.json()); if(g && g.country) return cc2cur(g.country); }catch(e){}
-  return null;
-}
-function cc2cur(cc){
-  const m={MZ:'MZN',BR:'BRL',PT:'EUR',US:'USD',ZA:'ZAR',AO:'AOA',GB:'GBP',FR:'EUR',DE:'EUR',ES:'EUR',IT:'EUR',NL:'EUR',IE:'EUR',NG:'NGN',KE:'KES',IN:'INR',CN:'CNY',JP:'JPY',CA:'CAD',AU:'AUD',CH:'CHF',SE:'SEK',NO:'NOK',AE:'AED'};
-  return m[cc]||null;
-}
-async function initCurrency(){
-  // cache de 12h (evita refetch a cada visita)
-  try{ const c=JSON.parse(localStorage.getItem('studio_cur')||'null');
-    if(c && (Date.now()-c.at)<43200000 && c.code && c.code!=='MZN' && c.rate){ CUR={code:c.code,rate:c.rate,ready:true}; reRenderPrices(); } }catch(e){}
-  try{
-    const code=await detectCurrency();
-    if(!code || code==='MZN') return;                 // visitante em MZN (ou não detectou): sem conversão
-    const rr=await fetch('https://open.er-api.com/v6/latest/MZN').then(r=>r.json());
-    const rate=rr && rr.rates && rr.rates[code];
-    if(!rate) return;
-    CUR={code, rate, ready:true};
-    try{ localStorage.setItem('studio_cur', JSON.stringify({code, rate, at:Date.now()})); }catch(e){}
-    reRenderPrices();
-  }catch(e){ /* falhou: mantém MZN */ }
+/* ---------- Link do WhatsApp a partir do telefone ---------- */
+function waLink(phone, name){
+  const d = String(phone||'').replace(/\D/g,'');
+  if(!d) return '';
+  const num = d.length<=11 ? '55'+d : d;            // assume Brasil se vier sem DDI
+  const msg = encodeURIComponent('Olá'+(name?', vi o perfil de '+name+' no Studio':'')+'! Gostaria de mais informações.');
+  return `https://wa.me/${num}?text=${msg}`;
 }
 
 /* Encurta a bio pela metade, cortando no limite da palavra */
@@ -724,20 +715,22 @@ function shortBio(t){
 /* ---------- Render da vitrine ---------- */
 function renderGrid(){
   const grid = document.getElementById('creatorGrid');
-  if(!CREATORS.length){
-    grid.innerHTML = '<p style="color:var(--muted);font-size:14px">Nenhuma criadora publicada ainda.</p>';
+  const list = getDisplayed();
+  if(!list.length){
+    grid.innerHTML = '<p class="shop-empty">'+(CREATORS.length?'Nenhuma acompanhante encontrada com esses filtros.':'Nenhuma acompanhante publicada ainda.')+'</p>';
+    renderFeatured();
     return;
   }
-  grid.innerHTML = CREATORS.map(c => `
+  grid.innerHTML = list.map(c => `
     <div class="creator" onclick="openCreator('${c.id}')">
       <div class="thumb" ${c.avatar?`style="background-image:url('${c.avatar}');background-size:cover;background-position:center"`:''}>
         ${c.live ? '<div class="live"><span class="dot"></span>Online agora</div>' : ''}
         <div class="c-name">${c.name}</div>
         <div class="c-hover">
           <span class="c-stars">${starsHtml(c.id)} <b>${fakeStars(c.id)}</b></span>
-          ${c.phone ? `<span class="c-phone">📱 ${c.phone}</span>` : ''}
+          ${c.city ? `<span class="c-city">📍 ${c.city}</span>` : ''}
         </div>
-        ${c.avatar ? '' : '<span class="ph">[ PRÉVIA / CAPA ]</span>'}
+        ${c.avatar ? '' : '<span class="ph">[ FOTO ]</span>'}
       </div>
     </div>
   `).join('');
@@ -769,103 +762,89 @@ function renderFeatured(){
 
 /* ---------- Carrega perfis aprovados do banco ---------- */
 function mapRow(row){
-  const plans = [];
-  if(row.access_price || row.checkout_access){
-    plans.push({ tier:"ACESSO", name:"Acesso completo", price:row.access_price||'', per:"",
-      perks:["Acesso à galeria completa","Conteúdo novo toda semana","Mensagens diretas"],
-      checkoutUrl: row.checkout_access || '#' });
-  }
-  if(row.vip_price || row.checkout_vip || row.telegram_link){
-    plans.push({ tier:"VIP", name:"GRUPO VAZADINHOS TELEGRAM", price:row.vip_price||'', per:"", best:true, telegram:true,
-      perks:["Tudo do acesso completo","Entrada no GRUPO VAZADINHOS TELEGRAM","Conteúdo em primeira mão"],
-      checkoutUrl: row.checkout_vip || '#' });
-  }
+  const a = row.attributes || {};
   return {
     id: row.id,
-    name: row.name || 'Criadora',
+    name: row.name || 'Acompanhante',
     handle: row.handle || '',
-    photos: row.photos_count || '—',
-    videos: row.videos_count || '—',
-    subs: '—',
     live: !!row.is_live,
     avatar: row.avatar_url || '',
     gallery: row.gallery || [],
-    schedule: row.schedule || [],
     bio: row.bio || '',
     phone: row.phone || '',
+    price: row.access_price || '',      // valor (R$) reaproveitando a coluna existente
+    city: a.cidade || '',               // cidade vem só das características (não do @handle)
+    schedule: row.schedule || [],
     featured: !!row.featured,
     desc: row.description || '',
-    fromPrice: row.access_price || row.vip_price || '—',
-    plans
+    attributes: a
   };
 }
 async function loadCreators(){
-  if(!sb) { renderGrid(); return; }   // sem banco: usa exemplos
+  if(!sb) { buildFilters(); renderGrid(); return; }   // sem banco: usa exemplos
   const { data, error } = await sb
-    .from('creators_public').select('*')   // view publica: NAO expoe o telegram_link
+    .from('creators_public').select('*')
     .order('sort_order', {ascending:true})
     .order('updated_at', {ascending:false});
-  if(error){ console.error(error); renderGrid(); return; }
+  if(error){ console.error(error); buildFilters(); renderGrid(); return; }
   if(data && data.length){ CREATORS = data.map(mapRow); }
+  buildFilters();
   renderGrid();
 }
 
-/* ---------- Checkout VIP: gera referência e redireciona ----------
-   O link do Telegram NÃO fica no site. O cliente paga, o DebitoPay
-   redireciona de volta para obrigado.html, que só então libera o
-   Telegram após confirmar o pagamento (webhook). */
-let currentCreatorId = null;
-// link de pagamento do Grupo Vazadinhos (comunidade) usado pelo botão flutuante. Troque se mudar.
-const GRUPO_VAZADINHOS_CHECKOUT = "https://debitopay.com/l/pacote-vp-comunidade-w4iq";
-function goVip(url){
-  if(!url || url === '#'){ return; }
-  const ref = `${currentCreatorId||'x'}__vip__${Date.now().toString(36)}${Math.random().toString(36).slice(2,7)}`;
-  try{ localStorage.setItem('studio_lastRef', ref); }catch(e){}
-  let target = url;
-  try{ const u = new URL(url); u.searchParams.set('reference', ref); target = u.toString(); }
-  catch(e){ target = url + (url.includes('?')?'&':'?') + 'reference=' + encodeURIComponent(ref); }
-  const w = window.open(target, '_blank', 'noopener'); if(!w) location.href = target;  // nova aba: o site fica aberto
+/* ---------- FILTROS (cidade · tipo · idade · fetiche) ---------- */
+const TIPOS = ['Loira','Morena','Ruiva','Negra','Mulata','Oriental','Latina'];
+const FETICHES = ['Beijo na boca','Oral','Garganta profunda','Massagem','Strip-tease','Roupa erótica','Pompoarismo','Podolatria','Inversão de papéis','Dominação','Submissão','Voyeurismo','Sexo a três','Fetiche por pés','Acessórios','Chuva dourada'];
+// todas as capitais do Brasil (aparecem mesmo sem acompanhante cadastrada)
+const CAPITAIS = ['Aracaju · SE','Belém · PA','Belo Horizonte · MG','Boa Vista · RR','Brasília · DF','Campo Grande · MS','Cuiabá · MT','Curitiba · PR','Florianópolis · SC','Fortaleza · CE','Goiânia · GO','João Pessoa · PB','Macapá · AP','Maceió · AL','Manaus · AM','Natal · RN','Palmas · TO','Porto Alegre · RS','Porto Velho · RO','Recife · PE','Rio Branco · AC','Rio de Janeiro · RJ','Salvador · BA','São Luís · MA','São Paulo · SP','Teresina · PI','Vitória · ES'];
+let FILTERS = { cities:new Set(), tipo:new Set(), idade:'', fetiches:new Set() };
+function _esc(s){ return String(s).replace(/'/g,"\\'"); }
+function buildFilters(){
+  // cidades = capitais + cidades cadastradas (sem repetir)
+  const cities = [...new Set([...CAPITAIS, ...CREATORS.map(c=>c.city).filter(Boolean)])].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+  const cbox = document.getElementById('fCity');
+  if(cbox){ cbox.innerHTML = cities.map(c=>`<span class="chip ${FILTERS.cities.has(c)?'on':''}" onclick="toggleChip('cities','${_esc(c)}',this)">${c}</span>`).join(''); }
+  const tbox = document.getElementById('fTipo');
+  if(tbox){ tbox.innerHTML = TIPOS.map(t=>`<span class="chip ${FILTERS.tipo.has(t.toLowerCase())?'on':''}" onclick="toggleChip('tipo','${t.toLowerCase()}',this)">${t}</span>`).join(''); }
+  const fbox = document.getElementById('fFetiche');
+  if(fbox){ fbox.innerHTML = FETICHES.map(f=>`<span class="chip ${FILTERS.fetiches.has(f)?'on':''}" onclick="toggleChip('fetiches','${_esc(f)}',this)">${f}</span>`).join(''); }
+  updateCityCount();
 }
-function goAccess(url){
-  if(!url || url === '#'){ return; }
-  const ref = `${currentCreatorId||'x'}__access__${Date.now().toString(36)}${Math.random().toString(36).slice(2,7)}`;
-  try{ localStorage.setItem('studio_lastRef', ref); }catch(e){}
-  let target = url;
-  try{ const u = new URL(url); u.searchParams.set('reference', ref); target = u.toString(); }
-  catch(e){ target = url + (url.includes('?')?'&':'?') + 'reference=' + encodeURIComponent(ref); }
-  const w = window.open(target, '_blank', 'noopener'); if(!w) location.href = target;  // nova aba
+function updateCityCount(){ const e=document.getElementById('fCityCount'); if(e) e.textContent = FILTERS.cities.size ? `(${FILTERS.cities.size})` : ''; }
+function setIdade(v){ FILTERS.idade = v; renderGrid(); }
+function toggleChip(key, val, el){
+  const s = FILTERS[key];
+  if(s.has(val)) s.delete(val); else s.add(val);
+  if(el) el.classList.toggle('on');
+  if(key==='cities') updateCityCount();
+  renderGrid();
+}
+function clearFilters(){
+  FILTERS = { cities:new Set(), tipo:new Set(), idade:'', fetiches:new Set() };
+  const i=document.getElementById('fIdade'); if(i) i.value='';
+  document.querySelectorAll('.filters .chip.on').forEach(c=>c.classList.remove('on'));
+  updateCityCount();
+  renderGrid();
+}
+function getDisplayed(){
+  return CREATORS.filter(c=>{
+    const a = c.attributes || {};
+    if(FILTERS.cities.size && !FILTERS.cities.has(c.city||'')) return false;
+    if(FILTERS.tipo.size && !FILTERS.tipo.has(String(a.tipo||'').toLowerCase())) return false;
+    if(FILTERS.idade){
+      const [min,max] = FILTERS.idade.split('-').map(Number);
+      const idade = parseInt(a.idade,10);
+      if(isNaN(idade) || idade<min || idade>max) return false;
+    }
+    if(FILTERS.fetiches.size){
+      const fl = Array.isArray(a.fetiches) ? a.fetiches : [];
+      if(![...FILTERS.fetiches].some(f=>fl.includes(f))) return false;   // pelo menos um
+    }
+    return true;
+  });
 }
 
-/* ---------- Estado de acesso do cliente (quem já pagou) ---------- */
-let UNLOCK = (function(){ try{ return JSON.parse(localStorage.getItem('studio_unlock')||'null')||{}; }catch(e){ return {}; } })();
-function setUnlock(u){ UNLOCK = Object.assign({}, UNLOCK, u); try{ localStorage.setItem('studio_unlock', JSON.stringify(UNLOCK)); }catch(e){} }
-function recMsg(m, err){ const e=document.getElementById('recMsg'); if(e){ e.textContent=m||''; e.style.color=err?'var(--accent)':'var(--ok)'; } }
-async function recoverAccess(){
-  const inp=document.getElementById('recPhone'), btn=document.getElementById('recBtn');
-  const phone=(inp.value||'').replace(/\D/g,'');
-  if(phone.length<9){ recMsg('Digite um número válido (9 dígitos).', true); return; }
-  if(typeof SUPABASE_URL==='undefined' || !String(SUPABASE_URL).startsWith('http')){ recMsg('Pagamentos ainda não conectados.', true); return; }
-  btn.disabled=true; recMsg('Verificando…');
-  try{
-    const r=await fetch(`${SUPABASE_URL}/functions/v1/unlock?phone=${encodeURIComponent(phone)}`,{headers:{apikey:SUPABASE_ANON_KEY,Authorization:'Bearer '+SUPABASE_ANON_KEY}});
-    const d=await r.json();
-    if(d && d.paid){
-      setUnlock({access:true, vip:!!d.vip, telegram:d.telegram||UNLOCK.telegram||null});
-      recMsg('✅ Acesso liberado!');
-      if(currentCreatorId) openCreator(currentCreatorId);   // re-renderiza desbloqueado
-    } else {
-      recMsg('Não encontramos uma compra com esse número.', true);
-    }
-  }catch(e){ recMsg('Erro ao verificar. Tente de novo.', true); }
-  btn.disabled=false;
-}
-function applyUnlockUI(){
-  const ready=document.getElementById('d-vip-ready'), link=document.getElementById('d-vip-link');
-  if(ready && link){
-    if(UNLOCK && UNLOCK.vip && UNLOCK.telegram){ link.href=UNLOCK.telegram; ready.style.display='flex'; }
-    else { ready.style.display='none'; }
-  }
-}
+let currentCreatorId = null;
 
 /* ---------- Nº de assinantes (aleatório, atrativo e estável por criadora) ---------- */
 function fakeSubs(id){
@@ -887,71 +866,142 @@ function starsHtml(id){
   return out;
 }
 
-/* ---------- Abrir detalhe ---------- */
+/* junta arrays em texto (ou devolve string) */
+function jv(x){ return Array.isArray(x) ? x.join(', ') : (x||''); }
+
+/* ---------- Características físicas (specs) ---------- */
+function renderSpecs(a){
+  const box = document.getElementById('d-specs');
+  if(!box) return;
+  const fields = [
+    ['Idade', a.idade ? a.idade+' anos' : ''],
+    ['Altura', a.altura], ['Peso', a.peso], ['Manequim', a.manequim],
+    ['Biotipo', a.biotipo], ['Cabelos', a.cabelos], ['Olhos', a.olhos],
+    ['Seios', a.seios], ['Pés', a.pes], ['Cintura', a.cintura], ['Quadril', a.quadril],
+    ['Tatuagem', a.tatuagem], ['Piercing', a.piercing], ['Fumante', a.fumante],
+    ['Nível cultural', a.nivel], ['Idiomas', jv(a.idiomas)], ['Signo', a.signo], ['Tipo', a.tipo]
+  ].filter(f => f[1] && String(f[1]).trim());
+  if(!fields.length){ box.style.display='none'; box.innerHTML=''; return; }
+  box.style.display='grid';
+  box.innerHTML = fields.map(f=>`<div class="spec"><div class="k">${f[0]}</div><div class="v">${f[1]}</div></div>`).join('');
+}
+/* monta um bloco título + linhas (chave/valor). Esconde se vazio. */
+function renderBlock(elId, title, rows){
+  const box = document.getElementById(elId);
+  if(!box) return;
+  const r = rows.filter(x => x[1] && String(x[1]).trim());
+  if(!r.length){ box.style.display='none'; box.innerHTML=''; return; }
+  box.style.display='block';
+  box.innerHTML = `<h3>${title}</h3>` + r.map(x=>`<div class="line"><span class="bk">${x[0]}</span><span class="bv">${x[1]}</span></div>`).join('');
+}
+function renderAtendimento(a){
+  renderBlock('d-atend','Atendimento',[
+    ['Sexo vaginal', a.at_vaginal], ['Sexo oral', a.at_oral], ['Sexo anal', a.at_anal],
+    ['Perfil', jv(a.perfil)], ['Fetiches', jv(a.fetiches)]
+  ]);
+}
+function renderAgenda(schedule){
+  const box = document.getElementById('d-agenda');
+  if(!box) return;
+  const items = (schedule||[]).filter(s=>s && (s.date||s.time||s.note));
+  if(!items.length){ box.style.display='none'; box.innerHTML=''; return; }
+  box.style.display='block';
+  const rows = items.map(s=>{
+    const d = s.date ? new Date(s.date+'T00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'}) : '';
+    const when = [d, s.time].filter(Boolean).join(' · ');
+    return `<div class="line"><span class="bk">${when||'Disponível'}</span><span class="bv">${s.note||'Disponível'}</span></div>`;
+  }).join('');
+  box.innerHTML = `<h3>Agenda · disponibilidade</h3>${rows}`;
+}
+function renderCache(a, price){
+  renderBlock('d-cache','Cachê',[
+    ['1 hora', fmtBRL(price)], ['2 horas', fmtBRL(a.cache2h)],
+    ['Pernoite', a.pernoite], ['Pagamento', a.pagamento]
+  ]);
+}
+function renderDispo(a){
+  renderBlock('d-dispo','Disponibilidade',[
+    ['Quem atende', jv(a.quem)], ['Onde', jv(a.onde)], ['Quando', jv(a.quando)],
+    ['Período', jv(a.periodo)], ['Disponível para', jv(a.disponivel)]
+  ]);
+}
+function renderEnsaio(a){
+  renderBlock('d-ensaio','Ensaio fotográfico profissional',[
+    ['Data', a.ensaio_data], ['Produção', a.ensaio_producao]
+  ]);
+}
+function renderRedes(a){
+  const box=document.getElementById('d-redes');
+  if(!box) return;
+  const nets = [
+    ['Instagram', a.instagram, 'https://instagram.com/'],
+    ['Twitter / X', a.twitter, 'https://x.com/'],
+    ['TikTok', a.tiktok, 'https://tiktok.com/@']
+  ].filter(n=>n[1] && String(n[1]).trim());
+  if(!nets.length){ box.style.display='none'; box.innerHTML=''; return; }
+  box.style.display='block';
+  box.innerHTML = `<h3>Redes sociais</h3>` + nets.map(n=>{
+    const u = n[1].trim();
+    const href = /^https?:\/\//.test(u) ? u : n[2] + u.replace(/^@/,'');
+    return `<div class="line"><span class="bk">${n[0]}</span><span class="bv"><a class="rede-link" href="${href}" target="_blank" rel="noopener">${u}</a></span></div>`;
+  }).join('');
+}
+function renderObs(a){
+  const box=document.getElementById('d-obs');
+  if(!box) return;
+  if(a.obs && String(a.obs).trim()){ box.style.display='block'; box.innerHTML=`<h3>Observações</h3><div class="obs">${a.obs}</div>`; }
+  else { box.style.display='none'; box.innerHTML=''; }
+}
+
+/* ---------- Abrir perfil ---------- */
 function openCreator(id){
   const c = CREATORS.find(x => String(x.id) === String(id));
   if(!c) return;
   currentCreatorId = c.id;
   document.getElementById('d-name').textContent   = c.name;
-  document.getElementById('d-handle').textContent = c.handle;
-  document.getElementById('d-photos').textContent = c.photos;
-  document.getElementById('d-videos').textContent = c.videos;
-  document.getElementById('d-subs').textContent   = fakeSubs(c.id);
-  document.getElementById('d-desc').textContent   = c.desc;
+  document.getElementById('d-handle').textContent = c.handle || '';
+  document.getElementById('d-desc').textContent   = c.desc || c.bio || '';
+
+  // avaliação em estrelas
+  document.getElementById('d-rating').innerHTML = `${starsHtml(c.id)} <b>${fakeStars(c.id)}</b>`;
+
+  // localização (usa o handle/cidade)
+  const loc = document.getElementById('d-loc');
+  if(c.city){ loc.style.display='flex'; loc.textContent = '📍 ' + c.city; }
+  else { loc.style.display='none'; }
+
+  // valor (R$)
+  const pr = document.getElementById('d-price');
+  const val = fmtBRL(c.price);
+  if(val){ pr.style.display='block'; pr.innerHTML = `${val} <small>a combinar</small>`; }
+  else { pr.style.display='none'; }
+
+  // características + seções
+  const at = c.attributes || {};
+  renderSpecs(at);
+  renderAtendimento(at);
+  renderCache(at, c.price);
+  renderDispo(at);
+  renderAgenda(c.schedule);
+  renderEnsaio(at);
+  renderRedes(at);
+  renderObs(at);
+  // acessos no mês (fictício, estável por perfil)
+  document.getElementById('d-acessos').innerHTML = `👁 <b>${fakeSubs(c.id)}</b> acessos no mês`;
 
   // foto de perfil
   const av = document.getElementById('d-avatar');
   if(c.avatar){ av.style.backgroundImage=`url('${c.avatar}')`; av.style.backgroundSize='cover'; av.style.backgroundPosition='center'; av.textContent=''; }
-  else { av.style.backgroundImage=''; av.textContent='[ FOTO DE PERFIL ]'; }
+  else { av.style.backgroundImage=''; av.textContent='[ FOTO ]'; }
 
-  // agenda de lives
-  const sw=document.getElementById('d-schedule-wrap');
-  const sl=document.getElementById('d-schedule');
-  const items=(c.schedule||[]).filter(s=>s.date||s.time);
-  if(items.length){
-    sw.style.display='block';
-    sl.innerHTML=items.map(s=>{
-      const d=s.date?new Date(s.date+'T00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'long'}):'';
-      return `<div style="display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px">
-        <span style="color:var(--accent);font-weight:700">${d}${s.time?' · '+s.time:''}</span>
-        <span style="color:var(--muted);font-size:14px">${s.note||'Live'}</span>
-      </div>`;
-    }).join('');
-  } else { sw.style.display='none'; }
+  // botão WhatsApp
+  const wa = document.getElementById('d-whats');
+  const link = waLink(c.phone, c.name);
+  if(link){ wa.href = link; wa.style.display='inline-flex'; }
+  else { wa.style.display='none'; }
 
-  // prévias (5 grátis + restante com cadeado; tudo liberado se já pagou)
+  // fotos (todas visíveis)
   renderPreviews(c.gallery || []);
-  applyUnlockUI();
-
-  document.getElementById('d-plans').innerHTML = c.plans.map(p => `
-    <div class="plan ${p.best?'best':''}">
-      ${p.best?'<div class="badge">Mais escolhido</div>':''}
-      <div class="tier">${p.tier}</div>
-      <h4>${p.name}</h4>
-      <div class="price">${fmtPrice(p.price)}<small>${p.per||''}</small></div>
-      ${CUR.ready && mznAmount(p.price)!=null ? `<div class="orig-mzn">${p.price} · cobrança em MZN</div>` : ''}
-      <ul>${p.perks.map(k=>`<li>${k}</li>`).join('')}</ul>
-      ${p.telegram
-        ? `<a class="btn btn-tg" href="${p.checkoutUrl}" onclick="event.preventDefault();goVip('${p.checkoutUrl}')"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>Pagar e entrar no Grupo Vazadinhos</a>`
-        : `<a class="btn btn-primary" href="${p.checkoutUrl}" onclick="event.preventDefault();goAccess('${p.checkoutUrl}')">Assinar</a>`}
-    </div>
-  `).join('');
-
-  // CTA fixo mobile: aponta para o plano em destaque (ou o primeiro)
-  const main = c.plans.find(p=>p.best) || c.plans[0];
-  const sticky = document.getElementById('stickyCtaLink');
-  if(main && sticky){
-    sticky.href = main.checkoutUrl;
-    if(main.telegram){
-      sticky.removeAttribute('target');
-      sticky.textContent = 'Pagar e entrar no Grupo Vazadinhos';
-      sticky.onclick = (e)=>{ e.preventDefault(); goVip(main.checkoutUrl); };
-    } else {
-      sticky.setAttribute('target','_blank');
-      sticky.textContent = 'Assinar';
-      sticky.onclick = null;
-    }
-  }
 
   document.getElementById('home').style.display='none';
   document.getElementById('detail').style.display='block';
@@ -976,42 +1026,27 @@ window.addEventListener('popstate', function(){
   if(document.body.classList.contains('detail-open')) showHomeView();
 });
 
-/* ---------- PRÉVIAS: 5 grátis + restante bloqueado com cadeado ---------- */
-const FREE_PREVIEWS = 5;
+/* ---------- FOTOS (todas visíveis) ---------- */
 function isVid(u){ return /\.(mp4|webm|mov|m4v|ogg)(\?|$)/i.test(u||''); }
-// itens da galeria podem ser string (antigo) ou {url, free} (novo, escolhido no painel)
+// itens da galeria podem ser string (antigo) ou {url, free} (novo)
 function gUrl(it){ return (it && typeof it==='object') ? it.url : it; }
-function gFree(it,i){ return (it && typeof it==='object') ? !!it.free : (i < FREE_PREVIEWS); }
 function renderPreviews(gallery){
   const wrap=document.getElementById('d-previews-wrap');
   const box=document.getElementById('d-previews');
   if(!gallery || !gallery.length){ wrap.style.display='none'; box.innerHTML=''; return; }
   wrap.style.display='block';
-  const unlocked = !!(UNLOCK && UNLOCK.access);   // cliente que já pagou vê tudo
-  box.innerHTML = gallery.map((it,i)=>{
+  box.innerHTML = gallery.map((it)=>{
     const u = gUrl(it);
-    const vid = isVid(u);
-    const media = vid
-      ? `<video src="${u}" loop muted playsinline preload="metadata" controlsList="nodownload" disablepictureinpicture></video><span class="vbadge">VÍDEO</span>`
-      : `<img src="${u}" alt="" loading="lazy" draggable="false">`;
-    if(unlocked || gFree(it,i)){
-      return vid
-        ? `<div class="preview playable" onclick="togglePreview(this)">${media}<span class="play-overlay">▶</span></div>`
-        : `<div class="preview">${media}</div>`;
+    if(isVid(u)){
+      return `<div class="preview playable" onclick="togglePreview(this)"><video src="${u}" loop muted playsinline preload="metadata" controlsList="nodownload" disablepictureinpicture></video><span class="vbadge">VÍDEO</span><span class="play-overlay">▶</span></div>`;
     }
-    return `<div class="preview locked" onclick="scrollToPlans()">${media}
-      <div class="lock">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5A4.5 4.5 0 0 0 7.5 6v3H6.75A2.25 2.25 0 0 0 4.5 11.25v8.25A2.25 2.25 0 0 0 6.75 21.75h10.5a2.25 2.25 0 0 0 2.25-2.25v-8.25A2.25 2.25 0 0 0 17.25 9H16.5V6A4.5 4.5 0 0 0 12 1.5zm-3 7.5V6a3 3 0 1 1 6 0v3H9z"/></svg>
-        <span>Assinar para ver</span>
-      </div></div>`;
+    return `<div class="preview"><img src="${u}" alt="" loading="lazy" draggable="false"></div>`;
   }).join('');
 }
-function scrollToPlans(){ const p=document.getElementById('d-plans'); if(p) p.scrollIntoView({behavior:'smooth',block:'center'}); }
-// prévia em vídeo: 1 clique dá play/pause no lugar (loop, sem tela cheia — tipo GIF)
+// vídeo: 1 clique dá play/pause no lugar (loop, sem tela cheia)
 function togglePreview(el){
   const v=el.querySelector('video'); if(!v) return;
   if(v.paused){
-    // toca só um por vez: pausa qualquer outra prévia que esteja tocando
     document.querySelectorAll('#d-previews .preview.playing').forEach(p=>{
       if(p!==el){ const ov=p.querySelector('video'); if(ov) ov.pause(); p.classList.remove('playing'); }
     });
@@ -1019,34 +1054,6 @@ function togglePreview(el){
   } else {
     v.pause(); el.classList.remove('playing');
   }
-}
-
-/* ---------- HISTÓRICO (FAKE) DE COMPRAS — sobe a cada 5s ---------- */
-// nomes moçambicanos reais — combinados aleatoriamente (nome + sobrenome)
-const _saleFirst=["José","João","Carlos","António","Manuel","Fernando","Paulo","Armando","Eduardo","Hélder","Nelson","Adérito","Délcio","Stélio","Júlio","Edson","Rui","Ivan","Geraldo","Anselmo","Fábio","Mário","Sérgio","Hélio","Gildo","Custódio","Elias","Albano","Momade","Amade","Abdul","Selemane","Rachide","Issufo","Nordine","Aida","Lúcia","Telma","Stela","Inês","Gracinda","Benilde","Anabela","Esperança"];
-const _saleLast=["Mucavele","Cossa","Chissano","Macuácua","Tembe","Sitoe","Mondlane","Nhaca","Massingue","Langa","Matsinhe","Mahumane","Nhantumbo","Bila","Zandamela","Macamo","Ubisse","Muianga","Fumo","Chaúque","Cumbe","Manjate","Mabunda","Chivambo","Maluleque","Wamusse","Guambe","Banze","Machava","Tivane","Saíde","Abdula","Nhampossa"];
-const _saleCities=["Maputo","Matola","Beira","Nampula","Tete","Quelimane","Chimoio","Xai-Xai","Nacala","Pemba","Inhambane","Maxixe","Lichinga"];
-const _salePlans=["o Grupo Vazadinhos","o Acesso completo"];
-function _pick(a){ return a[Math.floor(Math.random()*a.length)]; }
-function showSale(){
-  const feed=document.getElementById('salesFeed'); if(!feed) return;
-  const gate=document.getElementById('ageGate');
-  if(gate && getComputedStyle(gate).display!=='none') return;   // só depois do +18
-  const nome = `${_pick(_saleFirst)} ${_pick(_saleLast)}`;
-  const el=document.createElement('div'); el.className='sale';
-  el.innerHTML=`<div class="s-top">🔥 <b>${nome}</b></div>`+
-               `<div class="s-sub">comprou ${_pick(_salePlans)} · ${_pick(_saleCities)}</div>`;
-  feed.appendChild(el);
-  void el.offsetWidth;            // força reflow p/ a transição rodar sempre
-  el.classList.add('show');
-  while(feed.children.length>3) feed.removeChild(feed.firstChild);
-  setTimeout(()=>{ el.classList.remove('show'); setTimeout(()=>el.remove(),450); }, 4300);
-}
-let _salesTimer=null;
-function startSales(){
-  if(_salesTimer) return;
-  setTimeout(showSale, 1500);
-  _salesTimer=setInterval(showSale, 5000);
 }
 
 /* ---------- deterrente anti-download de mídias ----------
@@ -1081,7 +1088,6 @@ document.addEventListener('keydown', (e)=>{
 });
 
 loadCreators();
-setTimeout(initCurrency, 700);   // moeda local: depois, pra não competir com o carregamento inicial
 </script>
 </body>
 </html>
