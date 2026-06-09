@@ -14,7 +14,7 @@
     --display:'Fraunces',Georgia,serif;--body:'Manrope',system-ui,sans-serif;--radius:16px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased;color-scheme:dark}
   .wrap{max-width:820px;margin:0 auto;padding:24px 18px 90px}
   header{display:flex;align-items:center;justify-content:space-between;padding:18px 0 26px;border-bottom:1px solid var(--line);margin-bottom:26px}
   .logo{height:46px;width:auto;display:inline-block;vertical-align:middle}
@@ -30,11 +30,13 @@
   .card .hint{color:var(--muted);font-size:13px;margin-bottom:16px}
 
   label{display:block;font-size:13px;font-weight:600;margin:14px 0 6px}
-  input[type=text],input[type=email],input[type=password],input[type=url],input[type=date],input[type=time],input[type=number],textarea,select{
+  input[type=text],input[type=email],input[type=password],input[type=tel],input[type=url],input[type=date],input[type=time],input[type=number],textarea,select{
     width:100%;background:#15111780;border:1px solid var(--line);color:var(--ink);
-    border-radius:10px;padding:12px 13px;font-family:var(--body);font-size:15px;
+    border-radius:10px;padding:12px 13px;font-family:var(--body);font-size:15px;color-scheme:dark;
   }
-  input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
+  select option{background:#15110d;color:var(--ink)}
+  input[type=number]{-moz-appearance:textfield}
   textarea{resize:vertical;min-height:80px}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:560px){.row{grid-template-columns:1fr}}
@@ -54,9 +56,9 @@
   .thumb{width:80px;height:100px;border-radius:10px;object-fit:cover;border:1px solid var(--line);position:relative}
   .thumb-wrap{position:relative}
   .thumb-x{position:absolute;top:-7px;right:-7px;background:var(--accent);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-weight:700;font-size:13px;line-height:1;z-index:2}
-  .thumb-lock{position:absolute;top:-8px;left:-8px;border:none;border-radius:8px;width:26px;height:24px;cursor:pointer;font-size:12px;line-height:1;z-index:3;padding:0}
-  .thumb-lock.free{background:var(--ok)}
-  .thumb-lock.locked{background:#5e2733}
+  .thumb-prev{position:absolute;bottom:4px;left:4px;right:4px;background:rgba(0,0,0,.62);color:#f4d98a;border:1px solid rgba(244,217,138,.35);border-radius:7px;cursor:pointer;font-size:10px;font-weight:700;padding:3px 0;z-index:3}
+  .thumb-prev.on{background:linear-gradient(120deg,var(--accent),var(--gold-deep));color:#fff;border-color:transparent}
+  .thumb-wrap.is-prev{outline:2px solid var(--accent);outline-offset:1px;border-radius:10px}
   .thumb-move{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:3px}
   .thumb-move button{background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px;width:24px;height:22px;cursor:pointer;font-size:15px;line-height:1}
   .thumb-move button:disabled{opacity:.3;cursor:default}
@@ -176,11 +178,8 @@
       <label>Bio curta (aparece no card)</label>
       <input type="text" id="f_bio" placeholder="Uma frase sobre ela e o conteúdo" />
       <label>Descrição completa (aparece no perfil)</label>
-      <textarea id="f_desc" placeholder="O que ela publica, com que frequência, o que o assinante recebe."></textarea>
-      <div class="row">
-        <div><label>Nº de fotos</label><input type="text" id="f_photos" placeholder="120" /></div>
-        <div><label>Nº de vídeos</label><input type="text" id="f_videos" placeholder="40" /></div>
-      </div>
+      <textarea id="f_desc" placeholder="Sobre ela, atendimento, disponibilidade…"></textarea>
+      <p class="hint" style="margin:12px 0 0">📷 <b id="autoCount">0 fotos · 0 vídeos</b> — conta automática pela galeria.</p>
       <label class="switch" style="margin-top:16px"><input type="checkbox" id="f_live" style="width:16px;height:16px"> Mostrar "Online agora" no card</label>
       <label class="switch" style="margin-top:10px"><input type="checkbox" id="f_featured" style="width:16px;height:16px"> ⭐ <b>Destaque</b> — aparece na seção em evidência da vitrine</label>
     </div>
@@ -208,9 +207,21 @@
     <!-- AGENDA -->
     <div class="card">
       <h2>Agenda de disponibilidade</h2>
-      <p class="hint">Adicione os dias/horários disponíveis (ou deixe uma observação como "Hoje · 14h às 23h"). Aparece atualizado no perfil.</p>
-      <div id="schedList"></div>
-      <button class="btn btn-ghost" onclick="addSchedule()" style="margin-top:6px">+ Adicionar disponibilidade</button>
+      <p class="hint">Período, dias livres e horário. Aparece atualizado no perfil.</p>
+      <div class="row">
+        <div><label>Início</label><input type="date" id="ag_inicio" /></div>
+        <div><label>Fim</label><input type="date" id="ag_fim" /></div>
+      </div>
+      <label>Dias livres</label>
+      <div id="ag_dias" class="fetbox"></div>
+      <label>Horário</label>
+      <select id="ag_horario" onchange="agToggleCustom()">
+        <option>Dia todo</option><option>Manhã</option><option>Tarde</option><option>Noite</option><option value="Personalizado">Personalizar horário</option>
+      </select>
+      <div class="row" id="ag_custom" style="display:none">
+        <div><label>Das</label><input type="time" id="ag_de" /></div>
+        <div><label>Até</label><input type="time" id="ag_ate" /></div>
+      </div>
     </div>
 
     <!-- CARACTERÍSTICAS -->
@@ -540,7 +551,7 @@ async function uploadGallery(e){
     n++;
     showProgress(`Enviando ${n}/${files.length}: ${f.name}`);
     const url=await uploadFile(f, (p)=>setProgress(p));
-    if(url){ gallery.push({url:url, free:true}); ok++; renderGallery(); }   // novo upload entra como prévia grátis
+    if(url){ gallery.push({url:url, preview:false}); ok++; renderGallery(); }
   }
   hideProgress();
   e.target.value='';   // permite reenviar o mesmo arquivo depois
@@ -548,19 +559,20 @@ async function uploadGallery(e){
 }
 function isVideo(u){ return /\.(mp4|webm|mov|m4v|ogg)(\?|$)/i.test(u||''); }
 function gURL(it){ return (it && typeof it==='object') ? it.url : it; }
-function gFREE(it,i){ return (it && typeof it==='object') ? !!it.free : (i<5); }
+function _galCount(){ let fotos=0,videos=0; gallery.forEach(it=> isVideo(gURL(it))?videos++:fotos++); return {fotos,videos}; }
+function updateAutoCount(){ const c=_galCount(); const el=$('autoCount'); if(el) el.textContent=`${c.fotos} foto${c.fotos!==1?'s':''} · ${c.videos} vídeo${c.videos!==1?'s':''}`; }
 function renderGallery(){
   $('galleryThumbs').innerHTML = gallery.map((it,i)=>{
-    const u=gURL(it), free=gFREE(it,i);
+    const u=gURL(it), prev=(it&&typeof it==='object')?!!it.preview:false;
     const media = isVideo(u)
       ? `<video class="thumb" src="${u}" muted playsinline preload="metadata"></video><span class="thumb-badge">VÍDEO</span>`
       : `<img class="thumb" src="${u}" alt="">`;
     return `
-    <div class="thumb-wrap" draggable="true"
+    <div class="thumb-wrap${prev?' is-prev':''}" draggable="true"
          ondragstart="galDragStart(event,${i})" ondragover="galDragOver(event,${i})"
          ondragleave="galDragLeave(event)" ondrop="galDrop(event,${i})" ondragend="galDragEnd(event)">
       ${media}
-      <button class="thumb-lock ${free?'free':'locked'}" title="${free?'Prévia grátis — clique para BLOQUEAR':'Bloqueado — clique para liberar como prévia'}" onclick="toggleFree(${i})">${free?'🔓':'🔒'}</button>
+      <button class="thumb-prev ${prev?'on':''}" title="${prev?'Sai da vitrine':'Mostrar na vitrine (gira a cada 6s)'}" onclick="togglePreview(${i})">${prev?'★ vitrine':'☆ vitrine'}</button>
       <button class="thumb-x" title="remover" onclick="removeGalleryItem(${i})">×</button>
       <div class="thumb-move">
         <button title="mover para a esquerda" onclick="moveGalleryItem(${i},-1)" ${i===0?'disabled':''}>‹</button>
@@ -569,17 +581,14 @@ function renderGallery(){
     </div>`;
   }).join('');
   const c=$('galCount');
-  if(c){
-    const livres=gallery.filter((it,i)=>gFREE(it,i)).length;
-    c.textContent = `${gallery.length} de ${MAX_GALLERY} · ${livres} prévia(s) grátis, ${gallery.length-livres} bloqueada(s)`;
-  }
-  const inp=$('galleryFile');
-  if(inp) inp.disabled = gallery.length>=MAX_GALLERY;
+  if(c){ const prevN=gallery.filter(it=>it&&typeof it==='object'&&it.preview).length; c.textContent=`${gallery.length} de ${MAX_GALLERY} · ${prevN} na vitrine`; }
+  const inp=$('galleryFile'); if(inp) inp.disabled = gallery.length>=MAX_GALLERY;
+  updateAutoCount();
 }
-function toggleFree(i){
+function togglePreview(i){
   if(!gallery[i]) return;
-  if(typeof gallery[i]!=='object') gallery[i]={url:gallery[i], free:(i<5)};
-  gallery[i].free=!gallery[i].free; renderGallery();
+  if(typeof gallery[i]!=='object') gallery[i]={url:gallery[i],preview:false};
+  gallery[i].preview=!gallery[i].preview; renderGallery();
 }
 function moveGalleryItem(i,dir){
   const j=i+dir; if(j<0||j>=gallery.length) return;
@@ -618,17 +627,24 @@ function galDragEnd(){
 }
 
 /* ---------- AGENDA ---------- */
-function addSchedule(item){
-  schedule.push(item||{date:'',time:'',note:''}); renderSchedule();
+/* ---------- AGENDA fácil ---------- */
+const AG_DIAS=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+function renderAgDias(){ const box=$('ag_dias'); if(box) box.innerHTML=AG_DIAS.map(d=>`<label class="fetopt"><input type="checkbox" value="${d}"> ${d}</label>`).join(''); }
+function agToggleCustom(){ const sel=$('ag_horario'), box=$('ag_custom'); if(box) box.style.display=(sel&&sel.value==='Personalizado')?'':'none'; }
+function readAgenda(){
+  const dias=[...document.querySelectorAll('#ag_dias input:checked')].map(i=>i.value);
+  const s={ inicio:$('ag_inicio').value||'', fim:$('ag_fim').value||'', dias, horario:$('ag_horario').value||'', de:$('ag_de').value||'', ate:$('ag_ate').value||'' };
+  if(!s.inicio && !s.fim && !dias.length && s.horario==='Dia todo' && !s.de && !s.ate) return {};
+  return s;
 }
-function renderSchedule(){
-  $('schedList').innerHTML = schedule.map((s,i)=>`
-    <div class="sched-item">
-      <div><label>Data</label><input type="date" value="${s.date||''}" onchange="schedule[${i}].date=this.value"></div>
-      <div><label>Hora</label><input type="time" value="${s.time||''}" onchange="schedule[${i}].time=this.value"></div>
-      <div><label>Observação</label><input type="text" value="${(s.note||'').replace(/"/g,'&quot;')}" placeholder="Ex: live especial" onchange="schedule[${i}].note=this.value"></div>
-      <button class="sched-x" onclick="schedule.splice(${i},1);renderSchedule()">×</button>
-    </div>`).join('');
+function fillAgenda(s){
+  renderAgDias();
+  s=(s && typeof s==='object' && !Array.isArray(s))?s:{};
+  $('ag_inicio').value=s.inicio||''; $('ag_fim').value=s.fim||'';
+  const set=new Set(Array.isArray(s.dias)?s.dias:[]);
+  document.querySelectorAll('#ag_dias input').forEach(i=>{ i.checked=set.has(i.value); });
+  $('ag_horario').value=s.horario||'Dia todo'; $('ag_de').value=s.de||''; $('ag_ate').value=s.ate||'';
+  agToggleCustom();
 }
 
 /* ---------- LISTA DE CRIADORAS ---------- */
@@ -730,22 +746,30 @@ async function recusarModelo(){
 }
 function _normPhone(s){ return String(s||'').replace(/\D/g,'').slice(-9); }
 
-/* características (vão para a coluna JSON "attributes") */
-const ATTR_KEYS = ['cidade','bairro','tipo','idade','altura','peso','manequim','biotipo','cabelos','olhos','seios','pes','cintura','quadril','tatuagem','piercing','fumante','nivel','idiomas','signo','at_vaginal','at_oral','at_anal','at_perfil','cache2h','pernoite','pagamento','quem','onde','quando','periodo','disponivel','obs'];
-const FETICHES = ['Beijo na boca','Oral','Garganta profunda','Massagem','Strip-tease','Roupa erótica','Pompoarismo','Podolatria','Inversão de papéis','Dominação','Submissão','Voyeurismo','Sexo a três','Fetiche por pés','Acessórios','Chuva dourada'];
-function renderFetichesBox(){
-  const box=$('fetBox'); if(!box) return;
-  box.innerHTML = FETICHES.map(f=>`<label class="fetopt"><input type="checkbox" value="${f}"> ${f}</label>`).join('');
+/* características escalares (vão para a coluna JSON "attributes") */
+const ATTR_KEYS = ['cidade','bairro','tipo','idade','altura','peso','manequim','pes','cintura','quadril','biotipo','cabelos','olhos','seios','tatuagem','piercing','fumante','nivel','signo','at_vaginal','at_oral','at_anal','cache2h','pernoite','pagamento','obs','instagram','twitter','tiktok','ensaio_data','ensaio_producao'];
+/* campos de MÚLTIPLA escolha (checkboxes) — guardados como arrays */
+const MULTI_OPTS = {
+  perfil:['Menininha','Namoradinha','Safadinha','Dominadora','Submissa','GFE'],
+  fetiches:['Beijo na boca','Oral','Garganta profunda','Massagem','Strip-tease','Roupa erótica','Pompoarismo','Podolatria','Inversão de papéis','Dominação','Submissão','Voyeurismo','Sexo a três','Fetiche por pés','Acessórios','Chuva dourada'],
+  idiomas:['Português','Inglês','Espanhol','Francês','Italiano'],
+  quem:['Homens','Mulheres','Casais'],
+  onde:['Hotéis','Motéis','Privê','Residência','A domicílio','Viagens'],
+  quando:['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+  periodo:['Manhã','Tarde','Noite','Madrugada'],
+  disponivel:['Atendimento','Massagens','Jantar/Eventos','Viagens','Despedida de solteiro']
+};
+function renderMulti(){
+  Object.keys(MULTI_OPTS).forEach(k=>{ const box=$('m_'+k); if(box) box.innerHTML = MULTI_OPTS[k].map(o=>`<label class="fetopt"><input type="checkbox" value="${o}"> ${o}</label>`).join(''); });
 }
-function readFetiches(){ const b=$('fetBox'); return b? [...b.querySelectorAll('input:checked')].map(i=>i.value) : []; }
-function fillFetiches(arr){ arr=Array.isArray(arr)?arr:[]; const b=$('fetBox'); if(!b) return; b.querySelectorAll('input').forEach(i=>{ i.checked=arr.includes(i.value); }); }
+function readMulti(){ const r={}; Object.keys(MULTI_OPTS).forEach(k=>{ const box=$('m_'+k); if(box){ const v=[...box.querySelectorAll('input:checked')].map(i=>i.value); if(v.length) r[k]=v; } }); return r; }
+function fillMulti(a){ Object.keys(MULTI_OPTS).forEach(k=>{ const box=$('m_'+k); if(box){ const arr=Array.isArray(a[k])?a[k]:[]; box.querySelectorAll('input').forEach(i=>{ i.checked=arr.includes(i.value); }); } }); }
 function readAttrs(){
   const a = {};
-  ATTR_KEYS.forEach(k=>{ const v=($('f_at_'+k).value||'').trim(); if(v) a[k] = (k==='idade') ? parseInt(v,10) : v; });
-  const fet = readFetiches(); if(fet.length) a.fetiches = fet;
-  return a;
+  ATTR_KEYS.forEach(k=>{ const el=$('f_at_'+k); if(!el) return; const v=(el.value||'').trim(); if(v) a[k] = (k==='idade') ? parseInt(v,10) : v; });
+  return Object.assign(a, readMulti());
 }
-function fillAttrs(a){ a=a||{}; ATTR_KEYS.forEach(k=>{ $('f_at_'+k).value = (a[k]!=null?a[k]:''); }); fillFetiches(a.fetiches); }
+function fillAttrs(a){ a=a||{}; ATTR_KEYS.forEach(k=>{ const el=$('f_at_'+k); if(el) el.value = (a[k]!=null?a[k]:''); }); fillMulti(a); }
 /* CEP -> cidade/bairro (ViaCEP) */
 async function buscarCep(){
   const el=$('f_cep'), msg=$('cepMsg'); if(!el) return;
@@ -762,14 +786,14 @@ async function buscarCep(){
 }
 
 function clearForm(){
-  ['f_name','f_handle','f_bio','f_desc','f_photos','f_videos',
+  ['f_name','f_handle','f_bio','f_desc',
    'f_priceAccess','f_phone'].forEach(id=>$(id).value='');
   fillAttrs({});
   ['f_live','f_featured','c_age','c_own','c_remove','f_approved'].forEach(id=>$(id).checked=false);
-  avatarUrl=''; gallery=[]; schedule=[];
+  avatarUrl=''; gallery=[];
   $('avatarPrev').src=''; $('avatarPrev').classList.add('hidden');
   $('avatarFile').value=''; $('galleryFile').value='';
-  renderGallery(); renderSchedule();
+  renderGallery(); fillAgenda({});
 }
 
 function newCreator(){
@@ -785,7 +809,6 @@ function editCreator(id){
   editing=true; formId=d.id; clearForm();
   $('f_name').value=d.name||''; $('f_handle').value=d.handle||'';
   $('f_bio').value=d.bio||''; $('f_desc').value=d.description||'';
-  $('f_photos').value=d.photos_count||''; $('f_videos').value=d.videos_count||'';
   $('f_live').checked=!!d.is_live;
   $('f_featured').checked=!!d.featured;
   $('f_priceAccess').value=d.access_price||''; $('f_phone').value=d.phone||'';
@@ -794,9 +817,8 @@ function editCreator(id){
   $('f_approved').checked=!!d.approved;
   avatarUrl=d.avatar_url||'';
   if(avatarUrl){ const img=$('avatarPrev'); img.src=avatarUrl; img.classList.remove('hidden'); }
-  gallery=(Array.isArray(d.gallery)?d.gallery:[]).map((it,i)=> (it&&typeof it==='object')?{url:it.url,free:!!it.free}:{url:it,free:i<5});
-  schedule=Array.isArray(d.schedule)?d.schedule.slice():[];
-  renderGallery(); renderSchedule();
+  gallery=(Array.isArray(d.gallery)?d.gallery:[]).map((it)=> (it&&typeof it==='object')?{url:it.url,preview:!!it.preview}:{url:it});
+  renderGallery(); fillAgenda(d.schedule);
   $('editTitle').textContent='Editar criadora';
   $('editTag').textContent='Editando';
   showEditor();
@@ -815,10 +837,10 @@ async function saveProfile(){
     id: formId,
     name:$('f_name').value.trim(), handle:$('f_handle').value.trim(),
     bio:$('f_bio').value.trim(), description:$('f_desc').value.trim(),
-    photos_count:$('f_photos').value.trim(), videos_count:$('f_videos').value.trim(),
+    photos_count:String(_galCount().fotos), videos_count:String(_galCount().videos),
     is_live:$('f_live').checked,
     featured:$('f_featured').checked,
-    avatar_url:avatarUrl, gallery:gallery, schedule:schedule,
+    avatar_url:avatarUrl, gallery:gallery, schedule:readAgenda(),
     access_price:$('f_priceAccess').value.trim(), phone:$('f_phone').value.trim(),
     attributes:readAttrs(),
     confirmed_age:$('c_age').checked, confirmed_ownership:$('c_own').checked, confirmed_removal:$('c_remove').checked,
@@ -841,7 +863,7 @@ async function onLogin(user){
   await loadCreators();
 }
 (async function init(){
-  renderFetichesBox();
+  renderMulti(); renderAgDias();
   if(!sb){ $('auth').classList.remove('hidden'); return; }
   const { data } = await sb.auth.getSession();
   if(data.session){ onLogin(data.session.user); }

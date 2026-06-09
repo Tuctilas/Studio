@@ -72,11 +72,13 @@
   .btn-wpp{background:linear-gradient(120deg,#25D366,#128C7E);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:9px}
   .btn-wpp:hover{filter:brightness(1.08)}
   .btn-wpp svg{width:20px;height:20px;flex:none}
+  .btn-vip{background:transparent;border:1px solid var(--accent);color:var(--accent);display:inline-flex;align-items:center;justify-content:center;gap:8px;width:auto;min-width:240px;margin-top:10px}
+  .btn-vip:hover{background:rgba(201,162,78,.12)}
   .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
   .btn-ghost:hover{color:var(--ink)}
 
   /* ---------- SHELL ---------- */
-  .wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+  .wrap{max-width:1260px;margin:0 auto;padding:0 22px}
   header.site{
     position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
     background:rgba(4,3,2,.88);border-bottom:1px solid var(--line);
@@ -189,24 +191,47 @@
     display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
   .feat-panel .fmore{font-family:'Fira Sans',sans-serif;color:var(--accent);font-weight:600;font-size:13px;margin-top:2px}
 
-  /* ---------- LOJA: filtros + grade ---------- */
-  .shop{display:grid;grid-template-columns:248px 1fr;gap:28px;align-items:start}
-  .filters{position:sticky;top:96px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 18px;display:flex;flex-direction:column;gap:20px}
+  /* ---------- LOJA: grade (esquerda) + filtros (direita) ---------- */
+  .shop{display:grid;grid-template-columns:1fr 230px;gap:32px;align-items:start}
+  .shop-main{order:1;min-width:0}
+  .filters{order:2;position:sticky;top:96px;
+    background:rgba(18,14,10,.38);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+    border:1px solid rgba(201,162,78,.14);border-radius:var(--radius);
+    padding:20px 16px;display:flex;flex-direction:column;gap:18px;
+    box-shadow:0 18px 50px rgba(0,0,0,.25)}
   .filters h4{font-family:var(--display);font-size:18px;margin-bottom:2px}
   .filters .fgroup{display:flex;flex-direction:column;gap:9px}
   .filters .flabel{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700}
-  .filters select{background:#15111780;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:11px 12px;font-family:var(--body);font-size:14px}
+  .filters select{background:rgba(21,17,23,.35);border:1px solid rgba(201,162,78,.16);color:var(--ink);border-radius:10px;padding:11px 12px;font-family:var(--body);font-size:14px}
   .filters select:focus{outline:none;border-color:var(--accent)}
   .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{cursor:pointer;border:1px solid var(--line);background:#15111780;color:var(--muted);border-radius:99px;padding:7px 13px;font-size:13px;font-family:var(--body);transition:all .2s}
+  .chip{cursor:pointer;border:1px solid rgba(201,162,78,.18);background:rgba(21,17,23,.30);color:var(--muted);border-radius:99px;padding:7px 13px;font-size:13px;font-family:var(--body);transition:all .2s}
   .chip:hover{border-color:var(--accent);color:var(--ink)}
-  .chip.on{background:linear-gradient(120deg,var(--accent),var(--gold-deep));border-color:transparent;color:#fff;font-weight:600}
-  .chips-scroll{max-height:174px;overflow:auto;padding:2px 4px 2px 0}
+  .chip.on{background:#000;border-color:rgba(201,162,78,.5);color:#f4d98a;font-weight:600}
+  /* rolagem transparente (sem barra branca) */
+  .chips-scroll{max-height:180px;overflow-y:auto;padding:2px 6px 2px 0;
+    scrollbar-width:thin;scrollbar-color:rgba(201,162,78,.45) transparent}
+  .chips-scroll::-webkit-scrollbar{width:6px}
+  .chips-scroll::-webkit-scrollbar-track{background:transparent}
+  .chips-scroll::-webkit-scrollbar-thumb{background:rgba(201,162,78,.38);border-radius:99px}
+  .chips-scroll::-webkit-scrollbar-thumb:hover{background:rgba(201,162,78,.65)}
   .filters .flabel small{color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0;font-size:11px}
   .filters .clear{background:none;border:none;color:var(--muted);font-family:var(--body);font-size:13px;cursor:pointer;text-decoration:underline;align-self:flex-start;padding:0}
   .filters .clear:hover{color:var(--ink)}
   .filters-toggle{display:none}
   .shop-empty{color:var(--muted);font-size:14px;padding:30px 0}
+
+  /* barra de cidades (capitais) entre o título e a vitrine */
+  .citybar{padding:4px 0 2px;position:relative;z-index:1}
+  .citybar-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .citybar-head small{color:var(--muted);font-size:11px}
+  .citybar-chips{display:flex;flex-wrap:nowrap;overflow-x:auto;gap:8px;padding-bottom:8px;
+    scrollbar-width:thin;scrollbar-color:rgba(201,162,78,.45) transparent}
+  .citybar-chips::-webkit-scrollbar{height:6px}
+  .citybar-chips::-webkit-scrollbar-track{background:transparent}
+  .citybar-chips::-webkit-scrollbar-thumb{background:rgba(201,162,78,.4);border-radius:99px}
+  .citybar-chips::-webkit-scrollbar-thumb:hover{background:rgba(201,162,78,.65)}
+  .citybar-chips .chip{flex:none}
 
   /* localização no card */
   .creator .c-city{font-family:'Fira Sans',sans-serif;font-weight:600;white-space:nowrap;color:#f4d98a}
@@ -383,7 +408,8 @@
 
     /* filtros empilham no topo no celular */
     .shop{grid-template-columns:1fr;gap:16px}
-    .filters{position:static;top:auto;flex-direction:column}
+    .filters{order:0;position:static;top:auto;flex-direction:column}
+    .shop-main{order:1}
     .specs{grid-template-columns:repeat(2,1fr)}
 
     /* destaques: 1 por linha e painel sempre visível no touch */
@@ -508,6 +534,14 @@
       </div>
     </section>
 
+    <!-- BARRA DE CIDADES (capitais) — entre o título e a vitrine -->
+    <section class="citybar">
+      <div class="wrap">
+        <div class="citybar-head"><span class="flabel">Escolha a cidade</span> <small id="fCityCount"></small></div>
+        <div class="chips citybar-chips" id="fCity"></div>
+      </div>
+    </section>
+
     <section class="section featured-sec" id="featuredSec" style="display:none">
       <div class="wrap">
         <div class="section-head">
@@ -530,9 +564,9 @@
           <!-- FILTROS -->
           <aside class="filters">
             <h4>Filtros</h4>
-            <div class="fgroup">
-              <span class="flabel">Cidade <small id="fCityCount"></small></span>
-              <div class="chips chips-scroll" id="fCity"></div>
+            <div class="fgroup" id="fBairroGroup" style="display:none">
+              <span class="flabel">Bairro</span>
+              <div class="chips chips-scroll" id="fBairro"></div>
             </div>
             <div class="fgroup">
               <span class="flabel">Tipo</span>
@@ -571,7 +605,6 @@
         <div>
           <h2 id="d-name"></h2>
           <div class="handle" id="d-handle"></div>
-          <div class="d-rating" id="d-rating"></div>
           <div class="d-acessos" id="d-acessos"></div>
           <div class="d-loc" id="d-loc" style="display:none"></div>
           <div class="d-price" id="d-price" style="display:none"></div>
@@ -580,6 +613,7 @@
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.02zM12.04 20.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23a8.2 8.2 0 0 1 8.23 8.24c0 4.54-3.69 8.23-8.23 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.22.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.17-.47-.29z"/></svg>
             Falar no WhatsApp
           </a>
+          <button class="btn btn-vip" onclick="vipSoon()">🔒 Prévias exclusivas (em breve)</button>
         </div>
       </div>
 
@@ -721,20 +755,43 @@ function renderGrid(){
     renderFeatured();
     return;
   }
-  grid.innerHTML = list.map(c => `
+  grid.innerHTML = list.map(c => {
+    const slides = previewImgs(c);
+    const first = slides[0] || '';
+    return `
     <div class="creator" onclick="openCreator('${c.id}')">
-      <div class="thumb" ${c.avatar?`style="background-image:url('${c.avatar}');background-size:cover;background-position:center"`:''}>
+      <div class="thumb" data-imgs="${slides.length>1?slides.join('|'):''}" ${first?`style="background-image:url('${first}');background-size:cover;background-position:center"`:''}>
         ${c.live ? '<div class="live"><span class="dot"></span>Online agora</div>' : ''}
         <div class="c-name">${c.name}</div>
         <div class="c-hover">
-          <span class="c-stars">${starsHtml(c.id)} <b>${fakeStars(c.id)}</b></span>
-          ${c.city ? `<span class="c-city">📍 ${c.city}</span>` : ''}
+          ${c.city ? `<span class="c-city">📍 ${c.city}</span>` : '<span></span>'}
         </div>
-        ${c.avatar ? '' : '<span class="ph">[ FOTO ]</span>'}
+        ${first ? '' : '<span class="ph">[ FOTO ]</span>'}
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
   renderFeatured();
+  startSlideshow();
+}
+/* fotos escolhidas pra vitrine (giram a cada 6s); senão, a foto de perfil */
+function previewImgs(c){
+  const g = Array.isArray(c.gallery) ? c.gallery : [];
+  const imgs = g.filter(it => it && typeof it==='object' && it.preview && !isVid(it.url||'')).map(it => it.url);
+  if(imgs.length) return imgs;
+  return c.avatar ? [c.avatar] : [];
+}
+let _slideTimer=null;
+function startSlideshow(){
+  if(_slideTimer) return;
+  _slideTimer = setInterval(()=>{
+    document.querySelectorAll('.creator .thumb[data-imgs]').forEach(t=>{
+      const list=(t.getAttribute('data-imgs')||'').split('|').filter(Boolean);
+      if(list.length<2) return;
+      const i=(parseInt(t.getAttribute('data-i')||'0',10)+1)%list.length;
+      t.setAttribute('data-i', i);
+      t.style.backgroundImage = `url('${list[i]}')`;
+    });
+  }, 6000);
 }
 
 /* ---------- Destaques (modelos marcadas no painel) ---------- */
@@ -797,7 +854,7 @@ const TIPOS = ['Loira','Morena','Ruiva','Negra','Mulata','Oriental','Latina'];
 const FETICHES = ['Beijo na boca','Oral','Garganta profunda','Massagem','Strip-tease','Roupa erótica','Pompoarismo','Podolatria','Inversão de papéis','Dominação','Submissão','Voyeurismo','Sexo a três','Fetiche por pés','Acessórios','Chuva dourada'];
 // todas as capitais do Brasil (aparecem mesmo sem acompanhante cadastrada)
 const CAPITAIS = ['Aracaju · SE','Belém · PA','Belo Horizonte · MG','Boa Vista · RR','Brasília · DF','Campo Grande · MS','Cuiabá · MT','Curitiba · PR','Florianópolis · SC','Fortaleza · CE','Goiânia · GO','João Pessoa · PB','Macapá · AP','Maceió · AL','Manaus · AM','Natal · RN','Palmas · TO','Porto Alegre · RS','Porto Velho · RO','Recife · PE','Rio Branco · AC','Rio de Janeiro · RJ','Salvador · BA','São Luís · MA','São Paulo · SP','Teresina · PI','Vitória · ES'];
-let FILTERS = { cities:new Set(), tipo:new Set(), idade:'', fetiches:new Set() };
+let FILTERS = { cities:new Set(), bairros:new Set(), tipo:new Set(), idade:'', fetiches:new Set() };
 function _esc(s){ return String(s).replace(/'/g,"\\'"); }
 function buildFilters(){
   // cidades = capitais + cidades cadastradas (sem repetir)
@@ -808,7 +865,19 @@ function buildFilters(){
   if(tbox){ tbox.innerHTML = TIPOS.map(t=>`<span class="chip ${FILTERS.tipo.has(t.toLowerCase())?'on':''}" onclick="toggleChip('tipo','${t.toLowerCase()}',this)">${t}</span>`).join(''); }
   const fbox = document.getElementById('fFetiche');
   if(fbox){ fbox.innerHTML = FETICHES.map(f=>`<span class="chip ${FILTERS.fetiches.has(f)?'on':''}" onclick="toggleChip('fetiches','${_esc(f)}',this)">${f}</span>`).join(''); }
+  buildBairros();
   updateCityCount();
+}
+// bairros disponíveis a partir das cidades escolhidas (ou de todas, se nenhuma)
+function buildBairros(){
+  const box=document.getElementById('fBairro'), grp=document.getElementById('fBairroGroup');
+  if(!box||!grp) return;
+  const pool = CREATORS.filter(c=> !FILTERS.cities.size || FILTERS.cities.has(c.city||''));
+  const bairros = [...new Set(pool.map(c=> (c.attributes&&c.attributes.bairro)||'').filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+  [...FILTERS.bairros].forEach(b=>{ if(!bairros.includes(b)) FILTERS.bairros.delete(b); });
+  if(!bairros.length){ grp.style.display='none'; box.innerHTML=''; return; }
+  grp.style.display='';
+  box.innerHTML = bairros.map(b=>`<span class="chip ${FILTERS.bairros.has(b)?'on':''}" onclick="toggleChip('bairros','${_esc(b)}',this)">${b}</span>`).join('');
 }
 function updateCityCount(){ const e=document.getElementById('fCityCount'); if(e) e.textContent = FILTERS.cities.size ? `(${FILTERS.cities.size})` : ''; }
 function setIdade(v){ FILTERS.idade = v; renderGrid(); }
@@ -816,13 +885,14 @@ function toggleChip(key, val, el){
   const s = FILTERS[key];
   if(s.has(val)) s.delete(val); else s.add(val);
   if(el) el.classList.toggle('on');
-  if(key==='cities') updateCityCount();
+  if(key==='cities'){ updateCityCount(); buildBairros(); }   // muda os bairros disponíveis
   renderGrid();
 }
 function clearFilters(){
-  FILTERS = { cities:new Set(), tipo:new Set(), idade:'', fetiches:new Set() };
+  FILTERS = { cities:new Set(), bairros:new Set(), tipo:new Set(), idade:'', fetiches:new Set() };
   const i=document.getElementById('fIdade'); if(i) i.value='';
   document.querySelectorAll('.filters .chip.on').forEach(c=>c.classList.remove('on'));
+  buildBairros();
   updateCityCount();
   renderGrid();
 }
@@ -830,6 +900,7 @@ function getDisplayed(){
   return CREATORS.filter(c=>{
     const a = c.attributes || {};
     if(FILTERS.cities.size && !FILTERS.cities.has(c.city||'')) return false;
+    if(FILTERS.bairros.size && !FILTERS.bairros.has(a.bairro||'')) return false;
     if(FILTERS.tipo.size && !FILTERS.tipo.has(String(a.tipo||'').toLowerCase())) return false;
     if(FILTERS.idade){
       const [min,max] = FILTERS.idade.split('-').map(Number);
@@ -845,6 +916,7 @@ function getDisplayed(){
 }
 
 let currentCreatorId = null;
+function vipSoon(){ alert('Em breve: assinatura para liberar as prévias exclusivas desta acompanhante.'); }
 
 /* ---------- Nº de assinantes (aleatório, atrativo e estável por criadora) ---------- */
 function fakeSubs(id){
@@ -900,17 +972,33 @@ function renderAtendimento(a){
     ['Perfil', jv(a.perfil)], ['Fetiches', jv(a.fetiches)]
   ]);
 }
+function _fmtDate(d){ try{ return new Date(d+'T00:00').toLocaleDateString('pt-BR',{day:'2-digit',month:'short'}); }catch(e){ return d; } }
 function renderAgenda(schedule){
   const box = document.getElementById('d-agenda');
   if(!box) return;
-  const items = (schedule||[]).filter(s=>s && (s.date||s.time||s.note));
-  if(!items.length){ box.style.display='none'; box.innerHTML=''; return; }
+  const s = schedule;
+  let rows = '';
+  if(Array.isArray(s)){
+    // formato antigo (data/hora/nota)
+    const items = s.filter(x=>x && (x.date||x.time||x.note));
+    if(!items.length){ box.style.display='none'; box.innerHTML=''; return; }
+    rows = items.map(x=>{
+      const when=[x.date?_fmtDate(x.date):'', x.time].filter(Boolean).join(' · ');
+      return `<div class="line"><span class="bk">${when||'Disponível'}</span><span class="bv">${x.note||'Disponível'}</span></div>`;
+    }).join('');
+  } else if(s && typeof s==='object' && (s.inicio||s.fim||(s.dias&&s.dias.length)||s.de||s.ate)){
+    // formato novo (período + dias + horário)
+    const periodo = [s.inicio?_fmtDate(s.inicio):'', s.fim?_fmtDate(s.fim):''].filter(Boolean).join(' até ');
+    let horario = s.horario || '';
+    if(horario==='Personalizado' && (s.de||s.ate)) horario = `${s.de||''}–${s.ate||''}`;
+    rows = [
+      ['Período', periodo],
+      ['Dias livres', Array.isArray(s.dias)?s.dias.join(', '):''],
+      ['Horário', horario]
+    ].filter(r=>r[1]).map(r=>`<div class="line"><span class="bk">${r[0]}</span><span class="bv">${r[1]}</span></div>`).join('');
+  }
+  if(!rows){ box.style.display='none'; box.innerHTML=''; return; }
   box.style.display='block';
-  const rows = items.map(s=>{
-    const d = s.date ? new Date(s.date+'T00:00').toLocaleDateString('pt-BR',{weekday:'short',day:'2-digit',month:'short'}) : '';
-    const when = [d, s.time].filter(Boolean).join(' · ');
-    return `<div class="line"><span class="bk">${when||'Disponível'}</span><span class="bv">${s.note||'Disponível'}</span></div>`;
-  }).join('');
   box.innerHTML = `<h3>Agenda · disponibilidade</h3>${rows}`;
 }
 function renderCache(a, price){
@@ -961,9 +1049,6 @@ function openCreator(id){
   document.getElementById('d-name').textContent   = c.name;
   document.getElementById('d-handle').textContent = c.handle || '';
   document.getElementById('d-desc').textContent   = c.desc || c.bio || '';
-
-  // avaliação em estrelas
-  document.getElementById('d-rating').innerHTML = `${starsHtml(c.id)} <b>${fakeStars(c.id)}</b>`;
 
   // localização (usa o handle/cidade)
   const loc = document.getElementById('d-loc');

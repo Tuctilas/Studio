@@ -14,7 +14,7 @@
     --display:'Fraunces',Georgia,serif;--body:'Manrope',system-ui,sans-serif;--radius:16px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);line-height:1.55;-webkit-font-smoothing:antialiased;color-scheme:dark}
   .wrap{max-width:760px;margin:0 auto;padding:24px 18px 90px}
   header{display:flex;align-items:center;justify-content:space-between;padding:18px 0 26px;border-bottom:1px solid var(--line);margin-bottom:26px}
   .logo{height:46px;width:auto;display:inline-block;vertical-align:middle}
@@ -27,9 +27,12 @@
   .card h2{font-family:var(--display);font-weight:600;font-size:19px;margin-bottom:4px}
   .card .hint{color:var(--muted);font-size:13px;margin-bottom:16px}
   label{display:block;font-size:13px;font-weight:600;margin:14px 0 6px}
-  input[type=text],input[type=email],input[type=password],input[type=tel],input[type=url],textarea,select{
-    width:100%;background:#15111780;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:12px 13px;font-family:var(--body);font-size:15px}
-  input:focus,textarea:focus{outline:none;border-color:var(--accent)}
+  input[type=text],input[type=email],input[type=password],input[type=tel],input[type=url],input[type=number],input[type=date],input[type=time],textarea,select{
+    width:100%;background:#15111780;border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:12px 13px;font-family:var(--body);font-size:15px;color-scheme:dark}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
+  /* mantém setinhas/calendário/lista de opções escuros (não brancos) */
+  select option{background:#15110d;color:var(--ink)}
+  input[type=number]{-moz-appearance:textfield}
   textarea{resize:vertical;min-height:80px}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:560px){.row{grid-template-columns:1fr}}
   .fetbox{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:6px 14px;margin-top:8px}
@@ -59,6 +62,9 @@
   .thumb-badge{position:absolute;top:4px;left:4px;background:rgba(0,0,0,.6);color:#fff;font-size:9px;font-weight:800;padding:2px 5px;border-radius:5px}
   video.thumb{background:#000}
   .thumb-x{position:absolute;top:-8px;right:-8px;background:var(--accent);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-weight:700;font-size:13px;z-index:3}
+  .thumb-prev{position:absolute;bottom:4px;left:4px;right:4px;background:rgba(0,0,0,.62);color:#f4d98a;border:1px solid rgba(244,217,138,.35);border-radius:7px;cursor:pointer;font-size:10px;font-weight:700;padding:3px 0;z-index:3}
+  .thumb-prev.on{background:linear-gradient(120deg,var(--accent),var(--gold-deep));color:#fff;border-color:transparent}
+  .thumb-wrap.is-prev{outline:2px solid var(--accent);outline-offset:1px;border-radius:10px}
   .thumb-lock{position:absolute;top:-8px;left:-8px;border:none;border-radius:8px;width:26px;height:24px;cursor:pointer;font-size:12px;z-index:3;padding:0}
   .thumb-lock.free{background:var(--ok)}.thumb-lock.locked{background:#5e2733}
   .thumb-move{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;padding:3px}
@@ -138,12 +144,9 @@
       </div>
       <label>Bio curta (aparece no card)</label><input type="text" id="f_bio" placeholder="Uma frase sobre você" />
       <label>Descrição completa (aparece no seu perfil)</label>
-      <textarea id="f_desc" placeholder="O que você publica, com que frequência, o que o assinante recebe."></textarea>
-      <div class="row">
-        <div><label>Nº de fotos</label><input type="text" id="f_photos" placeholder="120" /></div>
-        <div><label>Nº de vídeos</label><input type="text" id="f_videos" placeholder="40" /></div>
-      </div>
-      <label class="switch" style="margin-top:16px"><input type="checkbox" id="f_live" style="width:16px;height:16px"> Mostrar "Online agora" no card</label>
+      <textarea id="f_desc" placeholder="Conte sobre você, seu atendimento, sua disponibilidade…"></textarea>
+      <p class="hint" style="margin:14px 0 0">📷 <b id="autoCount">0 fotos · 0 vídeos</b> — atualiza sozinho conforme você sobe a galeria.</p>
+      <p class="hint" style="margin:6px 0 0">🟢 Você aparece como <b>"Online agora"</b> automaticamente enquanto estiver logada aqui.</p>
     </div>
 
     <!-- fotos -->
@@ -154,7 +157,7 @@
       <input type="file" id="avatarFile" accept="image/*" onchange="uploadAvatar(event)" />
 
       <h2 style="margin-top:24px">Fotos da galeria</h2>
-      <p class="hint">Fotos ou vídeos · até 100&nbsp;MB cada · arraste para reordenar · todas aparecem no seu perfil.</p>
+      <p class="hint">Fotos ou vídeos · até 100&nbsp;MB cada · arraste para reordenar. Marque <b>★ vitrine</b> nas fotos que vão girar no seu card (uma a cada 6s).</p>
       <input type="file" id="galleryFile" accept="image/*,video/*" multiple onchange="uploadGallery(event)" />
       <div class="hint" id="galCount" style="margin-top:8px"></div>
       <div class="thumbs" id="galleryThumbs"></div>
@@ -264,6 +267,26 @@
       <input type="text" id="f_at_disponivel" placeholder="Ex: Atendimento, Massagens" />
     </div>
 
+    <!-- agenda fácil -->
+    <div class="card">
+      <h2>Agenda de disponibilidade</h2>
+      <p class="hint">Escolha o período, marque os dias livres e o horário. Aparece atualizado no seu perfil.</p>
+      <div class="row">
+        <div><label>Início</label><input type="date" id="ag_inicio" /></div>
+        <div><label>Fim</label><input type="date" id="ag_fim" /></div>
+      </div>
+      <label>Dias livres</label>
+      <div id="ag_dias" class="fetbox"></div>
+      <label>Horário</label>
+      <select id="ag_horario" onchange="agToggleCustom()">
+        <option>Dia todo</option><option>Manhã</option><option>Tarde</option><option>Noite</option><option value="Personalizado">Personalizar horário</option>
+      </select>
+      <div class="row" id="ag_custom" style="display:none">
+        <div><label>Das</label><input type="time" id="ag_de" /></div>
+        <div><label>Até</label><input type="time" id="ag_ate" /></div>
+      </div>
+    </div>
+
     <!-- observações -->
     <div class="card">
       <h2>Observações</h2>
@@ -332,7 +355,10 @@ async function doSignup(){
   toast('Conta criada! Aguarde a aprovação.');
   onLogin(user);
 }
-async function signOut(){ await sb.auth.signOut(); location.reload(); }
+async function signOut(){
+  try{ if(myCreator && myCreator.id) await sb.from('creators').update({is_live:false}).eq('id',myCreator.id); }catch(e){}
+  await sb.auth.signOut(); location.reload();
+}
 
 /* ---------- CARREGAR ---------- */
 async function onLogin(user){
@@ -346,6 +372,8 @@ async function onLogin(user){
     return;
   }
   $('pendingView').classList.add('hidden'); $('editorView').classList.remove('hidden');
+  // online automático: enquanto estiver logada, aparece "Online agora"
+  try{ await sb.from('creators').update({is_live:true}).eq('id',myCreator.id); myCreator.is_live=true; }catch(e){}
   fillEditor(myCreator);
 }
 const ATTR_KEYS = ['cidade','bairro','tipo','idade','altura','peso','manequim','biotipo','cabelos','olhos','seios','pes','cintura','quadril','tatuagem','piercing','fumante','nivel','idiomas','signo','at_vaginal','at_oral','at_anal','at_perfil','cache2h','pernoite','pagamento','quem','onde','quando','periodo','disponivel','obs'];
@@ -379,13 +407,20 @@ async function buscarCep(){
 }
 function fillEditor(d){
   f_name.value=d.name||''; f_handle.value=d.handle||''; f_bio.value=d.bio||''; f_desc.value=d.description||'';
-  f_photos.value=d.photos_count||''; f_videos.value=d.videos_count||''; f_live.checked=!!d.is_live;
   f_priceAccess.value=d.access_price||''; f_phone.value=d.phone||'';
   fillAttrs(d.attributes);
   f_approved.checked=!!d.approved;
   avatarUrl=d.avatar_url||''; if(avatarUrl){ const i=$('avatarPrev'); i.src=avatarUrl; i.classList.remove('hidden'); }
-  gallery=(Array.isArray(d.gallery)?d.gallery:[]).map((it)=> (it&&typeof it==='object')?{url:it.url}:{url:it});
+  gallery=(Array.isArray(d.gallery)?d.gallery:[]).map((it)=> (it&&typeof it==='object')?{url:it.url,preview:!!it.preview}:{url:it,preview:false});
   renderGallery();
+  fillAgenda(d.schedule);
+}
+/* conta fotos x vídeos da galeria automaticamente */
+function updateAutoCount(){
+  let fotos=0, videos=0;
+  gallery.forEach(it=>{ isVideo(gURL(it)) ? videos++ : fotos++; });
+  const el=document.getElementById('autoCount'); if(el) el.textContent = `${fotos} foto${fotos!==1?'s':''} · ${videos} vídeo${videos!==1?'s':''}`;
+  return {fotos, videos};
 }
 
 /* ---------- UPLOAD (na pasta da modelo = uid) ---------- */
@@ -416,7 +451,7 @@ async function uploadGallery(e){
   if(free<=0){ e.target.value=''; toast(`Limite de ${MAX_GALLERY}. Remova alguma.`,true); return; }
   if(files.length>free){ toast(`Só cabem mais ${free}.`,true); files=files.slice(0,free); }
   let ok=0,n=0;
-  for(const f of files){ n++; showProgress(`Enviando ${n}/${files.length}: ${f.name}`); const u=await uploadFile(f,setProgress); if(u){ gallery.push({url:u,free:true}); ok++; renderGallery(); } }
+  for(const f of files){ n++; showProgress(`Enviando ${n}/${files.length}: ${f.name}`); const u=await uploadFile(f,setProgress); if(u){ gallery.push({url:u,preview:false}); ok++; renderGallery(); } }
   hideProgress(); e.target.value=''; toast(ok?`${ok} enviado(s) · ${gallery.length}/${MAX_GALLERY}`:'Nada enviado.',!ok);
 }
 
@@ -425,16 +460,25 @@ function isVideo(u){ return /\.(mp4|webm|mov|m4v|ogg)(\?|$)/i.test(u||''); }
 function gURL(it){ return (it&&typeof it==='object')?it.url:it; }
 function renderGallery(){
   $('galleryThumbs').innerHTML = gallery.map((it,i)=>{
-    const u=gURL(it);
+    const u=gURL(it); const prev=(it&&typeof it==='object')?!!it.preview:false;
     const media=isVideo(u)?`<video class="thumb" src="${u}" muted playsinline preload="metadata"></video><span class="thumb-badge">VÍDEO</span>`:`<img class="thumb" src="${u}" alt="">`;
-    return `<div class="thumb-wrap" draggable="true" ondragstart="gDS(event,${i})" ondragover="gDO(event,${i})" ondragleave="gDL(event)" ondrop="gDR(event,${i})" ondragend="gDE(event)">
+    return `<div class="thumb-wrap${prev?' is-prev':''}" draggable="true" ondragstart="gDS(event,${i})" ondragover="gDO(event,${i})" ondragleave="gDL(event)" ondrop="gDR(event,${i})" ondragend="gDE(event)">
       ${media}
+      <button class="thumb-prev ${prev?'on':''}" title="${prev?'Sai da vitrine':'Mostrar na vitrine (gira a cada 6s)'}" onclick="togglePreview(${i})">${prev?'★ vitrine':'☆ vitrine'}</button>
       <button class="thumb-x" title="remover" onclick="rmGallery(${i})">×</button>
       <div class="thumb-move"><button onclick="mvGallery(${i},-1)" ${i===0?'disabled':''}>‹</button><button onclick="mvGallery(${i},1)" ${i===gallery.length-1?'disabled':''}>›</button></div>
     </div>`;
   }).join('');
-  $('galCount').textContent=`${gallery.length} de ${MAX_GALLERY}`;
+  const prevN=gallery.filter(it=> it&&typeof it==='object'&&it.preview).length;
+  $('galCount').textContent=`${gallery.length} de ${MAX_GALLERY} · ${prevN} na vitrine`;
   $('galleryFile').disabled=gallery.length>=MAX_GALLERY;
+  updateAutoCount();
+}
+function togglePreview(i){
+  if(!gallery[i]) return;
+  if(typeof gallery[i]!=='object') gallery[i]={url:gallery[i],preview:false};
+  gallery[i].preview=!gallery[i].preview;
+  renderGallery();
 }
 function mvGallery(i,d){ const j=i+d; if(j<0||j>=gallery.length) return; const t=gallery[i]; gallery[i]=gallery[j]; gallery[j]=t; renderGallery(); }
 async function rmGallery(i){ const u=gURL(gallery[i]); gallery.splice(i,1); renderGallery(); await deleteFromStorage(u); }
@@ -445,15 +489,53 @@ function gDL(e){ e.currentTarget.classList.remove('over'); }
 function gDR(e,i){ e.preventDefault(); const from=_df!==null?_df:parseInt((e.dataTransfer&&e.dataTransfer.getData('text/plain'))||'-1',10); _df=null; if(from<0||from===i||from>=gallery.length){ renderGallery(); return; } const it=gallery.splice(from,1)[0]; gallery.splice(i,0,it); renderGallery(); }
 function gDE(){ _df=null; document.querySelectorAll('.thumb-wrap.dragging,.thumb-wrap.over').forEach(el=>el.classList.remove('dragging','over')); }
 
+/* ---------- AGENDA fácil ---------- */
+const AG_DIAS=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
+function renderAgDias(){
+  const box=document.getElementById('ag_dias'); if(!box) return;
+  box.innerHTML = AG_DIAS.map(d=>`<label class="fetopt"><input type="checkbox" value="${d}"> ${d}</label>`).join('');
+}
+function agToggleCustom(){
+  const sel=document.getElementById('ag_horario'), box=document.getElementById('ag_custom');
+  if(box) box.style.display = (sel && sel.value==='Personalizado') ? '' : 'none';
+}
+function readAgenda(){
+  const dias=[...document.querySelectorAll('#ag_dias input:checked')].map(i=>i.value);
+  const s={
+    inicio: document.getElementById('ag_inicio').value||'',
+    fim: document.getElementById('ag_fim').value||'',
+    dias,
+    horario: document.getElementById('ag_horario').value||'',
+    de: document.getElementById('ag_de').value||'',
+    ate: document.getElementById('ag_ate').value||''
+  };
+  // só salva se tiver algo preenchido
+  if(!s.inicio && !s.fim && !dias.length && s.horario==='Dia todo' && !s.de && !s.ate) return {};
+  return s;
+}
+function fillAgenda(s){
+  renderAgDias();
+  s = (s && typeof s==='object' && !Array.isArray(s)) ? s : {};
+  document.getElementById('ag_inicio').value = s.inicio||'';
+  document.getElementById('ag_fim').value = s.fim||'';
+  const set=new Set(Array.isArray(s.dias)?s.dias:[]);
+  document.querySelectorAll('#ag_dias input').forEach(i=>{ i.checked=set.has(i.value); });
+  document.getElementById('ag_horario').value = s.horario||'Dia todo';
+  document.getElementById('ag_de').value = s.de||'';
+  document.getElementById('ag_ate').value = s.ate||'';
+  agToggleCustom();
+}
+
 /* ---------- SALVAR ---------- */
 async function saveProfile(){
   if(need()||!myCreator) return;
   if(!f_name.value.trim()){ toast('Dê um nome ao seu perfil.',true); return; }
+  const cnt=updateAutoCount();
   const payload={
     id: myCreator.id, owner: me.id,
     name:f_name.value.trim(), handle:f_handle.value.trim(), bio:f_bio.value.trim(), description:f_desc.value.trim(),
-    photos_count:f_photos.value.trim(), videos_count:f_videos.value.trim(), is_live:f_live.checked,
-    avatar_url:avatarUrl, gallery:gallery,
+    photos_count:String(cnt.fotos), videos_count:String(cnt.videos), is_live:true,
+    avatar_url:avatarUrl, gallery:gallery, schedule:readAgenda(),
     access_price:f_priceAccess.value.trim(), phone:f_phone.value.trim(),
     attributes:readAttrs(),
     approved:f_approved.checked, confirmed_age:true
@@ -467,7 +549,7 @@ async function saveProfile(){
 
 /* ---------- INICIAR ---------- */
 (async function init(){
-  renderFetichesBox();
+  renderFetichesBox(); renderAgDias();
   if(!sb){ $('auth').classList.remove('hidden'); return; }
   const { data } = await sb.auth.getSession();
   if(data.session){ onLogin(data.session.user); } else { $('auth').classList.remove('hidden'); }
